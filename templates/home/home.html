@@ -24,6 +24,7 @@
 
 </head>
 <body>
+
 <div class="container">
   <h2>Modal Example</h2>
   <!-- Trigger the modal with a button -->
@@ -42,10 +43,14 @@
         <div class="modal-body">
           <p id="label_mobile">Please enter Mobile Number</p>
                 <div id="div_mobile">
-                    <select>
-                        <option value="+91">+91 India</option>
-                        <option value="+91">+93 Afganistan</option>
-                        <option value="+91">+355 Albenia</option>
+                    <select style="width: 20%">
+                    <option>Country</option>
+                      {% for a in country_dialcode %}
+                         <br>
+                          <option value="+{{ a.dialcode }}">{{ a.country_name }} (+{{ a.dialcode }})</option>
+                      {% endfor %}
+
+
                     </select>
                     <input type="number" id="mobile_number"  required> Mobile Number
                     <div id="checkdiv" style="color: red"></div>

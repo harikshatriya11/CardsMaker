@@ -1,9 +1,17 @@
+from country_dialcode.models import Prefix
 from django.db import models
 from choices import *
 # Create your models here.
+class CountryDialcode(models.Model):
+    country_name = models.CharField(max_length=50,null=True,blank=True,default='')
+    dialcode = models.PositiveIntegerField(default=0, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    modified = models.DateTimeField(auto_now=True, null=True, blank=True)
 
 class UserDetails(models.Model):
     user_id = models.CharField(default='',blank=True,null=True,max_length=100)
+    dialcode = models.ForeignKey(Prefix, null=True, blank=True,on_delete=models.CASCADE )
+    country_dialcode = models.ForeignKey(CountryDialcode, null=True, blank=True, on_delete=models.CASCADE, related_name='country_dialcodes' )
     user_mobile = models.CharField(default='',blank=True, null=True,max_length=15)
     ads_watched = models.PositiveIntegerField(default=0, blank=True, null=True)
     active = models.BooleanField(default=False)
@@ -70,4 +78,3 @@ class MobileOTP(models.Model):
     otp_generated_time = models.PositiveIntegerField(default=0, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     modified = models.DateTimeField(auto_now=True, null=True, blank=True)
-

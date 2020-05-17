@@ -19,7 +19,8 @@ def Home(request):
     print('Home')
     template = loader.get_template("home/home.html")
     response = {}
-    response['json'] = {'home':'home'}
+    country_dialcode = CountryDialcode.objects.all()
+    response['country_dialcode'] = [{'country_name':a.country_name,'dialcode':a.dialcode} for a in country_dialcode]
     if request.method == 'POST':
         print(request.POST)
         data = request.POST

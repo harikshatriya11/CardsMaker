@@ -25,7 +25,7 @@ SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['157.245.102.47', 'kraagh.in', 'www.kraagh.n']
 
 
 # Application definition
@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'biodata',
     'marriage_cards',
     'bussiness_cards',
-    'country_dialcode',
 
 ]
 

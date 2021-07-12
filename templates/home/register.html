@@ -1,0 +1,273 @@
+
+{#  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">#}
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+
+{#  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>#}
+{#  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>#}
+  <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+
+  <script>
+    function onloadCallback() {
+        /* Place your recaptcha rendering code here */
+    }
+</script>
+
+<div class="container">
+  <!-- Trigger the modal with a button -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h4 class="modal-title">Register/Login</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="label_mobile"></p>
+                <div id="div_mobile">
+                    <select style="width: 20%" id="dialcode">
+                    <option value="nil">Country</option>
+                      {% for a in country_dialcode %}
+                         <br>
+                          <option value="{{ a.dialcode }}">{{ a.country_name }} (+{{ a.dialcode }})</option>
+                      {% endfor %}
+                    </select>
+                    <input type="number" id="mobile_number"  required> Mobile Number
+                    <div id="checkdiv" style="color: red"></div>
+                </div>
+                <div id="div_otp" style="display: none; margin-top: 2%" required>
+                    <input type="text" id="mobile_otp">   Enter OTP
+                    <div id="otp_checkdiv" style="color: red"></div>
+                </div>
+        </div>
+        <div class="modal-footer">
+             <div class="loader" style="display: none;"></div>
+          <button type="button" id="submit_mobile" class="btn btn-default" >Submit</button>
+          <button type="button" id="submit_otp" class="btn btn-default"  style="display: none">Submit OTP</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+    .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+{##}
+{#<style>#}
+{#    .modal {#}
+{#        top: 20% !important;#}
+{#        display: block !important;#}
+{#    }#}
+{#    .modal-dialog{#}
+{#        width: fit-content !important;#}
+{#    }#}
+{##}
+{#</style>#}
+
+
+<script>
+
+
+
+ var firebaseConfig = {
+    apiKey: "AIzaSyC7Dw_cb5GyYQHhJlP2LRpw0gKQUIbTwy4",
+    authDomain: "cardmaker-fe054.firebaseapp.com",
+    databaseURL: "https://cardmaker-fe054.firebaseio.com",
+    projectId: "cardmaker-fe054",
+    storageBucket: "cardmaker-fe054.appspot.com",
+    messagingSenderId: "1087015971680",
+    appId: "1:1087015971680:web:5f965eb0b8b7122e9b4c05",
+    measurementId: "G-B78P1JBLW2"
+  };
+
+  if (!firebase.apps.length) {
+ // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  console.log(firebase.auth ());
+  firebase.analytics();
+}
+  firebase.auth().useDeviceLanguage();
+  console.log(firebase);
+
+
+$(function () {
+    $('#submit_mobile').on('click', function () {
+var mobile_number = document.getElementById("mobile_number");
+var dialcode = '+'+document.getElementById("dialcode").value;
+console.log(dialcode);
+var phoneno = /^\d{10}$/;
+if (dialcode === 'nil') {
+           console.log('d');
+          document.getElementById("checkdiv").innerHTML = "Please select Your Country";
+      }
+ else if(!mobile_number.checkValidity() )  {
+      console.log('dm');
+    document.getElementById("checkdiv").innerHTML = mobile_number.validationMessage;
+
+  }
+  else if(mobile_number.value.match(phoneno))
+  {
+var mobile_no = document.getElementById("mobile_number").value;
+$(".loader").css('display','block');
+
+
+ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('mobile_number', {
+  'size': 'invisible',
+  'callback': function(response) {
+    // reCAPTCHA solved, allow signInWithPhoneNumber.
+      grecaptcha.reset(window.recaptchaWidgetId);
+    onSignInSubmit();
+  }
+});
+var phoneNumber = dialcode+document.getElementById("mobile_number").value;
+{#alert(phoneNumber);#}
+console.log(phoneNumber);
+var appVerifier = window.recaptchaVerifier;
+console.log(appVerifier);
+
+firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+    .then(function (confirmationResult) {
+      // SMS sent. Prompt user to type the code from the message, then sign the
+         console.log('code sent');
+         console.log(confirmationResult);
+         $("#div_mobile").css('display','none');
+         $("#label_mobile").css('display','none');
+         $("#div_otp").css('display','block');
+         $("#submit_mobile").css('display','none');
+         $("#submit_otp").css('display','block');
+      // user in with confirmationResult.confirm(code).
+      window.confirmationResult = confirmationResult;
+      $(".loader").css('display','none');
+    }).catch(function (error) {
+        $(".loader").css('display','none');
+      // Error; SMS not sent
+        document.getElementById("checkdiv").innerHTML = "Code not sent please check Number or Try again after sometime";
+
+      console.log('code not sent');
+      console.log(error);
+    });
+  $("#checkdiv").empty();
+
+
+
+
+        {#$('#apndloader').append('<div class="loader"></div>');#}
+
+ var user = "{{user}}";
+        let mobile_number  = document.getElementById('mobile_number').value;
+        let csrftoken = "{{ csrf_token }}";
+
+        // var Status = $(this).val();
+
+  }
+    else{
+        document.getElementById("checkdiv").innerHTML = "Please enter correct mobile number";
+  }
+
+    });
+});
+
+$(function () {
+    $('#submit_otp').on('click', function () {
+        $("#otp_checkdiv").html("");
+        var code = document.getElementById('mobile_otp').value;
+        var dialcode = document.getElementById("dialcode").value;
+        var mobile_number = document.getElementById('mobile_number').value;
+        {#alert(code);#}
+        if (code == '' )
+        {
+            {#alert('not submitted');#}
+            $("#otp_checkdiv").html("Please Enter correct OTP number");
+        }
+        else {
+            $(".loader").css('display','block');
+            confirmationResult.confirm(code).then(function (result) {
+                // User signed in successfully.
+                $(".loader").css('display', 'none');
+                $("#otp_checkdiv").html("");
+                var user = result.user;
+                console.log('verification success :' + user);
+                var data = {'mobile_number': mobile_number, 'code': code}
+                var status = 200;
+
+                $.post("{% url 'users:register' %}",
+                    {
+                        mobile_number: mobile_number,
+                        code: code,
+                        dialcode: dialcode
+                    },
+                    function (data) {
+                        location.reload();
+                        {#alert("Data: " + data );#}
+                    });
+                console.log('hello');
+
+                $.ajax({
+                    url: '{% url 'users:register' %}',
+                    type: 'POST',
+                    data: {
+                        mobile_number: mobile_number,
+                        code: code
+                    },
+                    headers: {
+                        // 'Content-type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    dataType: 'json',
+
+                    success: function (data) {
+                        $(".loader").css('display', 'none');
+                        // alert(data.data)
+                        var myStatus = data.status;
+
+                        if (myStatus == 200) {
+                            // alert('done');
+                            window.location = "/";
+
+                            // window.location = "/logoutview/";
+                        }
+                        if (myStatus == 201) {
+                            alert("please check amount and username")
+                        }
+
+
+                    }
+                });
+                // ...
+            }).catch(function (error) {
+                $(".loader").css('display', 'none');
+                $("#otp_checkdiv").html("Please Enter correct OTP number");
+                {#document.getElementById("checkdiv").innerHTML = "Please Enter correct OTP";#}
+            });
+        }
+    });
+});
+
+</script>

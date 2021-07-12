@@ -1,0 +1,294 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <style>
+        body{
+            {#background: url('/media/{{ btemplate_image }}') no-repeat;#}
+            {#background-size: cover;#}
+        }
+   </style>
+
+</head>
+<body style="">
+{#<img src="media/media/biodata/templates/icon/biodata_template_1.jpeg" width="200">#}
+{#<img src="{% static 'wed_biodata.png' %}" width="200">#}
+<div class="main_content" style="width: 27cm;height:36.95cm;color: #000000;">
+      <div class="column" style="float: right;width: 28%;">
+          <div style="height: 400px">
+              {% if biodata_instance.image is not None and  biodata_instance.image != "" %}
+              <img src="/media/{{ biodata_instance.image  }}" width="240px"height="290px" style="margin-top: 30px;margin-left: 19px">
+              {% endif %}
+          </div>
+      </div>
+      <div class="column" style="float: left;width: 68%;margin: 2%">
+          <div class="title_name" style="text-align:center;font-size: 50px;display: flex;justify-content: center;align-items: center;word-wrap: break-word;word-break: break-word">
+              {{ biodata_instance.biodata}} Bio-Data</div>
+          {% if biodata_instance.personal_details == '0' %}
+          {% else %}
+              <div class="column" style="margin-top:30px;float:left;width: 100%;height: fit-content;padding-left: 30px;">
+                  {#          <div style="font-size: 26px;margin-bottom: 10px;"class="title_header">{{ template_language.personal }} {{ template_language.information }} </div>#}
+                  {% if biodata_instance.first_name == 'none' or biodata_instance.first_name == '' or biodata_instance.first_name == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.name}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.first_name|capfirst }} {{ biodata_instance.last_name|capfirst }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.date_of_birth == 'none' or biodata_instance.date_of_birth == '' or biodata_instance.date_of_birth == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.date_of_birth}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.date_of_birth }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.birth_of_time == 'none' or biodata_instance.birth_of_time == '' or biodata_instance.birth_of_time == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.time_of_birth}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.birth_of_time }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.birth_of_place == 'none' or biodata_instance.birth_of_place == '' or biodata_instance.birth_of_place == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.place_of_birth}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.birth_of_place }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.height == 'none' or biodata_instance.height == '' or biodata_instance.height == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.height}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.height }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.complexion == 'none' or biodata_instance.complexion == '' or biodata_instance.complexion == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.complexion}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.complexion }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.personality == 'none' or biodata_instance.personality == '' or biodata_instance.personality == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.personality}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.personality }}</div>
+                      </div>
+                  {% endif %}
+
+                  {% if biodata_instance.caste is None or biodata_instance.caste == '' or biodata_instance.caste == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.caste}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.caste }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.gotra is None or biodata_instance.gotra == '' or biodata_instance.gotra == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.gotra}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.gotra }}</div>
+                      </div>
+                  {% endif %}
+
+                  {% if biodata_instance.zodiac is None or biodata_instance.zodiac == '' or biodata_instance.zodiac == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.zodiac}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.zodiac }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.religion is None or biodata_instance.religion == '' or biodata_instance.religion == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.religion}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.religion }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.language is None or biodata_instance.language == '' or biodata_instance.language == 'undefined'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.language}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.language }}</div>
+                      </div>
+                  {% endif %}
+                  {% if biodata_instance.diet == 'none' or biodata_instance.diet == '' or biodata_instance.diet == '0'%}
+                  {% else %}
+                      <div style="width: 100%;float: left">
+                          <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.diet}}</label></div>
+                          <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.diet }}</div>
+                      </div>
+                  {% endif %}
+              </div>
+          {% endif %}
+      </div>
+    <div class="row" style="margin: 50px;">
+
+    {% if biodata_instance.family_details == '0' %}
+    {% else %}
+      <div class="column" style="margin-top:0px;float:left;width: 100%;height: fit-content;">
+{#          <div style="font-size: 26px;margin-bottom: 10px;"class="title_header">{{ template_language.family }} {{ template_language.detail }}</div>#}
+          <div style="width: 100%;">
+              {% if biodata_instance.father_name is None or biodata_instance.father_name == '' or biodata_instance.father_name == 'undefined'%}
+              {% else %}
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.father_name}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.father_name }}</div>
+              </div>
+              {% endif %}
+              {% if biodata_instance.father_occupation is None or biodata_instance.father_occupation == '' or biodata_instance.father_occupation == 'undefined'%}
+              {% else %}
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.father_occupation}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.father_occupation }}</div>
+              </div>
+              {% endif %}
+              {% if biodata_instance.mother_name is None or biodata_instance.mother_name == '' or biodata_instance.mother_name == 'undefined'%}
+              {% else %}
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.mother_name}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.mother_name }}</div>
+              </div>
+               {% endif %}
+              {% if biodata_instance.mother_occupation is None or biodata_instance.mother_occupation == '' or biodata_instance.mother_occupation == 'undefined'%}
+              {% else %}
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.mother_occupation}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.mother_occupation }}</div>
+              </div>
+              {% endif %}
+              {% if biodata_instance.brother_name is None or biodata_instance.brother_name == '' or biodata_instance.brother_name == 'undefined'%}
+              {% else %}
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.brother_name}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.brother_name }}</div>
+              </div>
+              {% endif %}
+              {% if biodata_instance.sister_name is None or biodata_instance.sister_name == '' or biodata_instance.sister_name == 'undefined'%}
+              {% else %}
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.sister_name}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.sister_name }}</div>
+              </div>
+              {% endif %}
+          </div>
+      </div>
+    {% endif %}
+    {% if biodata_instance.qualification is None or biodata_instance.qualification == '' or biodata_instance.qualification == 'undefined' %}
+    {% else %}
+      <div class="column" style="margin-top:0px;float:left;width: 100%;height: fit-content;">
+{#          <div style="font-size: 26px;margin-bottom: 10px;"class="title_header">{{ template_language.education }}</div>#}
+          <div style="width: 100%;">
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.highest_qualification}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.qualification }}</div>
+              </div>
+              {% if biodata_instance.institute is None or biodata_instance.institute == '' or biodata_instance.institute == 'undefined' %}
+              {% else %}
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.institute}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.institute }}</div>
+              </div>
+              {% endif %}
+          </div>
+      </div>
+    {% endif %}
+    {% if biodata_instance.contact_details == '0' %}
+    {% else %}
+      <div class="column" style="margin-top:0px;float:left;width: 100%;height: fit-content;">
+{#          <div style="font-size: 26px;margin-bottom: 10px;"class="title_header">{{ template_language.contact }} {{ template_language.detail }}</div>#}
+          <div style="width: 100%;">
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.address}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">
+                       {% if biodata_instance.home_city == 'none' or biodata_instance.home_city == '' or biodata_instance.home_city == 'undefined' %}{% else %}{{ biodata_instance.home_city }},{% endif %}
+                       {% if biodata_instance.home_state == 'none' or biodata_instance.home_state == '' or biodata_instance.home_state == 'undefined' %}{% else %}{{ biodata_instance.home_state }},{% endif %}
+                       {% if biodata_instance.home_country == 'none' or biodata_instance.home_country == '' or biodata_instance.home_country == 'undefined' %}{% else %}{{ biodata_instance.home_country }} </div>{% endif %}
+              </div>
+              {% if biodata_instance.contact_email is None or biodata_instance.contact_email == '' or biodata_instance.contact_email == 'undefined' %}
+              {% else %}
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.email}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.contact_email }}</div>
+              </div>
+              {% endif %}
+              {% if biodata_instance.contact_mobile is None or biodata_instance.contact_mobile == '' or biodata_instance.contact_mobile == 'undefined' %}
+              {% else %}
+              <div style="width: 100%;float: left">
+                  <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.mobile}}</label></div>
+                  <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ biodata_instance.contact_mobile }}</div>
+              </div>
+              {% endif %}
+          </div>
+      </div>
+    {% endif %}
+    {% if biodata_instance.myself_partener_details == '0' %}
+    {% else %}
+      <div id="other_details" class="column">
+{#          <div style="font-size: 26px;margin-bottom: 10px;" class="myself_main_div">{{ template_language.about_myself}} {{ template_language.word_and}} {{ template_language.partner}} {{ template_language.preference}}</div>#}
+          <div style="width: 100%;" class="myself_main_sub_div">
+              {% if biodata_instance.about_myself is None or biodata_instance.about_myself == '' or biodata_instance.about_myself == 'undefined' %}
+              {% else %}
+              {% if biodata_instance.partner_preference is None or biodata_instance.partner_preference == '' or biodata_instance.partner_preference == 'undefined' %}<div style="width: 96%;float: left;font-size: 20px;">
+              {% else %}<div style="width: 48%;float: left;">{% endif %}
+                  <div style="width: 100%;float:left;margin-bottom: 8px;" class="myself_pref_div"><label class="myself_pref">{{ template_language.about_myself}}</label></div>
+                  <div style="width: 100%;float:right;margin-bottom: 8px;" class="">{{ biodata_instance.about_myself }}</div>
+              </div>
+                  <div style="width: 4%;text-align: center;float: left"><div class="myself_border"></div></div>
+              {% endif %}
+              {% if biodata_instance.partner_preference is None or biodata_instance.partner_preference == '' or biodata_instance.partner_preference == 'undefined' %}
+              {% else %}
+              {% if biodata_instance.about_myself is None or biodata_instance.about_myself == '' or biodata_instance.about_myself == 'undefined' %}<div style="width: 96%;float: left;font-size: 20px;">
+              {% else %}<div style="width: 46%;float: left;">{% endif %}
+                  <div style="width: 100%;float:left;margin-bottom: 8px;"class="myself_pref_div"><label class="myself_pref">{{ template_language.partner_preference}}</label></div>
+                  <div style="width: 100%;float:right;margin-bottom: 8px;" class="">{{ biodata_instance.partner_preference }}</div>
+              </div>
+              {% endif %}
+          </div>
+      </div>
+    {% endif %}
+
+</div>
+</div>
+</body>
+</html>
+<style>
+#other_details{
+    margin-top:28px;float:left;  width: 100%;   height: fit-content;  color: #000000;
+    {#background-image: linear-gradient(#fffe7a, #f3f3a2, #f3f3a2, #f3f3a2, #f3f3a2, #fffe7a);#}
+}
+    label{
+        color: #000000;
+        font-size: 20px;
+    }
+    .label_value{
+        color: #000000;
+        font-size: 18px;
+
+    }
+    .myself_pref{
+        color: black !important;
+        font-weight: bold;
+    }
+    .myself_main_div{
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+    .myself_main_sub_div{
+        margin-left: 0px;
+    }
+    .myself_border{
+        border-left: 6px solid #ffffff;min-height: 1px
+    }
+    .title_header{
+        color: #000000;
+    }
+    .title_name{
+        color: #000000;
+    }
+</style>

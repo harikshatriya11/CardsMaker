@@ -15,9 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+
+from CardsMaker import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('biodata/', include('biodata.urls')),
-    path('users/', include('users.urls')),
-]
+    path('engagement_cards/', include('engagement_cards.urls')),
+    path('wedding_cards/', include('wedding_cards.urls')),
+    path('resume/', include('resume.urls')),
+    path('bussiness_cards/', include('bussiness_cards.urls')),
+    path('latterhad/', include('latter_had.urls')),
+    path('', include('users.urls')),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

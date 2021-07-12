@@ -1,0 +1,110 @@
+{% load static %}
+{% include 'home/base.html' %}
+<body>
+{% include 'home/side_nav_bar.html' %}
+{% include 'home/register.html' %}
+<h6>Wedding Biodata</h6>
+
+<div class="container">
+    <ul class="nav nav-tabs">
+
+        <li class="active"><a href="#home" class="active show">Created Cards</a></li>
+        <li style="padding-left: 20px"><a href="#menu1">Templates</a></li>
+        {#        <li><a href="#menu2">Menu 2</a></li>#}
+        {#        <li><a href="#menu3">Menu 3</a></li>#}
+    </ul>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active show">
+            <div class="biodata" style="float: left;width: 100%;border-style: none">
+                <div class="biodata_purchased" style="border-style: none;background: none">
+                    <div><p style="font-size: x-large">PDF</p></div>
+                    {% for purchased in biodata_purchased %}
+                        <div style="background: #818896;margin: 1%;height: 27px; "> {{ purchased.first_name|add:" "|add:purchased.last_name|truncatechars:25 }}
+                            <div style="float: right">
+                                <a href="{% url 'biodata:biodata_Update_form'  purchased.id   %}"><button style="margin-right:2px ">Edit</button></a>
+                                <a href="{% url 'biodata:get_wk_pdf'   %}?biodata_id={{ purchased.id }}&content_type=download"><button style="">Download</button></a>
+                            </div>
+                        </div><br>
+                    {% endfor %}
+                </div>
+                <div class="biodata_drafs" style="border-style:none;background: none" >
+                    <div><p style="font-size: x-large">Drafts</p></div>
+
+                    {% for drafts in biodata_drafts %}
+                        <a href="{% url 'biodata:biodata_Update_form'  drafts.id   %}"><label  style="background: #818896;margin: 1%;width: 99%;color: #1e2229;cursor: pointer;text-align: center"> {{ drafts.first_name|add:" "|add:drafts.last_name|truncatechars:20 }} </label></a>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <div class="templates" style="float: left;width: 100%;border-style: none;margin-left: 1%">
+                <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
+                {% for biodata_image in biodata_templates %}
+                    <a href="{% url 'biodata:biodata_form'  biodata_image.id   %}" style="margin: 3%"><img src="/media/{{ biodata_image.template_image }}"width="40%"height="15%"></a>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $(".nav-tabs a").click(function(){
+            $(this).tab('show');
+        });
+    });
+</script>
+<style>
+    .container{
+        display: none;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .container {
+            display: block;
+        }
+        .main_desktop{
+            display: none;
+        }
+    }
+    img{
+        margin-bottom: 6%;
+    }
+
+</style>
+<div class="main_desktop"style="width: 100%">
+    <div class="biodata" style="float: left;width: 20%;border-style: none">
+         <div class="biodata_purchased" style="border-style: none;background: none">
+        <div><p style="font-size: x-large">PDF</p></div>
+            {% for purchased in biodata_purchased %}
+                <div style="background: #818896;margin: 1%;height: 27px; "> {{ purchased.first_name|add:" "|add:purchased.last_name|truncatechars:25 }}
+                <div style="float: right">
+                    <a href="{% url 'biodata:biodata_Update_form'  purchased.id   %}"><button style="margin-right:2px ">Edit</button></a>
+                    <a href="{% url 'biodata:get_wk_pdf'   %}?biodata_id={{ purchased.id }}&content_type=download"><button style="">Download</button></a>
+                </div>
+                </div><br>
+            {% endfor %}
+        </div>
+        <div class="biodata_drafs" style="border-style:none;background: none" >
+        <div><p style="font-size: x-large">Drafts</p></div>
+
+            {% for drafts in biodata_drafts %}
+                <a href="{% url 'biodata:biodata_Update_form'  drafts.id   %}"><label  style="background: #818896;margin: 1%;width: 45%;color: #1e2229;cursor: pointer"> {{ drafts.first_name|add:" "|add:drafts.last_name|truncatechars:20 }} </label></a>
+            {% endfor %}
+
+        </div>
+    </div>
+    <div class="border" style="border-style: solid;height: 100%;float: left;margin-left: 1%"></div>
+    <div class="templates" style="float: left;width: 77%;border-style: none;margin-left: 1%">
+    <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
+           {% for biodata_image in biodata_templates %}
+               <a href="{% url 'biodata:biodata_form'  biodata_image.id   %}" style="margin: 3%"><img src="/media/{{ biodata_image.template_image }}"width="10%"height="15%"></a>
+           {% endfor %}
+    </div>
+
+</div>
+</body>
+</html>

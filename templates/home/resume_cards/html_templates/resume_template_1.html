@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <style>
+        body{
+            {#background: url('/media/{{ resume_card_instance.b_image }}') no-repeat;#}
+            {#background-size: 26.5cm auto;#}
+            background: #ffffff;
+            margin: unset !important;
+        }
+   </style>
+
+</head>
+<body style="">
+{#<img src="media/media/biodata/templates/icon/biodata_template_1.jpeg" width="200">#}
+{#<img src="{% static 'wed_biodata.png' %}" width="200">#}
+<div class="main_content" >
+<div class="left">
+    <div class="left1"><p class="name">{{ resume_card_instance.name|capfirst }}</p></div>
+    <div class="left2" >
+        <div class="img_div" align="center"><img style="" src="/media/{{ resume_card_instance.image }}"></div>
+    </div>
+    <div class="left3"></div>
+</div>
+<div class="right">
+        <hr>
+    <div class="education">
+        <header>{{ template_language.education|capfirst }}</header>
+        <div>({{ resume_card_instance.pass_out_year }}) {{ resume_card_instance.institute }}</div>
+    </div>
+</div>
+</div>
+<style>
+    .main_content {display: flex;width: 100%;height: 100%}
+    header{font-size: 30px;font-weight: bold;}
+
+    .left {width: 40%;background: #000000;}
+    .left1 {width:100%;height: 200px;overflow: hidden;background: #000000;color: #ffffff;font-size:25px;}
+    .left2 {width:100%;height: 600px;overflow: hidden;background: gray;color: #000000;display: block}
+    .left3 {width:100%;height: 603px;overflow: hidden;background: #000000;;color: #ffffff}
+    .name {width: 100%;padding: 13%;padding-left: 0 !important;text-align: -webkit-center;}
+    img {width:200px}
+    .img_div {margin-top: 50%;}
+
+    .right {width: 60%;background:darkgrey ;color: #000000; }
+    hr { margin-top: 40%; }
+    {#.div_line {border-left: 3px solid black;height: 8%;position: absolute;left: 90%;margin-left: -3px;top: 0;}#}
+    {#.div_square {margin-right:0;border-right: 3px solid black;background: red;height: 8%;position: absolute;left: 90%;margin-left: -3px;top: 0;}#}
+</style>
+{% if resume_card_instance.resume_card_status == 1 %}
+{#    <div class="watermark1">#}
+{#    Kragh Cards Maker#}
+{#    </div>#}
+{#    <div class="watermark1">#}
+{#    Kragh Cards Maker#}
+{#    </div>#}
+{#    <div class="watermark1">#}
+{#    Kragh Cards Maker#}
+{#    </div>#}
+{% endif %}
+</body>
+</html>
+<style>
+
+    {% if resume_card_instance.resume_card_status == 1 %}
+        .watermark1{
+            content: "DRAFT";
+            color: grey;
+            font-size: 120px;
+            /* text-align: center; */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            {#transform: translate(-80%, -80%);#}
+            {#opacity:0.1#}
+        }
+    {% endif %}
+</style>

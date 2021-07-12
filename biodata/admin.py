@@ -20,3 +20,4 @@ class OtherDetailAdmin(admin.ModelAdmin):
 admin.site.register(BioData, OtherDetailAdmin)
 admin.site.register(LanguageName)
 admin.site.register(LabelName)
+admin.site.register(TemplateData)

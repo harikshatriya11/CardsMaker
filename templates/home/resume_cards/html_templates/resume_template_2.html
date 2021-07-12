@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <style>
+        body{
+        {#background: url('/media/{{ btemplate_image }}') no-repeat;#}
+        {#background-size: cover;#}
+        }
+    </style>
+
+</head>
+<body style="">
+{#<img src="media/media/resume/templates/icon/resume_template_1.jpeg" width="200">#}
+{#<img src="{% static 'wed_resume.png' %}" width="200">#}
+<div class="main_content" style="width: 27cm;height:36.95cm;color: #000000;">
+    <div class="column" style="float: right;width: 28%;">
+        <div style="height: 400px">
+            {% if resume_card_instance.image is not None and  resume_card_instance.image != "" %}
+                <img src="/media/{{ resume_card_instance.image  }}" width="240px"height="290px" style="margin-top: 30px;margin-left: 19px">
+            {% endif %}
+        </div>
+    </div>
+    <div class="column" style="float: left;width: 68%;margin: 2%">
+        <div class="title_name" style="text-align:center;font-size: 50px;display: flex;justify-content: center;align-items: center;word-wrap: break-word;word-break: break-word">
+            {{ template_language.resume}}</div>
+        {% if resume_card_instance.personal_details == '0' %}
+        {% else %}
+            <div class="column" style="margin-top:30px;float:left;width: 100%;height: fit-content;padding-left: 30px;">
+                {#          <div style="font-size: 26px;margin-bottom: 10px;"class="title_header">{{ template_language.personal }} {{ template_language.information }} </div>#}
+                {% if resume_card_instance.name == 'none' or resume_card_instance.name == '' or resume_card_instance.name == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.name|capfirst}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.name|capfirst }} {{ resume_card_instance.last_name|capfirst }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.date_of_birth == 'none' or resume_card_instance.date_of_birth == '' or resume_card_instance.date_of_birth == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.date_of_birth|capfirst}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.date_of_birth|capfirst }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.father == 'none' or resume_card_instance.father == '' or resume_card_instance.father == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.father|capfirst}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.father|capfirst }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.mother == 'none' or resume_card_instance.mother == '' or resume_card_instance.mother == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.mother}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.mother }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.height == 'none' or resume_card_instance.address == '' or resume_card_instance.address == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.address}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.address }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.contact == 'none' or resume_card_instance.contact == '' or resume_card_instance.contact == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.contact}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.contact }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.gmail == 'none' or resume_card_instance.gmail == '' or resume_card_instance.gmail == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.gmail}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.gmail }}</div>
+                    </div>
+                {% endif %}
+
+                {% if resume_card_instance.linkedin is None or resume_card_instance.linkedin == '' or resume_card_instance.linkedin == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.linkedin}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.linkedin }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.social_account is None or resume_card_instance.social_account == '' or resume_card_instance.social_account == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.social_account}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.social_account }}</div>
+                    </div>
+                {% endif %}
+
+                {% if resume_card_instance.profession is None or resume_card_instance.profession == '' or resume_card_instance.profession == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.profession}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.profession }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.about_profession is None or resume_card_instance.about_profession == '' or resume_card_instance.about_profession == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.about_profession}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.about_profession }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.skills is None or resume_card_instance.skills == '' or resume_card_instance.skills == 'undefined'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.skills|capfirst}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.skills|capfirst }}</div>
+                    </div>
+                {% endif %}
+                {% if resume_card_instance.highest_qualification == 'none' or resume_card_instance.highest_qualification == '' or resume_card_instance.highest_qualification == '0'%}
+                {% else %}
+                    <div class="label_value_container" style="width: 100%;float: left">
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.highest_qualification|capfirst}}</label></div>
+                        <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.highest_qualification }}</div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="row" style="margin: 50px;">
+
+        {% if resume_card_instance.family_details == '0' %}
+        {% else %}
+            <div class="column" style="margin-top:0px;float:left;width: 100%;height: fit-content;">
+                {#          <div style="font-size: 26px;margin-bottom: 10px;"class="title_header">{{ template_language.family }} {{ template_language.detail }}</div>#}
+                <div style="width: 100%;">
+                    {% if resume_card_instance.institute is None or resume_card_instance.institute == '' or resume_card_instance.institute == 'undefined'%}
+                    {% else %}
+                        <div class="label_value_container" style="width: 100%;float: left">
+                            <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.institute|capfirst}}</label></div>
+                            <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.institute|capfirst }}</div>
+                        </div>
+                    {% endif %}
+                    {% if resume_card_instance.pass_out_year is None or resume_card_instance.pass_out_year == '' or resume_card_instance.pass_out_year == 'undefined'%}
+                    {% else %}
+                        <div class="label_value_container" style="width: 100%;float: left">
+                            <div style="width: 30%;float:left;margin-bottom: 8px;"><label>{{ template_language.pass_out_year}}</label></div>
+                            <div style="width: 62%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.pass_out_year }}</div>
+                        </div>
+                    {% endif %}
+
+
+
+                    {% if resume_card_instance.work_experience1 is None or resume_card_instance.work_experience1 == '' or resume_card_instance.work_experience1 == 'undefined'%}
+                    {% else %}
+                        <div class="header" style="width: 100%;float:left;margin-bottom: 8px;"><label>{{ template_language.work_experience}}</label></div>
+                        <div style="width: 100%;float:right;margin-bottom: 8px;" class="label_value">
+                            - {{ resume_card_instance.work_experience1 }}
+                        </div>
+                        <div style="width: 100%;float:right;margin-bottom: 8px;" class="label_value">
+                            - {{ resume_card_instance.work_experience2 }}
+                        </div>
+                        <div style="width: 100%;float:right;margin-bottom: 8px;" class="label_value">
+                            - {{ resume_card_instance.work_experience3 }}
+                        </div>
+                    {% endif %}
+
+                </div>
+            <div class="label_value_container" style="width: 100%; ">
+                <div style="width: 100%;float:left;margin-bottom: 8px;margin-top: 50px !important;" class="label_value">
+                    {{ template_language.declaration }}
+                </div>
+                <div style="width: 50%;float:left;margin-bottom: 8px;margin-top: 30px !important;" class="label_value">
+                    {{ template_language.date|capfirst }}:<br>
+                    {{ template_language.place }}:
+                </div>
+                <div style="width: 50%;float:right;margin-bottom: 8px;margin-top: 30px !important;" class="label_value">
+                    <br>{{ template_language.name_and_sign }}
+                </div>
+            </div>
+
+            </div>
+        {% endif %}
+
+        </div>
+        </div>
+
+</body>
+</html>
+<style>
+    .label_value_container{
+        margin-bottom: 5px;
+    }
+    #other_details{
+        margin-top:28px;float:left;  width: 100%;   height: fit-content;  color: #000000;
+    {#background-image: linear-gradient(#fffe7a, #f3f3a2, #f3f3a2, #f3f3a2, #f3f3a2, #fffe7a);#}
+    }
+    label{
+        color: #000000;
+        font-size: 22px;
+    }
+    .label_value{
+        color: #000000;
+        font-size: 25px;
+
+    }
+    .myself_pref{
+        color: black !important;
+        font-weight: bold;
+    }
+    .myself_main_div{
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+    .myself_main_sub_div{
+        margin-left: 0px;
+    }
+    .myself_border{
+        border-left: 6px solid #ffffff;min-height: 1px
+    }
+    .title_header{
+        color: #000000;
+    }
+    .title_name{
+        color: #000000;
+    }
+    .header{
+        font-size: 30px !important;
+        font-weight: bold;
+        margin-top: 3%;
+    }
+</style>

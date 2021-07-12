@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from django.template.context_processors import static
+from django_countries import settings
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -25,7 +28,7 @@ SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost"]
 
 
 # Application definition
@@ -40,10 +43,17 @@ INSTALLED_APPS = [
     'languages',
     'users',
     'biodata',
-    'marriage_cards',
+    'wedding_cards',
+    'engagement_cards',
     'bussiness_cards',
     'country_dialcode',
-
+    'wkhtmltopdf',
+    'cities_light',
+    'mathfilters',
+    'resume',
+    'latter_had',
+    'fontawesome-free',
+    'qr_code',
 ]
 
 MIDDLEWARE = [
@@ -86,13 +96,26 @@ WSGI_APPLICATION = 'CardsMaker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+TESTING_MODE = True
+if TESTING_MODE == True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': "postgresDB",
+            'USER': 'Yaas',
+            'PASSWORD': 'root',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        }
+    }
+
 
 
 # Password validation
@@ -132,21 +155,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
-
-# Extra lookup directories for collectstatic to find static files
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
-
-#  Add configuration for static files storage using whitenoise
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-
 MEDIA_URL = '/media/'
+STATIC_ROOT = 'static'
+# Extra lookup directories for collectstatic to find static files
+STATIC_URL = '/assets/'
+MEDIA_URL = '/media/'
+# Extra lookup directories for collectstatic to find static files
+STATICFILES_DIRS = (os.path.join(str(BASE_DIR)+"/static/"),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

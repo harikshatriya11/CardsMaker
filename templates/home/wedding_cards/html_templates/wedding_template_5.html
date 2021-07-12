@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200&display=swap" rel="stylesheet">
+    {#    <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=pdfCalligraph">#}
+
+</head>
+<body style="">
+
+{#<img src="media/media/biodata/templates/icon/biodata_template_1.jpeg" width="200">#}
+{#<img src="{% static 'wed_biodata.png' %}" width="200">#}
+
+<div class="main_content">
+    <div class="top_content_div">
+        <div class="top_content1">
+            {% if template_image.image1 != '' and template_image.image1 is not none %}
+                <img src="/media/{{ template_image.image1 }}" width="50%">
+            {% endif %}
+        </div>
+        <div class="top_content2">
+            <div class="quotes" style="text-align: center;color: indianred">{{ template_language.quotes1 }}</div>
+            <div class="quotes" style="text-align: center;word-wrap: break-word;margin: auto;color: #efef89">{{ template_language.quotes2 }}</div>
+            <div class="quotes" style="text-align: center;word-wrap: break-word;margin: auto;color: #efef89">{{ template_language.quotes3 }}</div>
+        </div>
+        <div class="top_content3">
+            {% if template_image.image2 != '' and template_image.image2 is not none %}
+                <img src="/media/{{ template_image.image2 }}" width="50%">
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div id="couple" >
+        <div class="couple_name_div">
+            <label style="font-size: 20px">{{ template_language.mr }}</label><p class="couple_name" id="groom_first_name"> {{ wedding_card_instance.groom_first_name|capfirst }}</p><br>
+            <p class="parents"> {{ template_language.son_of }} {{ wedding_card_instance.groom_father|capfirst }} {{ template_language.and|capfirst }} {{ wedding_card_instance.groom_mother|capfirst }}</p><br>
+        </div>
+        <div class="couple_name_div_and">
+            <p id="symbol_word_and">{{ template_language.with }}</p>
+        </div>
+        <div class="couple_name_div" >
+            <label style="font-size: 20px">{{ template_language.ms }}</label><p class="couple_name"> {{ wedding_card_instance.bride_first_name|capfirst }}</p><br>
+            <p class="parents">{{ template_language.daughter_of }} {{ wedding_card_instance.bride_father|capfirst }} {{ template_language.and|capfirst }} {{ wedding_card_instance.bride_mother|capfirst }}</p><br>
+        </div>
+        {% if template_image.image15 != '' and template_image.image15 is not none %}
+            <img src="/media/{{ template_image.image15 }}" width="100%" style="margin-top: -75px;">
+        {% endif %}
+    </div>
+    <div class="engagment_invite">
+        <div class="functions_div_wed" style="width: 100%">
+            {#            <div style="width: 2%;float:left">&nbsp;</div>#}
+            {% if template_image.image3 != '' and template_image.image3 is not none %}
+                <div class="function_wed" style="">
+                    <img src="/media/{{ template_image.image3 }}" width="50%">
+                </div>
+            {% endif %}
+
+            {% if wedding_card_instance.function_name2 != '' and wedding_card_instance.function_name2 != none %}
+                <div class="function_wed">
+                    <div class="function_name_wed">{{ template_language.happy }} {{ template_language.wedding }}</div>
+                    <div class="wedding_date">{{ wedding_card_instance.date_of_wedding }}</div>
+                    <div class="wedding_place">{{ wedding_card_instance.time_of_wedding }}</div>
+                </div>
+            {% endif %}
+            {% if template_image.image4 != '' and template_image.image4 is not none %}
+                <div class="function_wed">
+                    <img src="/media/{{ template_image.image4 }}" width="50%">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div id="engagment_invite">
+        {#        {{ template_language.gladly_invite_you_to_celebrate_our }}<br>#}
+        {% if wedding_card_instance.function_name1 != '' and wedding_card_instance.function_name1 != none or wedding_card_instance.function_name2 != '' and wedding_card_instance.function_name2 != none or wedding_card_instance.function_name3 != '' and wedding_card_instance.function_name3 != none or wedding_card_instance.function_name4 != '' and wedding_card_instance.function_name4 != none or wedding_card_instance.function_name5 != '' and wedding_card_instance.function_name5 != none or wedding_card_instance.function_name6 != '' and wedding_card_instance.function_name6 != none %}
+            <div class="functions_div" style="width: 100%">
+                {#            <div style="width: 2%;float:left">&nbsp;</div>#}
+                {% if wedding_card_instance.function_name1 != '' and wedding_card_instance.function_name1 != none %}
+                    <div class="function">
+                        <p class="function_name">{{ wedding_card_instance.function_name1|capfirst }}</p>
+                        <p class="function_place">{{ wedding_card_instance.function_place1|capfirst }}</p>
+                        <p class="function_date">{{ wedding_card_instance.function_date1|capfirst }}</p>
+                        <p class="function_place">{{ wedding_card_instance.function_place1|capfirst }}</p>
+                    </div>
+                {% endif %}
+                {% if wedding_card_instance.function_name2 != '' and wedding_card_instance.function_name2 != none %}
+                    <div class="function">
+                        <p class="function_name">{{ wedding_card_instance.function_name2|capfirst }}</p>
+                        <p class="function_date">{{ wedding_card_instance.function_date2|capfirst }}</p>
+                        <p class="function_place">{{ wedding_card_instance.function_place2|capfirst }}</p>
+                    </div>
+                {% endif %}
+                {% if wedding_card_instance.function_name3 != '' and wedding_card_instance.function_name3 != none %}
+                    <div class="function">
+                        <p class="function_name">{{ wedding_card_instance.function_name3|capfirst }}</p>
+                        <p class="function_date">{{ wedding_card_instance.function_date3|capfirst }}</p>
+                        <p class="function_place">{{ wedding_card_instance.function_place3|capfirst }}</p>
+                    </div>
+                {% endif %}
+
+            </div>
+            <div class="functions_div" style="width: 100%">
+                {#            <div style="width: 2%;float:left">&nbsp;</div>#}
+                {% if wedding_card_instance.function_name4 != '' and wedding_card_instance.function_name4 != none %}
+                    <div class="function">
+                        <p class="function_name">{{ wedding_card_instance.function_name4|capfirst }}</p>
+                        <p class="function_date">{{ wedding_card_instance.function_date4|capfirst }}</p>
+                        <p class="function_place">{{ wedding_card_instance.function_place4|capfirst }}</p>
+                    </div>
+                {% endif %}
+                {% if wedding_card_instance.function_name5 != '' and wedding_card_instance.function_name5 != none %}
+                    <div class="function">
+                    <p class="function_name">{{ wedding_card_instance.function_name5|capfirst }}</p>
+                    <p class="function_date">{{ wedding_card_instance.function_date5|capfirst }}</p>
+                    <p class="function_place">{{ wedding_card_instance.function_place5|capfirst }}</p>
+                {% endif %}
+                </div>
+                {% if wedding_card_instance.function_name6 != '' and wedding_card_instance.function_name6 != none %}
+                    <div class="function">
+                        <p class="function_name">{{ wedding_card_instance.function_name6|capfirst }}</p>
+                        <p class="function_date">{{ wedding_card_instance.function_date6|capfirst }}</p>
+                        <p class="function_place">{{ wedding_card_instance.function_place6|capfirst }}</p>
+                    </div>
+                {% endif %}
+
+
+            </div>
+        {% else %}
+            <div class="functions_div" style="width: 100%">
+                <div class="function" style="border: unset !important;">
+                    {% if template_image.image1 != '' and template_image.image1 is not none %}
+                        <img src="/media/{{ template_image.image1 }}" width="100%" >
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+
+        <div class="functions_div" style="width: 100%">
+            {% if template_image.image5 != '' and template_image.image5 is not none %}
+                <div class="function" style="border: unset !important;">
+                    <img src="/media/{{ template_image.image5 }}" width="50%">
+                </div>
+            {% endif %}
+            {% if wedding_card_instance.place_of_wedding != '' and wedding_card_instance.place_of_wedding != none %}
+                <div class="function" style="border: unset !important;">
+                    <div class="wedding_place" style="width: 100%;text-align-last: center;text-align: -webkit-center;">
+                        <p style="font-size: 30px;font-weight: bold;">{{ template_language.wedding }} {{ template_language.place }}</p>
+                        <div id="place_of_wedding" style="margin-top: -35px;">{{ wedding_card_instance.place_of_wedding|capfirst }}</div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if template_image.image6 != '' and template_image.image6 is not none %}
+                <div class="function" style="border: unset !important;">
+                    <img src="/media/{{ template_image.image6 }}" width="50%">
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+    <div class="relatives" style="width: 100%;">
+        <div style="width: 10%;float:left">
+            {% if template_image.image15 != '' and template_image.image15 is not none %}
+                <img src="/media/{{ template_image.image15 }}" width="100%">
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+        <div class="relatives_head" style="width: 40%;float: left">
+            <div class="relatives_head" style="font-size: 30px;margin-top: 0px;">{{ template_language.close_relatives_name }}</div>
+            <div class="relatives_name" id="place_of_wedding">{{ wedding_card_instance.close_relatives_name|capfirst }}</div>
+        </div>
+
+        <div class="relatives_head" style="width: 40%;float: left">
+            <div style="font-size: 30px;margin-top: 0px;">{{ template_language.courteous_name }}</div>
+            <div class="relatives_name" id="place_of_wedding">{{ wedding_card_instance.courteous_name|capfirst }}</div>
+        </div>
+        <div style="width: 10%;float:left">
+            {% if template_image.image15 != '' and template_image.image15 is not none %}
+                <img src="/media/{{ template_image.image15 }}" width="100%">
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+{% if wedding_card_instance.wedding_card_status == 1 %}
+    {#    <div class="watermark1">#}
+    {#        Kraagh Cards Maker#}
+    {#    </div>#}
+    {#    <div class="watermark2">#}
+    {#        Kraagh Cards Maker#}
+    {#    </div>#}
+    {#    <div class="watermark3">#}
+    {#        Kraagh Cards Maker#}
+    {#    </div>#}
+{% endif %}
+</body>
+</html>
+<style>
+    .main_content{ margin-left: 80px; margin-right: 100px;margin-top: 170px; }
+    .couple_name_div{ width: 40%;float: left;word-wrap: break-word;font-size: 70px;  }
+    .couple_name_div_and{ width: 20%;float: left;word-wrap: break-word; margin-top: 100px; }
+    .parents{ font-size: 16px; line-height: normal}
+    #engagment_invite{ }
+    #couple{ margin-top: 150px; width: 100%;line-height: 10px;font-family: 'Sofia'; margin: auto;text-align: center; }
+    .couple_name{font-size: 70px;}
+    #symbol_word_and{ font-size: 30px;text-align: center;}
+    #engagment_invite{text-align: center;width: 100%;}
+    #date_of_wedding{font-size: 20px;margin-top: -50px; }
+    .relatives{ text-align: center;text-align: -webkit-center;}
+    .relatives_name {  margin-bottom: 30px; width: 50%;}
+
+    .function_wed { margin-left: 2%;width: 30%;margin-top: 2%;place-self: center !important; align-items: center !important; }
+    .functions_div_wed {text-align: -webkit-center;display: flex;justify-content: center; }
+    .function_name_wed {font-size: 50px;font-weight: bold;}
+    .wedding_date {    margin-top: 0px; font-size: 18px;}
+    .wedding_place {   font-size: 18px;}
+
+    .function { border-radius: 5px;margin-left: 2%;width: 30%;border: 1px solid #efef89;margin-top: 2%;text-align-last: center;text-align: -webkit-center;}
+    .functions_div { display: flex;justify-content: center; }
+    .function_name {font-size: 22px;font-weight: bold;}
+
+
+    .top_content1 { width: 20%}
+    .top_content2 { width: 60%}
+    .top_content3 { width: 20%}
+    .top_content_div { display: flex;    justify-content: center; text-align: -webkit-center;}
+    body{
+        background: url('/media/{{ wedding_card_instance.b_image }}') no-repeat;
+        background-size: cover;height: 32.4cm;color: #efef89;font-family: 'Mukta', sans-serif;
+    }
+
+    {% if wedding_card_instance.wedding_card_status == 1 %}
+        .watermark1 ,.watermark2, .watermark3{color: grey;font-size: 50px;text-align: center;transform: translate(-80%, -80%);opacity:0.3;-ms-transform: rotate(315deg); /* IE 9 */-ms-transform-origin: 20% 40%; /* IE 9 */transform: rotate(315deg);transform-origin: 20% 40%;}
+        .watermark1{ margin-bottom: 40%;margin-top: -25%;margin-left: 0%}
+        .watermark2{ margin-bottom: 40%;margin-top: -25%; margin-left: 20%}
+        .watermark3{  margin-top: -25%; margin-left: 40% }
+    {% endif %}
+
+</style>

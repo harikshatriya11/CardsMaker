@@ -1,0 +1,93 @@
+{% if user.is_authenticated and not user.is_superuser%}
+
+{% else %}
+    <button style="float: right;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Register/Login</button>
+{% endif %}
+
+
+<div class="page-wrapper chiller-theme">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a href="{% url 'users:home' %}">Card Maker</a>
+        <div id="close-sidebar">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="sidebar-header">
+        <div class="user-info">
+          <span class="user-name">{{ user }}
+            <strong></strong>
+          </span>
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+{#      <div class="sidebar-search">#}
+{#        <div>#}
+{#          <div class="input-group">#}
+{#            <input type="text" class="form-control search-menu" placeholder="Search...">#}
+{#            <div class="input-group-append">#}
+{#              <span class="input-group-text">#}
+{#                <i class="fa fa-search" aria-hidden="true"></i>#}
+{#              </span>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <!-- sidebar-search  -->#}
+      <div class="sidebar-menu">
+        <ul>
+          <li><a href="{% url 'biodata:biodata_home' %}" style="color: #ffffff"><i class="fa fa-book"></i><span>Wedding-BioData Cards</span><span class="badge badge-pill badge-primary"></span></a></li>
+          <li><a href="{% url 'engagement_cards:engagement_home' %}" style="color: #ffffff"><i class="fa fa-circle-notch"></i><span>Engagement Cards</span><span class="badge badge-pill badge-primary"></span></a></li>
+          <li><a href="{% url 'wedding_cards:wedding_home' %}" style="color: #ffffff"><i class="fa fa-circle"></i><span>Wedding Cards</span><span class="badge badge-pill badge-primary"></span></a></li>
+          <li><a href="{% url 'business_cards:business_card_home' %}" style="color: #ffffff"><i class="fa fa-credit-card"></i><span>Business Cards</span><span class="badge badge-pill badge-primary"></span></a></li>
+          <li><a href="{% url 'resume:resume_home' %}" style="color: #ffffff"><i class="fa fa-id-card"></i><span>Resume</span></a></li>
+
+          <li><a href="{% url 'users:logout' %}" style="float: right;margin: 1%;"><i class="fa fa-folder"></i><span>Logout</span></a></li>
+
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+
+  </nav>
+  <!-- sidebar-wrapper  -->
+  <main class="page-content">
+    <div class="container-fluid">
+        <h2 id="web_name" style="text-align: center"><a href="{% url 'users:home' %}" style="color: #1e2229">Card Maker</a></h2>
+
+
+      <hr>
+      <div class="row">
+        <div class="form-group col-md-12">
+            <ul class="nav nav-tabs" id="sub_menu_header">
+
+                <li class="sub_menu_header"><a href="{% url 'biodata:biodata_home' %}" style="color: #1e2229">Wedding-BioData</a></li>
+                <li class="sub_menu_header"><a href="{% url 'engagement_cards:engagement_home' %}" style="color: #1e2229">Engagement</a></li>
+                <li class="sub_menu_header"><a href="{% url 'wedding_cards:wedding_home' %}" style="color: #1e2229">Wedding</a></li>
+                <li class="sub_menu_header"><a href="{% url 'business_cards:business_card_home' %}" style="color: #1e2229">Business</a></li>
+                <li class="sub_menu_header"><a href="{% url 'resume:resume_home' %}" style="color: #1e2229">Resume</a></li>
+                {#        <li><a href="#menu2">Menu 2</a></li>#}
+                {#        <li><a href="#menu3">Menu 3</a></li>#}
+            </ul>
+{#            <ul>#}
+{#                <li><a href="{% url 'biodata:biodata_home' %}" style="color: #1e2229">BioData Templates</a></li>#}
+{#                <li><a href="{% url 'biodata:biodata_home' %}" style="color: #1e2229">BioData Templates</a></li>#}
+{#                <li><a href="{% url 'biodata:biodata_home' %}" style="color: #1e2229">BioData Templates</a></li>#}
+{#                <li><a href="{% url 'biodata:biodata_home' %}" style="color: #1e2229">BioData Templates</a></li>#}
+{#                <li><a href="{% url 'biodata:biodata_home' %}" style="color: #1e2229">BioData Templates</a></li>#}
+{#            </ul>#}
+        </div>
+
+{#      </div>#}
+{#    </div>#}
+{##}
+{#  </main>#}
+{#  <!-- page-content" -->#}
+{#</div>#}
+{#<!-- page-wrapper -->#}
+{##}
+

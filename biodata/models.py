@@ -3,6 +3,7 @@ from django.utils import timezone
 import pytz
 import datetime
 
+from languages.models import Biodata
 from .choices import *
 from users.models import *
 
@@ -35,6 +36,7 @@ class LabelName(models.Model):
     gotra = models.CharField(default='', blank=True, null=True, max_length=100)
     zodiac = models.CharField(default='', blank=True, null=True, max_length=100)
     language = models.CharField(default='', blank=True, null=True, max_length=100)
+    diet = models.CharField(default='', blank=True, null=True, max_length=100)
     mother_tongue = models.CharField(default='', blank=True, null=True, max_length=100)
 
     about_myself = models.CharField(default='', blank=True, null=True, max_length=100)
@@ -42,6 +44,7 @@ class LabelName(models.Model):
 
     qualification = models.CharField(default='', blank=True, null=True, max_length=100)
     institute = models.CharField(default='', blank=True, null=True, max_length=100)
+    completion_year = models.CharField(default='', blank=True, null=True, max_length=100)
 
     father_name = models.CharField(default='', blank=True, null=True, max_length=100)
     father_occupation = models.CharField(default='', blank=True, null=True, max_length=100)
@@ -76,6 +79,24 @@ class LabelName(models.Model):
     home_country = models.CharField(default='', blank=True, null=True, max_length=100)
     contact_email = models.CharField(default='', blank=True, null=True, max_length=100)
     contact_mobile = models.CharField(default='', blank=True, null=True, max_length=100)
+
+    personal = models.CharField(default='', blank=True, null=True, max_length=100)
+    detail = models.CharField(default='', blank=True, null=True, max_length=100)
+    family = models.CharField(default='', blank=True, null=True, max_length=100)
+    education = models.CharField(default='', blank=True, null=True, max_length=100)
+    contact = models.CharField(default='', blank=True, null=True, max_length=100)
+    information = models.CharField(default='', blank=True, null=True, max_length=100)
+    mobile = models.CharField(default='', blank=True, null=True, max_length=100)
+    address = models.CharField(default='', blank=True, null=True, max_length=100)
+    about = models.CharField(default='', blank=True, null=True, max_length=100)
+    myself = models.CharField(default='', blank=True, null=True, max_length=100)
+    partner = models.CharField(default='', blank=True, null=True, max_length=100)
+    preference = models.CharField(default='', blank=True, null=True, max_length=100)
+    word_and = models.CharField(default='', blank=True, null=True, max_length=100)
+    year = models.CharField(default='', blank=True, null=True, max_length=100)
+
+
+
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     modified = models.DateTimeField(auto_now=True, null=True, blank=True)
 
@@ -86,12 +107,16 @@ class TemplateData(models.Model):
     template_name = models.CharField(default='', blank=True, null=True, max_length=100)
     template_url = models.CharField(default='', blank=True, null=True, max_length=100)
     template_price = models.PositiveIntegerField(default=0, blank=True, null=True)
+    template_image = models.ImageField(upload_to='media/biodata/templates/icon',default='')
+    template_icon_image = models.ImageField(upload_to='media/biodata/templates/icon',default='')
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     modified = models.DateTimeField(auto_now=True, null=True, blank=True)
+    def __str__(self):
+        return '{}'.format(self.template_name)
 
 class BioData(models.Model):
     biodata_user = models.ForeignKey(UserDetails, on_delete=models.CASCADE, related_name='biodata_user_details')
-    language_name = models.ForeignKey(LanguageName, on_delete=models.CASCADE, related_name='biodata_language_name')
+    language_name = models.ForeignKey(Biodata,default = 1 ,on_delete=models.CASCADE, related_name='biodata_language_name', blank=True, null=True)
     template = models.ForeignKey(TemplateData, on_delete=models.CASCADE, related_name='biodata_template', default='', blank=True, null=True)
     first_name = models.CharField(default='', blank=True, null=True, max_length=100)
     last_name = models.CharField(default='', blank=True, null=True, max_length=100)
@@ -108,11 +133,12 @@ class BioData(models.Model):
     gotra = models.CharField(default='', blank=True, null=True, max_length=100)
     zodiac = models.CharField(default='', blank=True, null=True, max_length=100)
     language = models.CharField(default='', blank=True, null=True, max_length=100)
-    diet =  models.IntegerField(choices=CHOICE_DIET, default=0)
+    diet_choice =  models.IntegerField(choices=CHOICE_DIET, default=0)
+    diet = models.CharField(default='', blank=True, null=True, max_length=100)
     mother_tongue = models.CharField(default='', blank=True, null=True, max_length=100)
 
-    about_myself = models.CharField(default='', blank=True, null=True, max_length=100)
-    partner_preference = models.CharField(default='', blank=True, null=True, max_length=100)
+    about_myself = models.CharField(default='', blank=True, null=True, max_length=500)
+    partner_preference = models.CharField(default='', blank=True, null=True, max_length=500)
 
     father_name = models.CharField(default='', blank=True, null=True, max_length=100)
     father_occupation = models.CharField(default='', blank=True, null=True, max_length=100)
@@ -120,6 +146,10 @@ class BioData(models.Model):
     mother_occupation = models.CharField(default='', blank=True, null=True, max_length=100)
     sister_name = models.CharField(default='', blank=True, null=True, max_length=100)
     brother_name = models.CharField(default='', blank=True, null=True, max_length=100)
+
+    qualification = models.CharField(default='', blank=True, null=True, max_length=100)
+    institute = models.CharField(default='', blank=True, null=True, max_length=100)
+    completion_year = models.CharField(default='', blank=True, null=True, max_length=100)
 
     designation = models.CharField(default='', blank=True, null=True, max_length=100)
     business_companyn_name = models.CharField(default='', blank=True, null=True, max_length=100)
@@ -142,7 +172,7 @@ class BioData(models.Model):
     modified = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     def __str__(self):
-        return '{}'.format(self.language_name)
+        return '{}'.format(self.first_name)
 
 class Education(models.Model):
     qualification = models.CharField(default='', blank=True, null=True, max_length=100)
@@ -172,4 +202,4 @@ class BioDataImage(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     date_updated = models.DateTimeField(auto_now=True, null=True, blank=True)
     property = models.ForeignKey(BioData, on_delete=models.CASCADE, related_name='bio_data_images')
-    image = models.ImageField()
+    image = models.ImageField(upload_to='media/biodata/templates/images',default='')

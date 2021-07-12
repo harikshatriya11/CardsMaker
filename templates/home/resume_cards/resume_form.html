@@ -1,0 +1,758 @@
+{% load static %}
+{% include 'home/base.html' %}
+<body>
+{% include 'home/side_nav_bar.html' %}
+{% include 'home/register.html' %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<link rel="stylesheet" href="{% static 'css/resume_cards/form.css' %}">
+<script>
+    $(document).ready(function(){
+        $(".flip").click(function(){
+            if ($(this).find($(".panel")).is(":hidden")) {
+                $("i").removeClass("fa-angle-up").addClass("fa-angle-down");
+                $(".panel").slideUp();
+                $(this).find($(".panel")).slideToggle("slow");
+                $("i", this).removeClass("fa-angle-down").addClass("fa-angle-up");
+            }
+
+        });
+        $(".title_header").click(function(){
+
+            $("i").removeClass("fa-angle-up").addClass("fa-angle-down");
+            $(".panel").slideUp();
+        });
+    });
+</script>
+<style>
+    .form-row{
+        margin: 2%;
+    }
+    .flip{
+        margin-top: 2%;
+        min-height: 50px;
+    }
+    .title_header{
+        color: #ffffff;
+        min-height: 20px;
+        font-size: 18px;
+    }
+    .fa-angle-down, .fa-angle-up{
+        font-size: 30px;
+    }
+    html{
+        scroll-behavior: smooth;
+    }
+
+    #loader {
+
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        width: 120px;
+        height: 120px;
+        margin: -76px 0 0 -76px;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        display: none;
+        position:fixed;
+    }
+
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Add animation to "page content" */
+    .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s
+    }
+
+    @-webkit-keyframes animatebottom {
+        from { bottom:-100px; opacity:0 }
+        to { bottom:0px; opacity:1 }
+    }
+
+    @keyframes animatebottom {
+        from{ bottom:-100px; opacity:0 }
+        to{ bottom:0; opacity:1 }
+    }
+    #myBtn {
+    {#display: none;#}
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        {#background-color: red;#}
+        color: white;
+        cursor: pointer;
+        padding: 15px;
+        border-radius: 50%;
+    }
+
+    #myBtn:hover {
+        background-color: #555;
+    }
+    .btn-primary{
+        margin-top: 10px;
+    }
+    #footer_images{
+
+        position: fixed;
+        left: 5%;
+        right: 5%;
+        background-color: unset !important;
+        background: unset !important;
+        bottom: 0;
+        box-shadow: 1px 1px 1px 1px;
+        border: 1px solid ;
+        width: 90%;
+
+
+        color: white;
+        text-align: center;
+
+    }
+    .multi-item-carousel{
+    .carousel-inner{
+    > .item{
+        transition: 500ms ease-in-out left;
+    }
+    .active{
+    &.left{
+         left:-33%;
+     }
+    &.right{
+         left:33%;
+     }
+    }
+    .next{
+        left: 33%;
+    }
+    .prev{
+        left: -33%;
+    }
+    @media all and (transform-3d), (-webkit-transform-3d) {
+        > .item{
+        // use your favourite prefixer here
+        transition: 500ms ease-in-out left;
+            transition: 500ms ease-in-out all;
+            backface-visibility: visible;
+            transform: none!important;
+        }
+    }
+    }
+    .carouse-control{
+    &.left, &.right{
+                 background-image: none;
+             }
+    }
+    }
+
+    // non-related styling:
+       body{
+           background: #333;
+           color: #ddd;
+       }
+    h1{
+        color: white;
+        font-size: 2.25em;
+        text-align: center;
+        margin-top: 1em;
+        margin-bottom: 2em;
+        text-shadow: 0px 2px 0px rgba(0, 0, 0, 1);
+    }
+    select.form-control:not([size]):not([multiple]) {
+        height: unset !important;
+    }
+    .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+        position: relative;
+        min-height: 1px;
+        padding-right: unset !important;
+        padding-left: unset !important;
+    }
+    .col-xs-4 {
+        width: 18.333333%;
+    }
+    .carousel-control{
+        width: unset !important;
+    }#iframe {
+         width: 1028px;
+         height: 1600px;
+         border: 0px;
+     }
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        #iframe {
+            zoom: 1;
+        }
+    }
+    #iframe {
+        -moz-transform: scale(0.75);
+        -moz-transform-origin: 0 0;
+        -o-transform: scale(0.75);
+        -o-transform-origin: 0 0;
+        -webkit-transform: scale(0.75);
+        -webkit-transform-origin: 0 0;
+    }
+    @media only screen and (max-width: 870px) {
+        #iframe {
+            margin-left: -24px;
+
+            -moz-transform: scale(0.34);
+            -moz-transform-origin: 0 0;
+            -o-transform: scale(0.34);
+            -o-transform-origin: 0 0;
+            -webkit-transform: scale(0.34);
+            -webkit-transform-origin: 0 0;
+        }
+        #footer_images{
+            position: fixed;
+            left: 0%;
+            right: 0%;
+            bottom: 0;
+            width: 100%;
+            color: white;
+            text-align: center;
+        }
+    }
+    select.form-control:not([size]):not([multiple]) {
+        height: unset !important;
+    }
+    .work_experience_div{
+
+        margin-top: 30px;
+        width: 100%;
+    }
+
+</style>
+<form class="needs-validation" id="{% if resume_card_id != "" or resume_card_id != none %}{{ resume_card_id }}{% else %}-1{% endif %}" style="width: 100%"   enctype="multipart/form-data" novalidate>
+    <div class="" style="background:#6c7b88;border-style:solid ;box-shadow: #464a52 ;border-radius: 12px; text-underline: #1e2229;font-weight: bold">
+        {% csrf_token %}
+        <div class="title_header" id="" style="background: #6c7b88;margin: auto;margin-left: 2%;"><b id="input_box_header1">{{ labels.resume }} {{ labels.cards }}</b>
+            {#           <i class="fa fa-angle-down" style="float:right;margin-right: 4%;"></i>#}
+        </div>
+
+        <div class="" style="background: #ffffff;" >
+            <div class="form-row" >
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_resume_card_language">{% if all_languages|length > 1 %}{{ labels.language }}{% endif %}</label>
+                    <select  id="resume_card_language" class="form-control">
+                        {% for language in all_languages %}
+                            <option value="{{ language.id }}">{{ language.language }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                {#                <div class="col-md-4 mb-3">#}
+                {#                  <label for="validationCustom04" id="l_groom_or_bride">{{ labels.i_am }}</label>#}
+                {#                    <select id="groom_or_bride" class="form-control" >#}
+                {#                        <option id="l_groom" value="0" {% if details.groom_or_bride == '0' %}selected{% endif %}>{{ labels.groom }}</option>#}
+                {#                        <option id="l_bride" value="1" {% if details.groom_or_bride == '1' %}selected{% endif %}>{{ labels.groom }}>{{ labels.bride }}</option>#}
+                {#                    </select>#}
+                {#                  <div class="valid-feedback">#}
+                {#                    Looks good!#}
+                {#                  </div>#}
+                {#                </div>#}
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_name">{{ labels.name }}</label>
+                    <input type="text" class="form-control" id="name" placeholder="{{ labels.name }}" value="{{ details.name }}"  >
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                {#                  <div class="col-md-4 mb-3">#}
+                {#                      <label for="validationCustom04" id="l_bride_last_name">{{ labels.bride_last_name }}</label>#}
+                {#                      <input type="text" class="form-control" id="bride_last_name" placeholder="{{ labels.bride_last_name }}" value=""  >#}
+                {#                      <div class="valid-feedback">#}
+                {#                          Looks good!#}
+                {#                      </div>#}
+                {#                  </div>#}
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_father">{{ labels.father }}</label>
+                    <input type="text" class="form-control" id="father" placeholder="{{ labels.father }}" value="{{ details.father }}"  >
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_mother">{{ labels.mother }}</label>
+                    <input type="text" class="form-control" id="mother" placeholder="{{ labels.mother}}" value="{{ details.mother }}"  >
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_date_of_birth">{{ labels.date_of_birth }}</label>
+                    <input type="text" class="form-control" id="date_of_birth" placeholder="{{ labels.date_of_birth }}" value="{{ details.date_of_birth }}" >
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_address">{{ labels.address }}</label>
+                    <input type="text" class="form-control" id="address" placeholder="{{ labels.address }}" value="{{ details.address }}"  >
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_contact">{{ labels.contact }}1</label>
+                    <input type="text" class="form-control" id="contact" placeholder="{{ labels.contact }}" value="{{ details.contact }}"  >
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_gmail">{{ labels.gmail }}2</label>
+                    <input type="text" class="form-control" id="gmail" placeholder="{{ labels.gmail}}2"  value="{{ details.gmail }}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Date.
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_linkedin">{{ labels.linkedin}}</label>
+                    <input type="text" class="form-control" id="linkedin" placeholder="{{ labels.linkedin}}" value="{{ details.linkedin}}"  >
+                    <div class="invalid-feedback">
+                        Please provide a valid Place.
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_social_account">{{ labels.social_account }}</label>
+                    <input type="text" class="form-control" id="social_account" placeholder="{{ labels.social_account }}" value="{{ details.social_account}}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Time.
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_profession">{{ labels.profession }}</label>
+                    <input type="text" class="form-control" id="profession" placeholder="{{ labels.profession }}" value="{{ details.profession }}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Zodiac.
+                    </div>
+                </div>
+                {#                  <div class="col-md-4 mb-3">#}
+                {#                      <label for="validationCustom04" id="l_auspicious_name">{{ labels.auspicious_name }}</label>#}
+                {#                      <input type="text" class="form-control" id="auspicious_name" placeholder="{{ labels.auspicious_name }}"  >#}
+                {#                      <div class="invalid-feedback">#}
+                {#                          Please provide a valid Zodiac.#}
+                {#                      </div>#}
+                {#                  </div>#}
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_about_profession">{{ labels.about_profession }}</label>
+                    <input type="text" class="form-control" id="about_profession" placeholder="{{ labels.about_profession }}" value="{{ details.about_profession }}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Zodiac.
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_skills">{{ labels.skills }}</label>
+                    <input type="text" class="form-control" id="skills" placeholder="{{ labels.skills }}" value="{{ details.skills }}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Zodiac.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_highest_qualification">{{ labels.highest }} {{ labels.qualification }}</label>
+                    <input type="text" class="form-control" id="highest_qualification" placeholder="{{ labels.highest }} {{ labels.qualification }}" value="{{ details.highest_qualification }}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Zodiac.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_institute">{{ labels.institute }}</label>
+                    <input type="text" class="form-control" id="institute" placeholder="{{ labels.institute }}" value="{{ details.institute }}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Zodiac.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_pass_out_year">{{ labels.pass_out_year }}</label>
+                    <input type="text" class="form-control" id="pass_out_year" placeholder="{{ labels.pass_out_year }}" value="{{ details.pass_out_year }}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Zodiac.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_languages">{{ labels.languages }}</label>
+                    <input type="text" class="form-control" id="languages" placeholder="{{ labels.languages }}" value="{{ details.languages }}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Zodiac.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_organizations">{{ labels.organization }}</label>
+                    <input type="text" class="form-control" id="organizations" placeholder="{{ labels.organization }}" value="{{ details.organizations }}" >
+                    <div class="invalid-feedback">
+                        Please provide a valid Zodiac.
+                    </div>
+                </div>
+
+                {#                  <div class="col-md-4 mb-3">#}
+                {#                      <label for="validationCustom04" id="l_person_name">{{ labels.person_name }}</label>#}
+                {#                      <input type="text" class="form-control" id="person_name" placeholder="{{ labels.person_name }}" value="{{ details.person_name }}"  >#}
+                {##}
+                {#                      <div class="valid-feedback">#}
+                {#                        Looks good!#}
+                {#                      </div>#}
+                {#                  </div>#}
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom04" id="l_image">{{ labels.image }}</label>
+                    <input id="image" name="photo" type="file" accept="image/*" placeholder="{{ labels.image }}" onchange="document.getElementById('uploaded_image').src = window.URL.createObjectURL(this.files[0])">
+                    <img src="/media/{{ details.image }}" id="uploaded_image" width="40px" >
+
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 mb-12"><label class="l_work_experience1">{{ labels.work_experience}} 1 <h6>({{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}})</h6> </label><input type="text" class="form-control" id="work_experience1" placeholder="{{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}}" value="{{ details.work_experience1 }}"  ></div>
+                <div class="col-md-12 mb-12"><label class="l_work_experience2">{{ labels.work_experience}} 2</label><input type="text" class="form-control" id="work_experience2" placeholder="{{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}}"  value="{{ details.work_experience2}}"></div>
+                <div class=
+                             "col-md-12 mb-12"  style="margin-bottom: 20px;"><label class="l_work_experience3">{{ labels.work_experience}} 3</label><input type="text" class="form-control" id="work_experience3" placeholder="{{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}}"  value="{{ details.work_experience3 }}"></div>
+            </div>
+        </div>
+    </div>
+
+    {#    <button class="btn btn-primary" id="submit_form" >Submit form</button>#}
+</form>
+
+{#<div id="footer_images">#}
+{#    <div class="flip-card" id="{{ template_id }}">#}
+{#      <div class="flip-card-inner"style="width: 50px;height: 50px">#}
+{#          {% for resume_card in resume_template %}#}
+{##}
+{#              <div class="flip-card-front"  id="{{ resume_card.id }}"style="{% if resume_card.id|stringformat:"i" == template_id %}border-style: solid;{% else %}border-style: none;{% endif %}margin-bottom: 5px;height: 50px;width: 50px;"align="center">#}
+{#                <img id="{{ resume_card.id }}" src="/media/{{ resume_card.template_image_resume_icon }}" alt="Avatar" style="width:90%;height:100%;margin: 2%;">#}
+{#              </div>#}
+{#          {% endfor %}#}
+{#      </div>#}
+{#    </div>#}
+{#</div>#}
+<div id="iframe_div" style="margin-top:40px;overflow-scrolling: touch">
+    Output PDF Pages
+    <div id="wrap">
+        <iframe id="iframe" src="" ></iframe>
+    </div>
+</div>
+
+{#<label id="myBtn" title="Go to top"><i class="fa fa-angle-up"></i>Top</label>#}
+<div id="loader"></div>
+</div>
+</div>
+
+</main>
+<!-- page-content" -->
+</div>
+
+<div   id="footer_images">
+    <div>
+        <button class="btn btn-primary" id="submit_form" style="float: left;margin-right:15px;color: #ffffff;background: #6c7b88"> Submit</button>
+        <button style="float: right;margin-left: 15px;color: #ffffff;background: #6c7b88;"  class="btn btn-primary" id="myBtntop">Top</button>
+    </div>
+    <div class="row" style="margin-top: 10px"><br>
+        <div class="col-md-12">
+
+            <div class="carousel slide multi-item-carousel" id="theCarousel">
+                <div class="carousel-inner" id="{{ template_id }}" >
+                    {% for resume_card in resume_template %}
+
+                        <div class="item {% if forloop.counter == 1 %}active{% endif %} ">
+                            <div class="col-xs-4">
+                                <div style="color: black;{% if resume_card.id == template_id %}border-style: solid;{% else %}border-style: none;{% endif %}margin-bottom: 5px;"align="center" class="flip-card-front"  href="#1" id="{{ resume_card.id }}">
+                                    <img src="/media/{{ resume_card.template_image_resume_icon }}" alt="Avatar" style="width:90%;height:100%;margin: 2%;" class="img-responsive"></div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!--  Example item end -->
+                </div>
+                <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    {% if resume_card_id != "" or resume_card_id != none %}
+        $('form').attr("id",{{ resume_card_id }});
+    {% else %}
+    {% endif %}
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var today  = new Date();
+    console.log(today.toLocaleDateString("hi-IN", options));
+    var template_id = '{{ template_id }}';
+    console.log(template_id);
+    var create_resume_card_url = '{% url "resume:CreateResumeCard" %}';
+    var resume_form_id = $('form').attr("id",{{ resume_card_id }});
+
+    $("#submit_form").click(function (event) {
+        event.preventDefault();
+        var data = new FormData();
+        var template_id = $(".carousel-inner")[0].id;
+        console.log('template_id'+template_id)
+        {#data_array = $("#-1").serialize();#}
+        {#console.log('data_array:',data_array);#}
+
+            $("#loader").css('display','block');
+
+            formdata = new FormData();
+            formdata.append('resume_card_id', $('form').attr('id'));
+            formdata.append('template_id', template_id);
+            var uploaded_image = $("#uploaded_image").attr('src');
+            {#formdata.append('groom_or_bride', $('#groom_or_bride').val());#}
+            formdata.append('name', $('#name').val());
+            formdata.append('father', $('#father').val());
+            formdata.append('mother', $('#mother').val());
+            formdata.append('date_of_birth', $('#date_of_birth').val());
+            formdata.append('contact', $('#contact').val());
+            formdata.append('gmail', $('#gmail').val());
+            formdata.append('address', $('#address').val());
+            formdata.append('linkedin', $('#linkedin').val());
+            formdata.append('social_account', $('#social_account').val());
+            formdata.append('profession', $('#profession').val());
+            formdata.append('highest_qualification', $('#highest_qualification').val());
+            formdata.append('about_profession', $('#about_profession').val());
+            formdata.append('skills', $('#skills').val());
+            formdata.append('institute', $('#institute').val());
+            formdata.append('pass_out_year', $('#pass_out_year').val());
+            formdata.append('languages', $('#languages').val());
+            formdata.append('organization', $('#organizations').val());
+            formdata.append('image', $('#image').prop('files')[0]);
+
+
+        {% for a in '123' %}
+            formdata.append('work_experience'+{{ forloop.counter }}, $('#work_experience'+{{ forloop.counter }}).val());
+            formdata.append('work_experience_date'+{{ forloop.counter }}, $('#work_experience_date'+{{ forloop.counter }}).val());
+            formdata.append('work_experience_details'+{{ forloop.counter }}, $('#work_experience_details'+{{ forloop.counter }}).val());
+            formdata.append('work_experience_city'+{{ forloop.counter }}, $('#work_experience_city'+{{ forloop.counter }}).val());
+            formdata.append('work_experience_country'+{{ forloop.counter }}, $('#work_experience_country'+{{ forloop.counter }}).val());
+        {% endfor %}
+            {#formdata.append('image', $('#image').prop('files')[0]);#}
+
+            {#formdata.append('language', $('#language').val());#}
+            formdata.append('language_id', $('#resume_card_language').val());
+            formdata.append('csrfmiddlewaretoken', '{{csrf_token}}');
+            jQuery.ajax({
+                url: create_resume_card_url,
+                type: "POST",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $("#iframe_div").css('display','block');
+                    $('form').attr("id",data['resume_card_id']);
+                    var $iframe = $('#iframe');
+                    $iframe.attr('srcdoc', data['html']);
+                    $("#loader").css('display','none');
+                    $('html, body').animate({
+                        scrollTop: $("#iframe_div").offset().top
+                    }, );
+                }
+            });
+            {#}#}
+            });
+
+    $(document).ready(function() {
+        $(".flip-card-front").click(function () {
+            if ($(this).css("border-style") == "none") {
+                $(".flip-card-front").css('border-style','none')
+                console.log($(this).css("border-style"));
+                var template_id = this.id;
+
+                {#console.log(this.id);#}
+                $(this).css('border-style','solid')
+                {#$(".flip-card").attr('id',template_id);#}
+                $(".carousel-inner").attr('id',template_id)
+
+                event.preventDefault();
+                {#var template_id = $(".flip-card")[0].id;#}
+                var data = new FormData();
+                {#data.append('files[]', $('#image').prop('files')[0]);#}
+                {#console.log($('#image').prop('files')[0]);#}
+                var name = $("#name").val().length;
+                console.log(name);
+
+                if (name < 2 ) {
+                    alert("Company Name required with atleast 3 characters");
+                }
+                else {
+                    $("#loader").css('display','block');
+
+                    formdata = new FormData();
+                    formdata.append('resume_card_id', $('form').attr('id'));
+                    formdata.append('template_id', template_id);
+                    {#formdata.append('image', $('#image').prop('files')[0]);#}
+
+                    formdata.append('name', $('#name').val());
+                    formdata.append('father', $('#father').val());
+                    formdata.append('mother', $('#mother').val());
+                    formdata.append('date_of_birth', $('#date_of_birth').val());
+                    formdata.append('contact', $('#contact').val());
+                    formdata.append('gmail', $('#gmail').val());
+                    formdata.append('address', $('#address').val());
+                    formdata.append('linkedin', $('#linkedin').val());
+                    formdata.append('social_account', $('#social_account').val());
+                    formdata.append('profession', $('#profession').val());
+                    formdata.append('highest_qualification', $('#highest_qualification').val());
+                    formdata.append('about_profession', $('#about_profession').val());
+                    formdata.append('skills', $('#skills').val());
+                    formdata.append('institute', $('#institute').val());
+                    formdata.append('pass_out_year', $('#pass_out_year').val());
+                    formdata.append('languages', $('#languages').val());
+                    formdata.append('organization', $('#organizations').val());
+                    formdata.append('image', $('#image').prop('files')[0]);
+
+
+                    {% for a in '123' %}
+                        formdata.append('work_experience'+{{ forloop.counter }}, $('#work_experience'+{{ forloop.counter }}).val());
+                        formdata.append('work_experience_date'+{{ forloop.counter }}, $('#work_experience_date'+{{ forloop.counter }}).val());
+                        formdata.append('work_experience_details'+{{ forloop.counter }}, $('#work_experience_details'+{{ forloop.counter }}).val());
+                        formdata.append('work_experience_city'+{{ forloop.counter }}, $('#work_experience_city'+{{ forloop.counter }}).val());
+                        formdata.append('work_experience_country'+{{ forloop.counter }}, $('#work_experience_country'+{{ forloop.counter }}).val());
+                    {% endfor %}
+                    {#formdata.append('image', $('#image').prop('files')[0]);#}
+
+                    {#formdata.append('language', $('#language').val());#}
+                    formdata.append('language_id', $('#resume_card_language').val());
+
+
+                    formdata.append('language_id', $('#resume_card_language').val());
+                    formdata.append('csrfmiddlewaretoken', '{{csrf_token}}');
+                    jQuery.ajax({
+                        url: create_resume_card_url,
+                        type: "POST",
+                        data: formdata,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            $("#iframe_div").css('display','block');
+                            $('form').attr("id",data['resume_card_id']);
+                            var $iframe = $('#iframe');
+                            $iframe.attr('srcdoc', data['html']);
+                            $("#loader").css('display','none');
+                            $('html, body').animate({
+                                scrollTop: $("#iframe_div").offset().top
+                            }, );
+                        }
+                    });
+                }
+            }
+        });
+    });
+    $("#myBtntop").click(function (){
+        $('html, body').animate({
+            scrollTop: $(".needs-validation").offset().top
+        });
+
+    },);
+
+
+
+</script>
+
+<script>
+
+
+
+    $('#resume_card_language').change(function(event) {
+        event.preventDefault();
+        $.ajax({
+            type:"POST",
+            url : "{% url 'resume:selected_language' %}",
+            data : {'resume_language_id':$(this).val(),
+                'csrfmiddlewaretoken':'{{ csrf_token }}'},
+            success : function(response) {
+                data = response;
+                console.log('data:'+data);
+                var label = data['labels']
+                var label = JSON.parse(label);
+                console.log('label:',label);
+                console.log("ceo:"+label['groom']+'/'+label['bride']);
+
+                $("#l_ceo").html(label["ceo"]);
+
+                $("#l_company_name").html(label["company_name"]);
+                $("#l_social_id2").html(label['social_id2']);
+                $("#l_address").html(label['address']);
+                $("#l_website").html(label['website']);
+                $("#l_founder").html(label['founder']);
+                $("#l_established_date").html(label['established_date']);
+                $("#l_email").html(label['email']);
+                $("#l_social_id").html(label['social_id']);
+                $("#l_social_id2").html(label['social_id']+'2');
+                $("#l_contact").html(label['contact']);
+                $("#l_person_name").html(label['person_name']);
+                $("#l_established_date").html(label['established']);
+                $("#l_telephone").html(label['telephone']);
+                $("#l_language").html(label['language']);
+
+                {#console.log(data);#}
+            },
+            error: function() {
+                alert('Error occured');
+            }
+        });
+    });
+
+    // Instantiate the Bootstrap carousel
+    $('.multi-item-carousel').carousel({
+        interval: false
+    });
+
+    // for every slide in carousel, copy the next slide's item in the slide.
+    // Do the same for the next, next item.
+    $('.multi-item-carousel .item').each(function(){
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        if (next.next().length>0) {
+            next.next().children(':first-child').clone().appendTo($(this));
+        } else {
+            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+        }
+    });
+</script>
+
+</body>
+</html>

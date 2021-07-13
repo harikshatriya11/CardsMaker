@@ -201,17 +201,18 @@ $(function () {
         var dialcode = document.getElementById("dialcode").value;
         var mobile_number = document.getElementById('mobile_number').value;
         {#alert(code);#}
-        if (code == '' )
+        if (code === '' )
         {
             {#alert('not submitted');#}
             $("#otp_checkdiv").html("Please Enter correct OTP number");
         }
         else {
+            $("#otp_checkdiv").html("");
             $(".loader").css('display','block');
             confirmationResult.confirm(code).then(function (result) {
                 // User signed in successfully.
                 $(".loader").css('display', 'none');
-                $("#otp_checkdiv").html("");
+
                 var user = result.user;
                 console.log('verification success :' + user);
                 var data = {'mobile_number': mobile_number, 'code': code}

@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'wedding_cards',
     'engagement_cards',
     'bussiness_cards',
-    'country_dialcode',
     'wkhtmltopdf',
     'cities_light',
     'mathfilters',

@@ -251,20 +251,17 @@ $(function () {
                         if (myStatus == 200) {
                             // alert('done');
                             window.location = "/";
-
                             // window.location = "/logoutview/";
                         }
                         if (myStatus == 201) {
                             alert("please check amount and username")
                         }
-
-
                     }
                 });
                 // ...
             }).catch(function (error) {
                 $(".loader").css('display', 'none');
-                $("#otp_checkdiv").html("Please Enter correct OTP number");
+                {#$("#otp_checkdiv").html("Please Enter correct OTP number");#}
                 {#document.getElementById("checkdiv").innerHTML = "Please Enter correct OTP";#}
             });
         }

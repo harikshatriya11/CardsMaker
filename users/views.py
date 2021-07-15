@@ -78,3 +78,9 @@ def register(request):
     return response
 
     # return redirect('login')
+
+@csrf_exempt
+def Privacy_policy(request):
+    template = loader.get_template("home/privacy_policy.html")
+    response = {}
+    return HttpResponse(template.render(response, request))

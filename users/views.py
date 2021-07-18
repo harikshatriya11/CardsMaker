@@ -78,6 +78,72 @@ def register(request):
     return response
 
     # return redirect('login')
+@csrf_exempt
+def registeration(request):
+    print('Register')
+    if request.method == 'POST':
+        print(request.POST)
+        print('registered')
+        data = request.POST
+
+        username = data['username']
+        password = data['password']
+        mobile = data['mobile']
+
+
+        user_check = User.objects.filter(username=username).exists()
+        print("username",username,":","user_check",user_check, ":",password)
+        if user_check:
+            return JsonResponse({"status": 201, "data": 'username already exist'}, status=201)
+        elif username == '' or username == None:
+            print("username failed")
+            return JsonResponse({"status": 202, "data": 'please enter username'}, status=202)
+        elif len(username) < 4:
+            print("username failed")
+            return JsonResponse({"status": 203, "data": 'please enter more than 4 character'}, status=203)
+        elif password == '' or password == None or len(password) < 7:
+            print("password failed")
+            return JsonResponse({"status": 204, "data": 'please enter password correct'}, status=204)
+        else:
+            create_user = User.objects.create_user(username=username, password = password)
+            create_user.is_active = True
+            create_user.save()
+            user = UserDetails.objects.create(user=create_user,user_mobile=mobile)
+            user.save()
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                dj_login(request, user)
+    response = JsonResponse({"status": 200, "data": 'i'}, status=200)
+    return response
+@csrf_exempt
+def login(request):
+    print('login')
+    if request.method == 'POST':
+        print(request.POST)
+        print('login_post')
+        data = request.POST
+        username = data['username']
+        password = data['password']
+        user_check = User.objects.filter(username=username).exists()
+        if username == '' or username == None:
+            return JsonResponse({"status": 201, "data": 'please enter correct username'}, status=201)
+        if password == '' or password == None:
+            return JsonResponse({"status": 201, "data": 'please enter correct password'}, status=201)
+        if user_check:
+            print('login')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                dj_login(request, user)
+                response = JsonResponse({"status": 200, "data": 'i'}, status=200)
+                # return redirect('/')
+            else:
+                response = JsonResponse({"status": 201, "data": 'password not matched with username'}, status=201)
+            return response
+        else:
+            response = JsonResponse({"status": 201, "data": 'please check username'}, status=201)
+            return response
+    response = JsonResponse({"status": 200, "data": 'username not exist'}, status=200)
+    return response
 
 @csrf_exempt
 def Privacy_policy(request):

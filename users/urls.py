@@ -16,6 +16,8 @@ urlpatterns = [
     path('', views.Home, name='home'),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('register/', views.register, name='register'),
+    path('registeration/', views.registeration, name='registeration'),
+    path('login/', views.login, name='login'),
     path('privacy_policy/', views.Privacy_policy, name='privacy_policy'),
 ]
 # if settings.DEBUG:

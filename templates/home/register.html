@@ -10,13 +10,16 @@
   <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
 
+{#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">#}
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
+{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>#}
   <script>
     function onloadCallback() {
         /* Place your recaptcha rendering code here */
     }
 </script>
 
-<div class="container">
+
   <!-- Trigger the modal with a button -->
 
   <!-- Modal -->
@@ -29,30 +32,65 @@
           <h4 class="modal-title">Register/Login</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body">
-          <p id="label_mobile"></p>
-                <div id="div_mobile">
-                    <select style="width: 20%" id="dialcode">
-                    <option value="nil">Country</option>
-                      {% for a in country_dialcode %}
-                         <br>
-                          <option value="{{ a.dialcode }}">{{ a.country_name }} (+{{ a.dialcode }})</option>
-                      {% endfor %}
-                    </select>
-                    <input type="number" id="mobile_number"  required> Mobile Number
-                    <div id="checkdiv" style="color: red"></div>
-                </div>
-                <div id="div_otp" style="display: none; margin-top: 2%" required>
-                    <input type="text" id="mobile_otp">   Enter OTP
-                    <div id="otp_checkdiv" style="color: red"></div>
-                </div>
-        </div>
-        <div class="modal-footer">
-             <div class="loader" style="display: none;"></div>
-          <button type="button" id="submit_mobile" class="btn btn-default" >Submit</button>
-          <button type="button" id="submit_otp" class="btn btn-default"  style="display: none">Submit OTP</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+          <div class="modal-body">
+              <div class="container">
+                  <ul class="nav nav-pills" style="color: white">
+                      <li class="active" style="text-align:center;color:white;background: #5b80b2;margin: 5px;border-radius: 5px"><a data-toggle="pill" href="#login" style="color:white !important;margin: 10px" > Login </a></li>
+                      <li style="text-align:center;background: #5b80b2;margin: 5px;border-radius: 5px"><a data-toggle="pill" href="#register" style="color:white !important;margin: 10px"> Register </a></li>
+                  </ul>
+                  <div class="tab-content">
+                      <div id="login" class="tab-pane fade in active show">
+                          <h3>Login</h3>
+                          <label>UserName</label><br>
+                          <input value="" id="login_username"type="text" placeholder="Enter UserName"><br>
+                          <div id="invalid_username_l"></div><br>
+                          <label>Password</label><br>
+                          <input value="" id="login_password" type="password" placeholder="Enter unique UserName"><br>
+                          <div id="invalid_password_l"></div>
+                          <br>
+                          <button class="btn-primary" id="submit_login" onclick="login_function()" >Submit</button>
+                      </div>
+                      <div id="register" class="tab-pane fade">
+                          <h3>Register</h3>
+                          <label>UserName</label><br>
+                          <input maxlength="4" value="" id="register_username" type="text" placeholder="Enter UserName"><br>
+                          <div id="invalid_username_r"></div><br>
+                          <label>Mobile number</label><br>
+                          <input value="" id="register_mobile" type="number" minlength="6000000000" maxlength="9999999999" placeholder="Enter UserName"><br>
+                            <br>
+                          <label>Password (must be 8 char)</label><br>
+                          <input value="" id="register_password" type="password" placeholder="Enter unique UserName">
+                          <div id="invalid_password_r"></div><br>
+                          <br>
+                          <button class="btn-primary" id="submit_userdetails" onclick="register()" >Submit</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+{#        <div class="modal-body">#}
+{#          <p id="label_mobile"></p>#}
+{#                <div id="div_mobile">#}
+{#                    <select style="width: 20%" id="dialcode">#}
+{#                    <option value="nil">Country</option>#}
+{#                      {% for a in country_dialcode %}#}
+{#                         <br>#}
+{#                          <option value="{{ a.dialcode }}">{{ a.country_name }} (+{{ a.dialcode }})</option>#}
+{#                      {% endfor %}#}
+{#                    </select>#}
+{#                    <input value="" type="number" id="mobile_number"  required> Mobile Number#}
+{#                    <div id="checkdiv" style="color: red"></div>#}
+{#                </div>#}
+{#                <div id="div_otp" style="display: none; margin-top: 2%" required>#}
+{#                    <input value="" type="text" id="mobile_otp">   Enter OTP#}
+{#                    <div id="otp_checkdiv" style="color: red"></div>#}
+{#                </div>#}
+{#        </div>#}
+{#        <div class="modal-footer">#}
+{#             <div class="loader" style="display: none;"></div>#}
+{#          <button type="button" id="submit_mobile" class="btn btn-default" >Submit</button>#}
+{#          <button type="button" id="submit_otp" class="btn btn-default"  style="display: none">Submit OTP</button>#}
+{#          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#        </div>#}
       </div>
     </div>
   </div>
@@ -78,6 +116,10 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+     .modal-body input {
+
+        width: 100%;
+    }
 </style>
 {##}
 {#<style>#}
@@ -93,7 +135,37 @@
 
 
 <script>
+function register_login() {
+    $.ajax({
+        url: '{% url 'users:registeration' %}',
+        type: 'POST',
+        data: {
+            username: $("$username"),
+            password: $("$password")
+        },
+        headers: {
+            // 'Content-type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        dataType: 'json',
 
+        success: function (data) {
+            $(".loader").css('display', 'none');
+            // alert(data.data)
+            var myStatus = data.status;
+
+            if (myStatus == 200) {
+                // alert('done');
+                window.location = "/";
+                // window.location = "/logoutview/";
+            }
+            if (myStatus == 201) {
+
+                alert("usernmae exist please choose different username");
+            }
+        }
+    });
+}
 
 
  var firebaseConfig = {
@@ -254,7 +326,7 @@ $(function () {
                             // window.location = "/logoutview/";
                         }
                         if (myStatus == 201) {
-                            alert("please check amount and username")
+                            alert("please check mobile number")
                         }
                     }
                 });
@@ -267,5 +339,73 @@ $(function () {
         }
     });
 });
+function register(){
+    $("#invalid_username_r").html("");
+    $("#invalid_password_r").html("");
+    username = $("#register_username").val();
+    mobile = $("#register_mobile").val();
+    password = $("#register_password").val();
+    {#var csrftoken = "{% csrf_token %}";#}
+    $.ajax({
+        url: '{% url 'users:registeration' %}',
+        type: 'POST',
+        data: {
+            mobile: mobile,
+            password: password,
+            username: username,
+            csrfmiddlewaretoken: "{{csrf_token}}"
+        },
+
+        dataType: 'json',
+
+        success: function (data) {
+            $(".loader").css('display', 'none');
+            // alert(data.data)
+            var myStatus = data.status;
+
+            if (myStatus == 200) {
+                // alert('done');
+                window.location = "/";
+                // window.location = "/logoutview/";
+            }
+            if (myStatus == 201) {$("#invalid_username_r").html(data.data).css('color','red');}
+            if (myStatus == 202) {$("#invalid_username_r").html(data.data).css('color','red');}
+            if (myStatus == 203) {$("#invalid_username_r").html(data.data).css('color','red');}
+            if (myStatus == 204) {$("#invalid_password_r").html(data.data).css('color','red');}
+        }
+    });
+}
+
+function login_function(){
+    $("#invalid_password_l").html("");
+    username = $("#login_username").val();
+    password = $("#login_password").val();
+    {#var csrftoken = "{% csrf_token %}";#}
+    {#alert(username+":"+password)#}
+    $.ajax({
+        type: "POST",
+        url: "{% url 'users:login' %}",
+        data: {
+
+                username: username,
+                password: password
+
+        },
+        cache: false,
+        success: function(data){
+            var myStatus = data.status;
+
+            if (myStatus == 200) {
+                // alert('done');
+                window.location = "/";
+                // window.location = "/logoutview/";
+            }
+            {#if (myStatus == 201) {$("#invalid_username_l").html(data.data).css('color','red');}#}
+            {#if (myStatus == 202) {$("#invalid_username_l").html(data.data).css('color','red');}#}
+            {#if (myStatus == 203) {$("#invalid_username_l").html(data.data).css('color','red');}#}
+            if (myStatus == 201) {$("#invalid_password_l").html(data.data).css('color','red');}
+        }
+    });
+}
 
 </script>

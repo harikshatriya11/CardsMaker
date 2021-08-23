@@ -19,6 +19,7 @@ urlpatterns = [
     path('registeration/', views.registeration, name='registeration'),
     path('login/', views.login, name='login'),
     path('privacy_policy/', views.Privacy_policy, name='privacy_policy'),
+    path('create_payment/', views.create_payment, name='create_payment'),
 ]
 # if settings.DEBUG:
 #     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

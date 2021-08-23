@@ -46,7 +46,7 @@
           <li><a href="{% url 'business_cards:business_card_home' %}" style="color: #ffffff"><i class="fa fa-credit-card"></i><span>Business Cards</span><span class="badge badge-pill badge-primary"></span></a></li>
           <li><a href="{% url 'resume:resume_home' %}" style="color: #ffffff"><i class="fa fa-id-card"></i><span>Resume</span></a></li>
 
-          <li><a href="{% url 'users:privacy_policy' %}" style="float: right;margin: 1%;"><i class="fa fa-folder"></i><span>Privacy Policy</span></a></li>
+          <li><a href="{% url 'users:privacy_policy' %}" style="float: right;margin: 1%;"><i class="fa fa-folder"></i><span>Privacy Policy and T&C</span></a></li>
             {% if user.is_authenticated and not user.is_superuser%}
           <li><a href="{% url 'users:logout' %}?next=/" style="float: right;margin: 1%;"><i class="fa fa-folder"></i><span>Logout</span></a></li>
             {% endif %}

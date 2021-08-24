@@ -156,16 +156,13 @@ USE_TZ = True
 PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 MEDIA_URL = '/media/'
-STATIC_ROOT = 'static'
-# Extra lookup directories for collectstatic to find static files
-STATIC_URL = '/assets/'
-MEDIA_URL = '/media/'
-# Extra lookup directories for collectstatic to find static files
-STATICFILES_DIRS = (os.path.join(str(BASE_DIR)+"/static/"),)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 RAZOR_KEY_ID = "H2K22dD1I3soH9"
 RAZOR_KEY_SECRET = "rzp_test_7nruGgj5EfDxGO"

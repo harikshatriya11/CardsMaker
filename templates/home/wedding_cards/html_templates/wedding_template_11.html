@@ -16,15 +16,14 @@
         body{
             background: url('/media/{{ wedding_card_instance.b_image }}') no-repeat;
             background-size: cover;
-            height: 34.27cm;
+            height: 100%;
+            margin: unset !important;
             color: #efef89;
             font-family: 'Mukta', sans-serif;
         }
-        html,body{
-        {#height:297mm;#}
-        {#width:210mm;#}
-        {#max-height:297mm;#}
-        {#max-width:210mm;#}
+        html{
+            margin: unset !important;
+            height: 100%;
         }
 
     </style>
@@ -68,7 +67,7 @@
             <p class="parents">{{ template_language.daughter_of }} {{ wedding_card_instance.bride_father|capfirst }} {{ template_language.and|capfirst }} {{ wedding_card_instance.bride_mother|capfirst }}</p><br>
         </div>
         {% if template_image.image15 != '' and template_image.image15 is not none %}
-            <img src="/media/{{ template_image.image15 }}" width="100%" style="margin-top: -75px;">
+            <img src="/media/{{ template_image.image15 }}" width="100%" style="padding-top: -75px;">
         {% endif %}
     </div>
     <div class="engagment_invite">
@@ -169,8 +168,8 @@
             {% if wedding_card_instance.place_of_wedding != '' and wedding_card_instance.place_of_wedding != none %}
                 <div class="function" style="border: unset !important;">
                     <div class="wedding_place" style="width: 100%;text-align-last: center;text-align: -webkit-center;">
-                        <p style="font-size: 30px;font-weight: bold;">{{ template_language.wedding }} {{ template_language.place }}</p>
-                        <div id="place_of_wedding" style="margin-top: -35px;">{{ wedding_card_instance.place_of_wedding|capfirst }}</div>
+                        <label style="font-size: 30px;font-weight: bold;">{{ template_language.wedding }} {{ template_language.place }}</label>
+                        <div id="place_of_wedding" style="padding-top: -35px;">{{ wedding_card_instance.place_of_wedding|capfirst }}</div>
                     </div>
                 </div>
             {% endif %}
@@ -192,12 +191,12 @@
             {% endif %}
         </div>
         <div class="relatives_head" style="width: 40%;float: left">
-            <div class="relatives_head" style="font-size: 30px;margin-top: 0px;">{{ template_language.close_relatives_name }}</div>
+            <div class="relatives_head" style="font-size: 30px;padding-top: 0px;">{{ template_language.close_relatives_name }}</div>
             <div class="relatives_name" id="place_of_wedding">{{ wedding_card_instance.close_relatives_name|capfirst }}</div>
         </div>
 
         <div class="relatives_head" style="width: 40%;float: left">
-            <div style="font-size: 30px;margin-top: 0px;">{{ template_language.courteous_name }}</div>
+            <div style="font-size: 30px;padding-top: 0px;">{{ template_language.courteous_name }}</div>
             <div class="relatives_name" id="place_of_wedding">{{ wedding_card_instance.courteous_name|capfirst }}</div>
         </div>
         <div style="width: 10%;float:left">
@@ -225,26 +224,26 @@
 </body>
 </html>
 <style>
-    .main_content{ margin-left: 80px; margin-right: 100px;margin-top: 100px; }
+    .main_content{ margin-left: 80px; margin-right: 100px;padding-top: 50px; }
     .couple_name_div{ width: 40%;float: left;word-wrap: break-word;font-size: 70px;  }
-    .couple_name_div_and{ width: 20%;float: left;word-wrap: break-word; margin-top: 100px; }
+    .couple_name_div_and{ width: 20%;float: left;word-wrap: break-word; padding-top: 100px; }
     .parents{ font-size: 16px; line-height: normal}
     #engagment_invite{ }
-    #couple{ margin-top: 150px; width: 100%;line-height: 10px;font-family: 'Sofia'; margin: auto;text-align: center; }
+    #couple{ padding-top: 10px; width: 100%;line-height: 10px;font-family: 'Sofia'; margin: auto;text-align: center; }
     .couple_name{font-size: 70px;}
     #symbol_word_and{ font-size: 30px;text-align: center;}
     #engagment_invite{text-align: center;width: 100%;}
-    #date_of_wedding{font-size: 20px;margin-top: -50px; }
-    .relatives{ text-align: center;text-align: -webkit-center;}
+    #date_of_wedding{font-size: 20px;padding-top: -50px; }
+    .relatives{ text-align: center;text-align: -webkit-center; padding-top: 50px}
     .relatives_name {  margin-bottom: 30px; width: 50%;}
 
-    .function_wed { margin-left: 2%;width: 30%;margin-top: 2%;place-self: center !important; align-items: center !important; }
+    .function_wed { margin-left: 2%;width: 30%;padding-top: 2%;place-self: center !important; align-items: center !important; }
     .functions_div_wed {text-align: -webkit-center;display: flex;justify-content: center; }
     .function_name_wed {font-size: 50px;font-weight: bold;}
-    .wedding_date {    margin-top: 0px; font-size: 18px;}
+    .wedding_date {    padding-top: 0px; font-size: 18px;}
     .wedding_place {   font-size: 18px;}
 
-    .function { border-radius: 5px;margin-left: 2%;width: 30%;border: 1px solid #efef89;margin-top: 2%;text-align-last: center;text-align: -webkit-center;}
+    .function { border-radius: 5px;margin-left: 2%;width: 30%;border: 0px solid #efef89;padding-top: 2%;text-align-last: center;text-align: -webkit-center;}
     .functions_div { display: flex;justify-content: center; }
     .function_name {font-size: 22px;font-weight: bold;}
 
@@ -256,8 +255,8 @@
 
     {% if wedding_card_instance.wedding_card_status == 1 %}
         .watermark1 ,.watermark2, .watermark3{color: grey;font-size: 50px;text-align: center;transform: translate(-80%, -80%);opacity:0.3;-ms-transform: rotate(315deg); /* IE 9 */-ms-transform-origin: 20% 40%; /* IE 9 */transform: rotate(315deg);transform-origin: 20% 40%;}
-        .watermark1{ margin-bottom: 40%;margin-top: -25%;margin-left: 0%}
-        .watermark2{ margin-bottom: 40%;margin-top: -25%; margin-left: 20%}
-        .watermark3{  margin-top: -25%; margin-left: 40% }
+        .watermark1{ margin-bottom: 40%;padding-top: -25%;margin-left: 0%}
+        .watermark2{ margin-bottom: 40%;padding-top: -25%; margin-left: 20%}
+        .watermark3{  padding-top: -25%; margin-left: 40% }
     {% endif %}
 </style>

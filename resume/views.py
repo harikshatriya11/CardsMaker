@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 from languages.models import Biodata, LanguageName
+from users.views import generate_all_pdf
 from .models import *
 from django.http import JsonResponse
 from django.http import Http404,HttpResponse
@@ -207,16 +208,11 @@ def get_wk_pdf(request):
     resume_card_id = request.GET['resume_card_id']
     resume_card_instance = get_resume_card(request,resume_card_id)
     filename = resume_card_instance['name']+' '+resume_card_instance['name']
-    response = PDFTemplateResponse(request=request,
-                                   template=resume_card_instance['btemplate'],
-                                   filename=filename,
-                                   context=resume_card_instance,
-                                   show_content_in_browser=show_content,
-                                   cmd_options={'margin-top': 0,'margin-bottom': 0,'margin-right': 0,'margin-left': 0, },
-
-                                   )
+    response = generate_all_pdf(request, resume_card_instance, resume_card_instance['btemplate'], filename, show_content)
     # pdf = response.rendered_content
     return response
+
+
 def get_resume_card(requset,resume_card_id):
     resume_card = ResumeCard.objects.get(id=resume_card_id)
     resume_card_instance = ResumeCard.objects.filter(id=resume_card_id).values()[0]

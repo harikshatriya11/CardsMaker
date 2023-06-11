@@ -16,15 +16,14 @@
         body{
             background: url('/media/{{ wedding_card_instance.b_image }}') no-repeat;
             background-size: cover;
-            height: 34.27cm;
+            height:100%;
+            margin: unset !important;
             color: #efef89;
             font-family: 'Mukta', sans-serif;
         }
-        html,body{
-        {#height:297mm;#}
-        {#width:210mm;#}
-        {#max-height:297mm;#}
-        {#max-width:210mm;#}
+        html{
+            margin: unset !important;
+            height: 100%;
         }
 
     </style>
@@ -225,7 +224,7 @@
 </body>
 </html>
 <style>
-    .main_content{ margin-left: 80px; margin-right: 100px;margin-top: 100px; }
+    .main_content{ margin-left: 80px; margin-right: 100px; padding-top: 100px; }
     .couple_name_div{ width: 40%;float: left;word-wrap: break-word;font-size: 70px;  }
     .couple_name_div_and{ width: 20%;float: left;word-wrap: break-word; margin-top: 100px; }
     .parents{ font-size: 16px; line-height: normal}

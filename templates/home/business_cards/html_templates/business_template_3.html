@@ -21,11 +21,9 @@
             overflow: hidden !important;
         {#height: 30.3cm;#}
         }
-        html,body{
-        {#height:297mm;#}
-        {#width:210mm;#}
-        {#max-height:297mm;#}
-        {#max-width:210mm;#}
+        html{
+            margin: unset !important;
+            height: 100%;
         }
 
     </style>
@@ -36,7 +34,9 @@
 {#<img src="{% static 'wed_biodata.png' %}" width="200">#}
 <div class="main_content" >
     <div class="div1" style="width: 100%">
-        <div class="top_div" id="company_name">{{ business_card_instance.company_name }}</div>
+        {% if business_card_instance.logo and business_card_instance.logo != 'undefined' %}
+                <div id="logo"><img width="60px" src="/media/{{ business_card_instance.logo }}"></div>
+            {% endif %}
         <div class="top_div">
             <div id="logo"><img width="60px" src="/media/{{ business_card_instance.logo }}"></div>
             <div id="company_tagline">{{ business_card_instance.company_tagline }}</div>

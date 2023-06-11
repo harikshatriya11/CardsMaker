@@ -12,7 +12,7 @@ class TemplateData(models.Model):
     template_url_engagement = models.CharField(default='', blank=True, null=True, max_length=100)
     template_type_engagement = models.CharField(default='', blank=True, null=True, max_length=100)
     template_country_engagement = models.ForeignKey(Country,default=1,on_delete=models.CASCADE,related_name='template_country_engagement')
-    template_price_engagement = models.PositiveIntegerField(default=0, blank=True, null=True)
+    template_price = models.PositiveIntegerField(default=0, blank=True, null=True)
     template_image_engagement_icon = models.ImageField(upload_to='media/engagement/templates/icon',default='')
     template_image_engagement = models.ImageField(upload_to='media/engagement/templates/images',default='')
     status = models.IntegerField(choices=CHOICE_STATUS, default=0)
@@ -42,6 +42,10 @@ class EngagementCard(models.Model):
     bride_image = models.ImageField(upload_to='media/engagement/templates/images', default='')
     groom_image = models.ImageField(upload_to='media/engagement/templates/images', default='')
     engagement_card_status = models.IntegerField(choices=CHOICE_ENGAGEMENT_CARDS_STATUS, default=1)
+
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, null=True, blank=True)
+    paid_template = models.ForeignKey(TemplateData, on_delete=models.CASCADE, blank=True, null=True)
+
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     modified = models.DateTimeField(auto_now=True, null=True, blank=True)
 

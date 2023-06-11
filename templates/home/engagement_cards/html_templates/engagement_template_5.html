@@ -11,11 +11,15 @@
     <style>
         body{
             background: url('/media/{{ engagement_card_instance.b_image }}') no-repeat;
-            background-size: 27cm 50cm;
-            height: 30.3cm;
-
+            background-size: cover;
+            margin: unset !important;
+            height: 100%;
         }
-    </style>
+        html{
+            margin: unset !important;
+            height: 100%;
+        }
+   </style>
 
 </head>
 <body style="">
@@ -46,7 +50,7 @@
 
     }
     #couple_name{
-        margin-top: 250px;
+        padding-top: 250px;
         line-height: 10px;
         font-family: 'Sofia';
     {#background: red;#}

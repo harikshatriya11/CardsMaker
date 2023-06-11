@@ -4,6 +4,9 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from CardsMaker import settings
+from CardsMaker.settings import *
+from biodata.models import BioData
+from engagement_cards.models import EngagementCard
 from .models import *
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.http import Http404,HttpResponse
@@ -21,7 +24,12 @@ from resume.models import *
 
 from django.contrib.auth import authenticate, login as dj_login, logout
 from cities_light.models import City, Country
-# import razorpay
+import razorpay
+from django.views.generic import View
+from wkhtmltopdf.views import PDFTemplateResponse
+
+
+
 
 def SplashScreen(request):
     print('hello')
@@ -44,7 +52,7 @@ def Home(request):
     response['resume_templates'] = ResumeTemplateData.objects.filter(status=0)
     response['business_templates'] = BusinessTemplateData.objects.filter(status=0)
     response['latterhad_templates'] = LatterHadTemplateData.objects.filter(status=0)
-    print('eng_temp:',response['engagement_templates'])
+
     country_dialcode = CountryDialcode.objects.all()
 
     response['country_dialcode'] = [{'country_name':a,'dialcode':a.phone} for a in country]
@@ -230,3 +238,96 @@ def Privacy_policy(request):
 #     else:
 #         # if other than POST request is made.
 #         return HttpResponseBadRequest()
+
+class OrderPayment(View):
+    def get(self, request, id):
+        context = {}
+        type = request.GET.get('card_type')
+        amount = 0
+        print(type)
+        url = ''
+        if not type:
+            return JsonResponse({'message':'something went wrong'}, status=201)
+
+        if type == 'wedding_biodata':
+            obj = BioData.objects.filter(id=id).first()
+            url = '/biodata/get_wk_pdf/?biodata_id={0}'.format(id)
+            context['first_name'] = obj.first_name
+            context['last_name'] = obj.last_name
+        elif type == 'wedding':
+            obj = WeddingCard.objects.filter(id=id).first()
+            url = '/wedding_cards/get_wk_pdf/?wedding_card_id={0}'.format(id)
+        elif type == 'engagement_card':
+            obj = EngagementCard.objects.filter(id=id).first()
+            url = '/engagement_cards/get_wk_pdf/?engagement_card_id={0}'.format(id)
+        elif type == 'business':
+            obj = BusinessCard.objects.filter(id=id).first()
+        elif type == 'resume':
+            obj = ResumeCard.objects.filter(id=id).first()
+        else:
+            obj = None
+
+        client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+        if obj:
+            amount = obj.template.template_price
+        else:
+            return JsonResponse({'message': 'something went wrong'}, status=201)
+        print('amount', amount)
+
+        if amount < 1 or amount is None or amount == "":
+            return redirect(url)
+        payment_data = {"amount": amount * 100, "currency": "INR", "receipt": "order_{0}_{1}".format(type, (obj.id)*723465)}
+        payment = client.order.create(data=payment_data)
+
+
+        if payment['id']:
+            user = UserDetails.objects.filter(user=request.user).first()
+            payment_obj = Payment.objects.create(userId=user,gateway_id=payment['id'], status=payment['status'], amount=amount)
+            payment_obj.entity = payment['entity']
+            payment_obj.currency = payment['currency']
+            payment_obj.save()
+            if obj:
+                obj.payment = payment_obj
+                obj.save()
+        url = "/order_update_payment/?link="+url
+        context = {
+            'payment_obj':payment_obj,
+            'obj':obj,
+            'api_key':settings.RAZOR_KEY_ID,
+            'amount':amount * 100,
+            'url':url
+        }
+        return render(request, 'payment.html', context)
+    def post(self, request, id):
+        pass
+@csrf_exempt
+def order_update_payment(request):
+    payments = Payment.objects.filter(gateway_id=request.POST.get('razorpay_order_id')).first()
+    client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+    params_dict = {
+        'razorpay_order_id': request.POST.get('razorpay_order_id'),
+        'razorpay_payment_id': request.POST.get('razorpay_payment_id'),
+        'razorpay_signature': request.POST.get('razorpay_signature')
+    }
+    try:
+        client.utility.verify_payment_signature(params_dict)
+        payments.verification_failed = True
+    except Exception as er:
+        print('error:', er)
+
+    link = request.GET.get('link')
+    return redirect('{0}'.format(link))
+
+
+def generate_all_pdf(request,card_instance,template, filename, show_content):
+    pdf = PDFTemplateResponse(request=request,
+                                   template=template,
+                                   filename=filename,
+                                   context=card_instance,
+                                   show_content_in_browser=show_content,
+                                   cmd_options={'margin-top': 0, 'margin-bottom': 0, 'margin-right': 0,
+                                                'margin-left': 0,'page-height': '297mm', 'disable-smart-shrinking': False, 'quiet': None,
+                                                'enable-local-file-access': True},
+                                   )
+    # pdf = response.rendered_content
+    return pdf

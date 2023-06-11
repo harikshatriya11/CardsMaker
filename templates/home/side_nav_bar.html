@@ -4,7 +4,11 @@
     <button style="float: right;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Register/Login</button>
 {% endif %}
 
-
+<style>
+    .sup_free{
+        background: greenyellow;padding: 2px;border-radius: 5px;color:black;font-weight: bold;
+    }
+</style>
 <div class="page-wrapper chiller-theme">
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
@@ -43,8 +47,8 @@
           <li><a href="{% url 'biodata:biodata_home' %}" style="color: #ffffff"><i class="fa fa-book"></i><span>Wedding-BioData Cards</span><span class="badge badge-pill badge-primary"></span></a></li>
           <li><a href="{% url 'engagement_cards:engagement_home' %}" style="color: #ffffff"><i class="fa fa-circle-notch"></i><span>Engagement Cards</span><span class="badge badge-pill badge-primary"></span></a></li>
           <li><a href="{% url 'wedding_cards:wedding_home' %}" style="color: #ffffff"><i class="fa fa-circle"></i><span>Wedding Cards</span><span class="badge badge-pill badge-primary"></span></a></li>
-          <li><a href="{% url 'business_cards:business_card_home' %}" style="color: #ffffff"><i class="fa fa-credit-card"></i><span>Business Cards</span><span class="badge badge-pill badge-primary"></span></a></li>
-          <li><a href="{% url 'resume:resume_home' %}" style="color: #ffffff"><i class="fa fa-id-card"></i><span>Resume</span></a></li>
+          <li><a href="{% url 'business_cards:business_card_home' %}" style="color: #ffffff"><i class="fa fa-credit-card"></i><span>Business Cards<sup class="sup_free">Free</sup></span><span class="badge badge-pill badge-primary"></span></a></li>
+          <li><a href="{% url 'resume:resume_home' %}" style="color: #ffffff"><i class="fa fa-id-card"></i><span>Resume<sup class="sup_free">Free</sup></span></a></li>
 
           <li><a href="{% url 'users:privacy_policy' %}" style="float: right;margin: 1%;"><i class="fa fa-folder"></i><span>Privacy Policy and T&C</span></a></li>
             {% if user.is_authenticated and not user.is_superuser%}
@@ -68,11 +72,13 @@
         <div class="form-group col-md-12">
             <ul class="nav nav-tabs" id="sub_menu_header">
 
+                <li class="sub_menu_header"><a href="{% url 'business_cards:business_card_home' %}" style="color: #1e2229">Business<sup class="sup_free">Free</sup></a></li>
+                <li class="sub_menu_header"><a href="{% url 'resume:resume_home' %}" style="color: #1e2229">Resume<sup class="sup_free">Free</sup></a></li>
+                <li class="sub_menu_header"><a href="{% url 'wedding_cards:wedding_home' %}" style="color: #1e2229">Wedding</a></li>
                 <li class="sub_menu_header"><a href="{% url 'biodata:biodata_home' %}" style="color: #1e2229">Wedding-BioData</a></li>
                 <li class="sub_menu_header"><a href="{% url 'engagement_cards:engagement_home' %}" style="color: #1e2229">Engagement</a></li>
-                <li class="sub_menu_header"><a href="{% url 'wedding_cards:wedding_home' %}" style="color: #1e2229">Wedding</a></li>
-                <li class="sub_menu_header"><a href="{% url 'business_cards:business_card_home' %}" style="color: #1e2229">Business</a></li>
-                <li class="sub_menu_header"><a href="{% url 'resume:resume_home' %}" style="color: #1e2229">Resume</a></li>
+
+
                 {#        <li><a href="#menu2">Menu 2</a></li>#}
                 {#        <li><a href="#menu3">Menu 3</a></li>#}
             </ul>

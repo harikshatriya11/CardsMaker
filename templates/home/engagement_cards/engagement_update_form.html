@@ -43,8 +43,8 @@
         color: #ffffff;
     }
     #iframe {
-        width: 1028px;
-        height: 1600px;
+        width: 1020px;
+        height: 1420px;
         border: 0px;
     }
     @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -202,6 +202,30 @@
         </div>
        </div>
 
+    {%  if engagement_card_details.payment.payment_status %}
+        <a class="btn btn-primary"id="show_pdf"style="margin-top: 5px;display: none;width: 30%;float: left;margin-left: 5%;margin-right: 5%" target="_blank">Show PDF</a>
+
+    {% else %}
+    <div class="row">
+        <div class="col-md-12" id="payment_btn" style="display: none;margin-top: 10px">
+            <button type="button" class="btn btn-primary" onclick="paynow()">Pay Now & Get PDF</button>
+        </div>
+    </div>
+    {% endif %}
+    <script>
+    function paynow(){
+        var obj_id = $('form').attr('id');
+        if (obj_id > 0) {
+            window.location = '/payment/' + obj_id + "?card_type=engagement_card"
+        }
+        else {
+            alert("Engagement Card Not Found");
+        }
+    }
+
+
+    </script>
+
 {#  <button class="btn btn-primary" id="submit_form" type="submit" style="margin-top: 10px">Submit form</button>#}
 </form>
 <div id="iframe_div" style="margin-top:40px;overflow-scrolling: touch">
@@ -229,26 +253,30 @@
 
             <div class="carousel slide multi-item-carousel" id="theCarousel">
                 <div class="carousel-inner" id="{{ template_id }}" >
-                    {% for engagement_image in engagement_template %}
+                    {% if not engagement_card_details.payment.payment_status %}
+                        {% for engagement_image in engagement_template %}
 
-                        {% if forloop.counter < 4 %}
-                            {% cycle '<div class="item active">' '' '' %}
-                        {% else %}
-                            {% cycle '<div class="item">' '' '' %}
-                        {% endif %}
-                        <div class="col-xs-4">
-                            <div style="color: black;{% if engagement_image.id == template_id %}border-style: solid;{% else %}border-style: none;{% endif %}margin-bottom: 5px;"align="center" class="flip-card-front"  href="#1" id="{{ engagement_image.id }}">
-                                <img id="{{ engagement_image.id }}" src="/media/{{ engagement_image.template_image_engagement_icon }}" alt="Avatar" style="width:50%;height:50%;margin: 2%;" class="img-responsive">
+                            {% if forloop.counter < 4 %}
+                                {% cycle '<div class="item active">' '' '' %}
+                            {% else %}
+                                {% cycle '<div class="item">' '' '' %}
+                            {% endif %}
+                            <div class="col-xs-4">
+                                <div style="color: black;{% if engagement_image.id == template_id %}border-style: solid;{% else %}border-style: none;{% endif %}margin-bottom: 5px;"align="center" class="flip-card-front"  href="#1" id="{{ engagement_image.id }}">
+                                    <img id="{{ engagement_image.id }}" src="/media/{{ engagement_image.template_image_engagement_icon }}" alt="Avatar" style="width:50%;height:50%;margin: 2%;" class="img-responsive">
+                                </div>
                             </div>
-                        </div>
-                        {% cycle '' '' '</div>' %}
+                            {% cycle '' '' '</div>' %}
 
-                    {% endfor %}
+                        {% endfor %}
+                    {% endif %}
 
                     <!--  Example item end -->
                 </div>
-                <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                {%  if not engagement_card_details.payment.payment_status %}
+                    <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -338,6 +366,11 @@
             success: function (data) {
                 $('form').attr("id",data['engagement_card_id']);
                 var $iframe = $('#iframe');
+                {%  if engagement_card_details.payment.payment_status %}
+                    $("#show_pdf").css('display','block').attr("href","{% url 'engagement_cards:get_wk_pdf' %}?engagement_card_id="+data['engagement_card_id']+"&content_type=none")
+                {% else %}
+                    $("#payment_btn").css('display', 'block');
+                {% endif %}
                 $iframe.attr('srcdoc', data['html']);
                 $('html, body').animate({
                     scrollTop: $("#iframe_div").offset().top

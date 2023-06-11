@@ -7,9 +7,10 @@ from django.core.files import File
 from django.core.files.base import ContentFile
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-
+from CardsMaker.settings import *
 
 from languages.models import Biodata
+from users.views import generate_all_pdf
 from .models import *
 from django.http import JsonResponse
 from django.http import Http404,HttpResponse
@@ -71,10 +72,12 @@ def CreateBioData(request):
         print(request.POST)
         data = request.POST
         template_id = data['template_id']
-        template_instance = TemplateData.objects.get(id=template_id)
+        template_instance = TemplateData.objects.filter(id=template_id).first()
         template_path =template_instance.template_url
         # print('template_url: ',template_path)
-
+        amount = template_instance.template_price
+        if not template_instance:
+            return JsonResponse({'message':'template not found'}, status=404)
         bio_data_id = data['bio_data_id']
         first_name = data['first_name']
         last_name = data['last_name']
@@ -167,7 +170,8 @@ def CreateBioData(request):
                 contact_email=email,
                 contact_mobile=mobile,
                 about_myself=about_myself,
-                partner_preference=partner_preference
+                partner_preference=partner_preference,
+
 
             )
             if request.FILES:
@@ -254,7 +258,8 @@ def CreateBioData(request):
             html = btemplate.render(biodata_instance)
 
         # template = get_template(btemplate)
-        return JsonResponse({"bio_data_id": bio_data_id, "html": html}, status=202)
+
+        return JsonResponse({"bio_data_id": bio_data_id,'amount':amount, "html": html}, status=202)
         result = BytesIO()
         pdf = render_to_pdf('home/test.html',response)
         print(type(pdf))
@@ -294,11 +299,25 @@ def CreateBioData(request):
 #     # pdf = wkhtmltopdf('templates/home/biodata/html_templates/biodata_template_1.html','pdf.file')
 #     return HttpResponse(pdf,content_type='application/pdf')
 
+
+@csrf_exempt
 def get_wk_pdf(request):
-    print(request)
+
     show_content = True
     biodata_instance = {}
     biodata_id = request.GET['biodata_id']
+    razorpay_order_id = request.POST.get('razorpay_order_id')
+    if razorpay_order_id:
+        payment = Payment.objects.filter(gateway_id=razorpay_order_id, userId__user=request.user).first()
+        if payment:
+            payment.payment_status = True
+            payment.status = 'Paid'
+            payment.save()
+            obj = BioData.objects.filter(id=biodata_id).first()
+            obj.paid_template = obj.template
+            obj.payment = payment
+            obj.save()
+
     try:
         content_type = request.GET['content_type']
         if content_type == 'download':
@@ -311,24 +330,14 @@ def get_wk_pdf(request):
     biodata_instance = get_bio_data(request,biodata_id)
     pdf_filename = biodata_instance['first_name'] + biodata_id
     print('-------------')
-    response = PDFTemplateResponse(request=request,
-                                   template=biodata_instance['btemplate'],
-                                   filename=pdf_filename,
-                                   context=biodata_instance,
-                                   show_content_in_browser=show_content,
-                                   cmd_options={'margin-top': 0,'margin-bottom': 0,'margin-right': 0,'margin-left': 0, 'disable-smart-shrinking': False },
+    response = generate_all_pdf(request, biodata_instance, biodata_instance['btemplate'], pdf_filename, show_content)
 
-                                   )
-    # print('response:',response.rendered_content)
-    pdf = response.rendered_content
-    # for a in response:
-    #     print(a)
-    # return HttpResponse(pdf, content_type='application/pdf')
     return response
 
     # pdf = pdfkit.from_file('templates/home/biodata/html_templates/biodata_template_1.html','file.pdf')
     # pdf = wkhtmltopdf('templates/home/biodata/html_templates/biodata_template_1.html','pdf.file')
     # return HttpResponse(response.getvalue(),content_type='application/pdf')
+
 def get_bio_data(requset,biodata_id):
     biodata = BioData.objects.get(id=biodata_id)
     biodata_instance = BioData.objects.filter(id=biodata_id).values()[0]
@@ -400,7 +409,7 @@ def get_bio_data(requset,biodata_id):
     biodata_instance['btemplate_image'] = template_path.template_image
     biodata_instance['biodata_instance'] = biodata_instance
     biodata_instance['template_language'] = template_language
-    print(template_language)
+    print(requset.POST)
     return biodata_instance
 def selected_country(request):
     if request.user.is_authenticated:
@@ -519,6 +528,6 @@ def biodata_home(request):
     if request.user.is_authenticated:
         user = UserDetails.objects.get(user = request.user)
         response['biodata_drafts'] = BioData.objects.filter(biodata_user=user,biodata_status=1).order_by('created').reverse()
-        response['biodata_purchased'] = BioData.objects.filter(biodata_user=user,biodata_status=2).order_by('created').reverse()
+        response['biodata_purchased'] = BioData.objects.filter(biodata_user=user,payment__payment_status=True).order_by('created').reverse()
     response['biodata_templates'] = TemplateData.objects.all()
     return HttpResponse(template.render(response, request))

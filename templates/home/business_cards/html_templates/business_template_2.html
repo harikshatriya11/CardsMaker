@@ -21,11 +21,9 @@
             color: #ffffff;
         {#height: 30.3cm;#}
         }
-        html,body{
-        {#height:297mm;#}
-        {#width:210mm;#}
-        {#max-height:297mm;#}
-        {#max-width:210mm;#}
+        html{
+            margin: unset !important;
+            height: 100%;
         }
 
     </style>
@@ -40,7 +38,9 @@
     <div class="top_div1">
 
         <div class="top_div">
-            <div id="logo"><img width="60px" src="/media/{{ business_card_instance.logo }}"></div>
+            {% if business_card_instance.logo and business_card_instance.logo != 'undefined' %}
+                <div id="logo"><img width="60px" src="/media/{{ business_card_instance.logo }}"></div>
+            {% endif %}
             <div id="company_tagline">{{ business_card_instance.company_tagline }}</div>
 
             {% if  business_card_instance.qrcode != '' and business_card_instance.qrcode is not none %}

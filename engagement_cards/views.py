@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 from languages.models import Biodata
+from users.views import generate_all_pdf
 from .models import *
 from django.http import JsonResponse
 from django.http import Http404,HttpResponse
@@ -193,6 +194,8 @@ def CreateEngagementCard(request):
         return JsonResponse({"engagement_card_id": engagement_card_id, "html": html}, status=200)
     else:
         return redirect('users:home')
+
+@csrf_exempt
 def get_wk_pdf(request):
     print(request)
     engagement_card_instance = {}
@@ -211,15 +214,15 @@ def get_wk_pdf(request):
     filename = engagement_card_instance['groom_first_name']+' '+engagement_card_instance['bride_first_name']
     print('filename:',filename)
     print('-------------')
-
-    response = PDFTemplateResponse(request=request,
-                                   template=engagement_card_instance['btemplate'],
-                                   filename=filename,
-                                   context=engagement_card_instance,
-                                   show_content_in_browser=show_content,
-                                   cmd_options={'margin-top': 0,'margin-bottom': 0,'margin-right': 0,'margin-left': 0, },
-
-                                   )
+    response = generate_all_pdf(request, engagement_card_instance, engagement_card_instance['btemplate'], filename, show_content)
+    # response = PDFTemplateResponse(request=request,
+    #                                template=engagement_card_instance['btemplate'],
+    #                                filename=filename,
+    #                                context=engagement_card_instance,
+    #                                show_content_in_browser=show_content,
+    #                                cmd_options={'margin-top': 0,'margin-bottom': 0,'margin-right': 0,'margin-left': 0, },
+    #
+    #                                )
     # pdf = response.rendered_content
     return response
 def get_engagement_card(requset,engagement_card_id):
@@ -349,8 +352,8 @@ def engagement_home(request):
     template = loader.get_template("home/engagement_cards/engagement_home.html")
     if request.user.is_authenticated:
         user = UserDetails.objects.get(user = request.user)
-        response['engagement_drafts'] = EngagementCard.objects.filter(engagement_user=user,engagement_card_status=1).order_by('created').reverse()
-        response['engagement_purchased'] = EngagementCard.objects.filter(engagement_user=user,engagement_card_status=2).order_by('created').reverse()
+        response['engagement_drafts'] = EngagementCard.objects.filter(engagement_user=user).order_by('created').reverse()
+        response['engagement_purchased'] = EngagementCard.objects.filter(engagement_user=user).order_by('created').reverse()
     response['engagement_templates'] = TemplateData.objects.all()
     print(response)
     return HttpResponse(template.render(response, request))

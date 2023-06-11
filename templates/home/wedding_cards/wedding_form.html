@@ -382,6 +382,19 @@
     </div>
 
 {#    <button class="btn btn-primary" id="submit_form" >Submit form</button>#}
+
+<div>
+{#  <button class="btn btn-primary" id="submit_form" type="submit" style="margin-top: 5px;width: 30%;float: left">Submit form</button>#}
+{#  <a class="btn btn-primary"id="show_pdf"style="margin-top: 5px;display: none;width: 30%;float: left;margin-left: 5%;margin-right: 5%" target="_blank">Show PDF</a>#}
+    <div class="row">
+        <div class="col-md-12" id="payment_btn" style="display: none;margin-top: 10px">
+            <button type="button" class="btn btn-primary" onclick="paynow()">Pay Now & Get PDF</button>
+        </div>
+    </div>
+{#  <a class="btn btn-primary"id="download_pdf"style="margin-top: 5px;display: none;width: 30%;float: left">Download </a>#}
+{#    <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_HaLdzF1VPOjcJV" async> </script> </form>#}
+
+</div>
 </form>
 
 {#<div style="height: 100%;width: 10%;margin-left: 1%;max-height: 830px;background: #ffffff;overflow-y: scroll">#}
@@ -448,7 +461,19 @@
         </div>
     </div>
 </div>
+<script>
+    function paynow(){
+        var id = $('form').attr('id');
+        if (id > 0) {
+            window.location = '/payment/' + id + "?card_type=wedding"
+        }
+        else {
+            alert("Wedding Card Not Found");
+        }
+    }
 
+
+</script>
 <script>
 
     {% if wedding_card_id != "" or wedding_card_id != none %}
@@ -542,6 +567,7 @@
                 $('html, body').animate({
                     scrollTop: $("#iframe_div").offset().top
                 }, );
+                $("#payment_btn").css('display','block');
             }
         });
     }
@@ -634,6 +660,7 @@
                             $('html, body').animate({
                                 scrollTop: $("#iframe_div").offset().top
                             }, );
+                            $("#payment_btn").css('display','block');
                         }
                     });
                 }

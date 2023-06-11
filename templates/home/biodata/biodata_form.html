@@ -140,7 +140,9 @@
             <option value="">Select State</option>
              {% if request.user.is_authenticated %}
                  {% for states in all_state %}
-                 <option value="{{ states.name }}">{{ states.name|truncatechars:20 }}</option>
+                     {% if states.country.id == 105 %}
+                         <option value="{{ states.name }}">{{ states.name|truncatechars:20 }}</option>
+                     {% endif %}
                  {% endfor %}
              {% else %}
                  {% for states in all_state %}
@@ -437,7 +439,7 @@
           <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="validationCustom04" id="l_about_myself">{{ labels.about_myself}}</label>
-        <textarea type="text" rows="7" class="form-control" id="about_myself" placeholder="{{ labels.describe_your_self_in_max_500_words}}" value=""  maxlength="500"></textarea>
+        <textarea type="text" rows="7" class="form-control" id="about_myself" placeholder="{{ labels.describe_your_self_in_max_500_words}}" value=""  maxlength="400"></textarea>
       <div class="valid-feedback">
         Looks good!
       </div>
@@ -456,9 +458,14 @@
 
 <div>
 {#  <button class="btn btn-primary" id="submit_form" type="submit" style="margin-top: 5px;width: 30%;float: left">Submit form</button>#}
-  <a class="btn btn-primary"id="show_pdf"style="margin-top: 5px;display: none;width: 30%;float: left;margin-left: 5%;margin-right: 5%" target="_blank">Show PDF</a>
+{#  <a class="btn btn-primary"id="show_pdf"style="margin-top: 5px;display: none;width: 30%;float: left;margin-left: 5%;margin-right: 5%" target="_blank">Show PDF</a>#}
+    <div class="row">
+        <div class="col-md-12" id="payment_btn" style="display: none;margin-top: 10px">
+            <button type="button" class="btn btn-primary" onclick="paynow()">Pay Now & Get PDF</button>
+        </div>
+    </div>
 {#  <a class="btn btn-primary"id="download_pdf"style="margin-top: 5px;display: none;width: 30%;float: left">Download </a>#}
-    <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_HaLdzF1VPOjcJV" async> </script> </form>
+{#    <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_HaLdzF1VPOjcJV" async> </script> </form>#}
 
 </div>
 </form>
@@ -524,6 +531,7 @@
         </div>
     </div>
 </div>
+
 <script>
 
     var url = '{% url "biodata:create_biodata" %}';
@@ -590,11 +598,13 @@
                 $('form').attr("id",data['bio_data_id']);
                 var $iframe = $('#iframe');
                 $iframe.attr('srcdoc', data['html']);
-                $("#show_pdf").css('display','block').attr("href","{% url 'biodata:get_wk_pdf' %}?biodata_id="+data['bio_data_id']+"&content_type=none")
+                $("#payment_btn").css('display','block');
+                {# $("#show_pdf").css('display','block').attr("href","{% url 'biodata:get_wk_pdf' %}?biodata_id="+data['bio_data_id']+"&content_type=none")#}
                 $("#download_pdf").css('display','block').attr("href","{% url 'biodata:get_wk_pdf' %}?biodata_id="+data['bio_data_id']+"&content_type=download")
                 $('html, body').animate({
                     scrollTop: $("#iframe_div").offset().top
                 }, );
+                $("#payment_btn").html(data['payment_html'])
             }
         });
     }
@@ -713,8 +723,11 @@ $('#biodata_language').change(function(event) {
 
 
 <script>
+    var amount = "";
+    var biodata_id = "";
     $(document).ready(function(){
   $(".flip-card-front").click(function(){
+
    if ($(this).css("border-style") == "none") {
        $(".flip-card-front").css('border-style','none')
        console.log($(this).css("border-style"));
@@ -737,6 +750,7 @@ $('#biodata_language').change(function(event) {
         alert("First Name Is Requried");
     }
     else {
+        {#alert($('form').attr('id'))#}
         formdata = new FormData();
         formdata.append('bio_data_id', $('form').attr('id'));
         formdata.append('template_id', template_id);
@@ -784,9 +798,13 @@ $('#biodata_language').change(function(event) {
                 $('form').attr("id",data['bio_data_id']);
                 var $iframe = $('#iframe');
                 $iframe.attr('srcdoc', data['html']);
+                amount = data['amount'];
+                biodata_id = $('form').attr('id');
+                {#alert(biodata_id);#}
                 $('html, body').animate({
                     scrollTop: $("#iframe_div").offset().top
                 }, );
+                $("#payment_btn").css('display','block');
             }
         });
     }
@@ -807,7 +825,7 @@ $('#biodata_language').change(function(event) {
     {#    } else {#}
     {#        $(this).siblings(':first').children(':first-child').clone().appendTo($(this));#}
     {#    }#}
-    {#});#}
+    {# });#}
 
     $("#myBtn").click(function (){
         $('html, body').animate({
@@ -815,6 +833,20 @@ $('#biodata_language').change(function(event) {
         });
 
     },);
+</script>
+
+<script>
+    function paynow(){
+        var biodata_id = $('form').attr('id');
+        if (biodata_id > 0) {
+            window.location = '/payment/' + biodata_id + "?card_type=wedding_biodata"
+        }
+        else {
+            alert("Biodata Not Found");
+        }
+    }
+
+
 </script>
 
 </body>

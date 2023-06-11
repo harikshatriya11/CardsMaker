@@ -79,3 +79,19 @@ class MobileOTP(models.Model):
     otp_generated_time = models.PositiveIntegerField(default=0, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     modified = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+
+class Payment(models.Model):
+    userId = models.ForeignKey(UserDetails, on_delete=models.CASCADE, related_name='user_payment')
+    gateway_id = models.CharField(max_length=100,null=True, blank=True)
+    order_no = models.CharField(max_length=100,null=True, blank=True)
+    payment_id = models.CharField(max_length=100,null=True, blank=True)
+    payment_mode = models.CharField(max_length=100, null=True, blank=True)
+    entity = models.CharField(max_length=100, null=True, blank=True)
+    currency = models.CharField(max_length=100, null=True, blank=True)
+    amount = models.CharField(max_length=100, null=True, blank=True)
+    status = models.CharField(max_length=100, null=True, blank=True)
+    payment_status = models.BooleanField(default=False)
+    verification_failed = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    modified = models.DateTimeField(auto_now=True, null=True, blank=True)

@@ -41,7 +41,7 @@
             <div class="templates" style="float: left;width: 100%;border-style: none;margin-left: 1%">
                 <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
                 {% for resume_image in resume_templates %}
-                    <a href="{% url 'resume:resume_form'    %}?resume_card_id={{ resume_image.id }}" style="margin: 3%"><img src="/media/{{ resume_image.template_image_resume_icon }}"width="40%"height="15%"></a>
+                    <a href="{% url 'resume:resume_form'    %}?template_id={{ resume_image.id }}" style="margin: 3%"><img src="/media/{{ resume_image.template_image_resume_icon }}"width="40%"height="15%"></a>
                 {% endfor %}
             </div>
         </div>
@@ -97,7 +97,7 @@
     <div class="templates" style="float: left;width:65%;border-style: none;margin-left: 1%">
     <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
            {% for resume_image in resume_templates %}
-               <a href="{% url 'resume:resume_form'    %}?resume_card_id={{ resume_image.id }}" style="margin: 3%"><img src="/media/{{ resume_image.template_image_resume_icon }}"width="10%"height="15%"></a>
+               <a href="{% url 'resume:resume_form'    %}?template_id={{ resume_image.id }}" style="margin: 3%"><img src="/media/{{ resume_image.template_image_resume_icon }}"width="10%"height="15%"></a>
            {% endfor %}
     </div>
 

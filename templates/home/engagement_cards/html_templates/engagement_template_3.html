@@ -13,18 +13,22 @@
     <style>
         body{
             background: url('/media/{{ engagement_card_instance.b_image }}') no-repeat;
-            background-size: 26.5cm ;
-            height: 32.95cm;
-
+            background-size: cover;
+            margin: unset !important;
+            height: 100%;
         }
-    </style>
+        html{
+            margin: unset !important;
+            height: 100%;
+        }
+   </style>
 
 </head>
 <body style="">
 {#<img src="media/media/biodata/templates/icon/biodata_template_1.jpeg" width="200">#}
 {#<img src="{% static 'wed_biodata.png' %}" width="200">#}
 <div class="main_content" style="text-align: -webkit-center;">
-    <div style="align-content: center;text-align: center;margin-top: 500px;">
+    <div style="align-content: center;text-align: center;padding-top: 500px;">
         <p style="margin:0px;font-size: 22px;color: #000000;">{{ template_language.gladly_invite_you_to_celebrate_our }}</p>
         <p style="margin:0px;font-size: 22px;color: #000000;">{{ template_language.engagement }}</p>
     </div>

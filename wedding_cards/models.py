@@ -13,7 +13,7 @@ class WeddingTemplateData(models.Model):
     template_type_wedding = models.CharField(default='', blank=True, null=True, max_length=100)
     template_country_wedding = models.ForeignKey(Country,default=1,on_delete=models.CASCADE,related_name='template_country_wedding')
     template_language_wedding = models.ForeignKey(LanguageName,default=1,on_delete=models.CASCADE,related_name='template_language_wedding')
-    template_price_wedding = models.PositiveIntegerField(default=0, blank=True, null=True)
+    template_price = models.PositiveIntegerField(default=0, blank=True, null=True)
     template_image_wedding_icon = models.ImageField(upload_to='media/wedding/templates/icon',default='')
     template_image_wedding = models.ImageField(upload_to='media/wedding/templates/images',default='')
     card_language = models.ForeignKey(Wedding, on_delete=models.CASCADE, related_name='card_language',blank=True, null=True)
@@ -90,6 +90,10 @@ class WeddingCard(models.Model):
     wedding_image4 = models.ImageField(upload_to='media/wedding/templates/images', default='')
 
     wedding_card_status = models.IntegerField(choices=CHOICE_ENGAGEMENT_CARDS_STATUS, default=1)
+
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, null=True, blank=True)
+    paid_template = models.ForeignKey(WeddingTemplateData, on_delete=models.CASCADE, blank=True, null=True)
+
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     modified = models.DateTimeField(auto_now=True, null=True, blank=True)
 

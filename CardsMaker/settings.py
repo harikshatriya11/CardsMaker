@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.template.context_processors import static
@@ -26,13 +27,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost"]
 
 
 # Application definition
 
+
+sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'fontawesomefree',
     'languages',
     'users',
     'biodata',
@@ -51,7 +55,8 @@ INSTALLED_APPS = [
     'mathfilters',
     'resume',
     'latter_had',
-    'fontawesome-free',
+    'agora',
+
     'qr_code',
 ]
 
@@ -86,7 +91,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'templatetags': 'users.templatetags.templatetags',
+            },
         },
+
     },
 ]
 
@@ -167,5 +176,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
-RAZOR_KEY_ID = "H2K22dD1I3soH9"
-RAZOR_KEY_SECRET = "rzp_test_7nruGgj5EfDxGO"
+APPEND_SLASH = False
+if DEBUG:
+    RAZOR_KEY_ID = "rzp_test_pRwByYGHjIP0t2"
+    RAZOR_KEY_SECRET = "GOfSmvSm0jAlTiwiBoXue8kP"
+else:
+    RAZOR_KEY_ID = "H2K22dD1I3soH9"
+    RAZOR_KEY_SECRET = "rzp_test_7nruGgj5EfDxGO"
+
+LOGIN_REDIRECT_URL = '/'

@@ -10,10 +10,11 @@ from django.core.files.base import ContentFile
 from django.shortcuts import render
 from django.utils.encoding import smart_str
 from django.views.decorators.csrf import csrf_exempt
-from imgkit import imgkit
+
 
 
 from languages.models import Biodata, LanguageName, LatterHad, Business
+from users.views import generate_all_pdf
 from .models import *
 from django.http import JsonResponse
 from django.http import Http404,HttpResponse
@@ -328,15 +329,8 @@ def get_wk_pdf(request):
     filename = business_card_instance['founder']+' '+business_card_instance['company_name']
     print('filename:',filename)
     print('-------------')
+    response = generate_all_pdf(request, business_card_instance, business_card_instance['btemplate'], filename, show_content)
 
-    response = PDFTemplateResponse(request=request,
-                                   template=business_card_instance['btemplate'],
-                                   filename=filename,
-                                   context=business_card_instance,
-                                   show_content_in_browser=show_content,
-                                   cmd_options={'margin-top': 0,'margin-bottom': 0,'margin-right': 0,'margin-left': 0, 'page-height':'250px', 'page-width':'400px'},
-
-                                   )
     # pdf = response.rendered_content
     return response
 def get_business_card(requset,business_card_id):
@@ -532,3 +526,6 @@ def CreateLanguageLabel(request):
             add_language = LanguageName.objects.create(language_name=language_name, country_name=country_name,language_abr=language_abr)
             add_language_label = Business.objects.create(language=add_language,label_name=label_name,status=True)
     return HttpResponse(template.render(context,request))
+
+
+

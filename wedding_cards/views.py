@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 from languages.models import Biodata
+from users.views import generate_all_pdf
 from .models import *
 from django.http import JsonResponse
 from django.http import Http404,HttpResponse
@@ -279,15 +280,8 @@ def get_wk_pdf(request):
     filename = wedding_card_instance['groom_first_name']+' '+wedding_card_instance['bride_first_name']
     print('filename:',filename)
     print('-------------')
+    response = generate_all_pdf(request, wedding_card_instance, wedding_card_instance['btemplate'], filename,show_content)
 
-    response = PDFTemplateResponse(request=request,
-                                   template=wedding_card_instance['btemplate'],
-                                   filename=filename,
-                                   context=wedding_card_instance,
-                                   show_content_in_browser=show_content,
-                                   cmd_options={'margin-top': 0,'margin-bottom': 0,'margin-right': 0,'margin-left': 0, 'page-size':'A4'},
-
-                                   )
     # pdf = response.rendered_content
     return response
 def get_wedding_card(requset,wedding_card_id):

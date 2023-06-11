@@ -9,7 +9,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200&display=swap" rel="stylesheet">
     {#    <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=pdfCalligraph">#}
+    <style>
 
+        body{
+            background: url('/media/{{ wedding_card_instance.b_image }}') no-repeat;
+            background-size: cover;
+            height:100%;
+            margin: unset !important;
+            color: #efef89;
+            font-family: 'Mukta', sans-serif;
+        }
+        html{
+            margin: unset !important;
+            height: 100%;
+        }
+
+    </style>
 </head>
 <body style="">
 
@@ -206,7 +221,7 @@
 </body>
 </html>
 <style>
-    .main_content{ margin-left: 80px; margin-right: 100px;margin-top: 200px; }
+    .main_content{ margin-left: 80px; margin-right: 100px;padding-top: 200px; }
     .couple_name_div{ width: 40%;float: left;word-wrap: break-word;font-size: 70px;  }
     .couple_name_div_and{ width: 20%;float: left;word-wrap: break-word; margin-top: 100px; }
     .parents{ font-size: 16px; line-height: normal}
@@ -236,7 +251,9 @@
     .top_content_div { display: flex;    justify-content: center; text-align: -webkit-center;}
     body{
         background: url('/media/{{ wedding_card_instance.b_image }}') no-repeat;
-        background-size: cover;height: 31.62cm;color: #efef89;font-family: 'Mukta', sans-serif;
+        background-size: cover;color: #efef89;font-family: 'Mukta', sans-serif;
+        height: 100%;
+        margin: unset !important;
     }
 
     {% if wedding_card_instance.wedding_card_status == 1 %}

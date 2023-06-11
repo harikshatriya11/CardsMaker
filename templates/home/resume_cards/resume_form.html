@@ -441,10 +441,9 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-md-12 mb-12"><label class="l_work_experience1">{{ labels.work_experience}} 1 <h6>({{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}})</h6> </label><input type="text" class="form-control" id="work_experience1" placeholder="{{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}}" value="{{ details.work_experience1 }}"  ></div>
-                <div class="col-md-12 mb-12"><label class="l_work_experience2">{{ labels.work_experience}} 2</label><input type="text" class="form-control" id="work_experience2" placeholder="{{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}}"  value="{{ details.work_experience2}}"></div>
-                <div class=
-                             "col-md-12 mb-12"  style="margin-bottom: 20px;"><label class="l_work_experience3">{{ labels.work_experience}} 3</label><input type="text" class="form-control" id="work_experience3" placeholder="{{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}}"  value="{{ details.work_experience3 }}"></div>
+                <div class="col-md-12 mb-12"><label class="l_work_experience1">{{ labels.work_experience}} 1 <h6>({{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}})</h6> </label><textarea class="form-control my-textarea" id="work_experience1" placeholder="{{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}}" value="{{ details.work_experience1 }}"  >{{ details.work_experience1|safe }}</textarea></div>
+                <div class="col-md-12 mb-12"><label class="l_work_experience2">{{ labels.work_experience}} 2</label><textarea type="text" class="form-control my-textarea" id="work_experience2" placeholder="{{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}}"  value="{{ details.work_experience2}}">{{ details.work_experience2|safe }}</textarea></div>
+                <div class="col-md-12 mb-12"  style="margin-bottom: 20px;"><label class="l_work_experience3">{{ labels.work_experience}} 3</label><textarea type="text" class="form-control my-textarea" id="work_experience3" placeholder="{{ labels.company_name}}, {{ labels.year}}, {{ labels.job_role}}, {{ labels.location}}"  value="{{ details.work_experience3 }}">{{ details.work_experience3|safe }}</textarea></div>
             </div>
         </div>
     </div>
@@ -452,7 +451,11 @@
     {#    <button class="btn btn-primary" id="submit_form" >Submit form</button>#}
 </form>
 <br>
-<form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_HaMGJFmGAE5vAc" async> </script> </form>
+<div class="row">
+    <div class="col-md-12" id="payment_btn" style="display: block;margin-top: 10px">
+        <button onclick="if ($('form').attr('id')){window.location='/resume/get_wk_pdf/?resume_card_id=' + $('form').attr('id')} else {alert('create resume first')}" type="button" class="btn btn-primary" onclick="paynow()">Get PDF</button>
+    </div>
+</div>
 
 {#<div id="footer_images">#}
 {#    <div class="flip-card" id="{{ template_id }}">#}
@@ -466,10 +469,16 @@
 {#      </div>#}
 {#    </div>#}
 {#</div>#}
+<style>
+    #iframe {
+    size: 7in 9.25in;
+    margin: 27mm 16mm 27mm 16mm;
+}
+</style>
 <div id="iframe_div" style="margin-top:40px;overflow-scrolling: touch">
     Output PDF Pages
     <div id="wrap">
-        <iframe id="iframe" src="" ></iframe>
+        <iframe id="iframe" src=""  sandbox="allow-scripts allow-forms"></iframe>
     </div>
 </div>
 
@@ -494,10 +503,11 @@
                 <div class="carousel-inner" id="{{ template_id }}" >
                     {% for resume_card in resume_template %}
 
+
                         <div class="item {% if forloop.counter == 1 %}active{% endif %} ">
                             <div class="col-xs-4">
                                 <div style="color: black;{% if resume_card.id == template_id %}border-style: solid;{% else %}border-style: none;{% endif %}margin-bottom: 5px;"align="center" class="flip-card-front"  href="#1" id="{{ resume_card.id }}">
-                                    <img src="/media/{{ resume_card.template_image_resume_icon }}" alt="Avatar" style="width:90%;height:100%;margin: 2%;" class="img-responsive"></div>
+                                    {{ forloop.counter }}<img src="/media/{{ resume_card.template_image_resume_icon }}" alt="Avatar" style="width:90%;height:100%;margin: 2%;" class="img-responsive"></div>
                             </div>
                         </div>
                     {% endfor %}
@@ -525,13 +535,20 @@
     var create_resume_card_url = '{% url "resume:CreateResumeCard" %}';
     var resume_form_id = $('form').attr("id",{{ resume_card_id }});
 
-    $("#submit_form").click(function (event) {
+    function submit_form() {
         event.preventDefault();
         var data = new FormData();
         var template_id = $(".carousel-inner")[0].id;
         console.log('template_id'+template_id)
         {#data_array = $("#-1").serialize();#}
         {#console.log('data_array:',data_array);#}
+         var name = $("#name").val().length;
+                console.log(name);
+
+                if (name < 2 ) {
+                    alert("Name required, atleast 3 characters");
+                    return false;
+                }
 
             $("#loader").css('display','block');
 
@@ -589,8 +606,8 @@
                     }, );
                 }
             });
-            {#}#}
-            });
+
+            }
 
     $(document).ready(function() {
         $(".flip-card-front").click(function () {
@@ -613,7 +630,7 @@
                 console.log(name);
 
                 if (name < 2 ) {
-                    alert("Company Name required with atleast 3 characters");
+                    alert("Name required, atleast 3 characters");
                 }
                 else {
                     $("#loader").css('display','block');
@@ -688,6 +705,7 @@
 
 
 
+
 </script>
 
 <script>
@@ -754,6 +772,82 @@
             $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
         }
     });
+</script>
+<script>
+{#submit_form()#}
+{#work_experience1#}
+
+
+   document.addEventListener('DOMContentLoaded', function() {
+   {% for a in '123' %}
+      var textarea{{ forloop.counter }} = document.getElementById('work_experience{{ forloop.counter }}');
+
+
+      // Function to add <br> tags at line break points
+      function addBrAtLineBreaks{{ forloop.counter }}() {
+        var content = textarea{{ forloop.counter }}.value;
+        var newText = content.replace(/\n/g, '<br>');
+        textarea{{ forloop.counter }}.value = newText;
+      }
+
+      // Function to remove <br> tags from content
+      function removeBrTags{{ forloop.counter }}() {
+        var content = textarea{{ forloop.counter }}.value;
+        var newText = content.replace(/<br>/g, '\n');
+        newText = newText.replace('<b>', '').replace('</b>', '');
+        textarea{{ forloop.counter }}.value = newText;
+      }
+      function addBoldTagForFirstLine{{ forloop.counter }}() {
+        var content = textarea{{ forloop.counter }}.value;
+        var lines = content.split('\n');
+        if (lines.length > 0) {
+          lines[0] = '<b>' + lines[0] + '</b>';
+          textarea{{ forloop.counter }}.value = lines.join('\n');
+        }
+      }
+
+      // Function to resize textarea{{ forloop.counter }} based on text content
+      function resizetextarea{{ forloop.counter }}() {
+        textarea{{ forloop.counter }}.style.height = 'auto';
+        textarea{{ forloop.counter }}.style.height = (textarea{{ forloop.counter }}.scrollHeight) + 'px';
+      }
+
+
+      // Add event listener for focusin event
+      textarea{{ forloop.counter }}.addEventListener('focusin', function() {
+        removeBrTags{{ forloop.counter }}(); // remove <br> tags from content
+        resizetextarea{{ forloop.counter }}(); // resize textarea{{ forloop.counter }} based on text content
+      });
+
+      // Add event listener for focusout event
+      textarea{{ forloop.counter }}.addEventListener('focusout', function() {
+
+        resizetextarea{{ forloop.counter }}(); // resize textarea{{ forloop.counter }} based on text content
+      });
+
+      // Resize textarea{{ forloop.counter }} based on text content on load
+      window.addEventListener('load', function() {
+          removeBrTags{{ forloop.counter }}();
+        resizetextarea{{ forloop.counter }}();
+
+      });
+
+    {% endfor %}
+    var button = document.getElementById('submit_form');
+    button.addEventListener('click', function() {
+        {% for a in '123' %}
+            addBoldTagForFirstLine{{ forloop.counter }}();
+            addBrAtLineBreaks{{ forloop.counter }}(); // add <br> tags at line break points
+        {% endfor %}
+        submit_form();
+      {% for a in '123' %}
+          removeBrTags{{ forloop.counter }}();
+          resizetextarea{{ forloop.counter }}();
+    {% endfor %}
+});
+});
+
+
 </script>
 
 </body>

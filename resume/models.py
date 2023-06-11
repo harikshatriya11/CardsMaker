@@ -3,14 +3,15 @@ from django.db import models
 # Create your models here.
 import choices
 from languages.models import Resume
-from users.models import UserDetails
+from users.models import UserDetails, Payment
+
 
 class ResumeTemplateData(models.Model):
     template_name_resume = models.CharField(default='', blank=True, null=True, max_length=100)
     template_url_resume = models.CharField(default='', blank=True, null=True, max_length=100)
     template_type_resume = models.CharField(default='', blank=True, null=True, max_length=100)
     template_country_resume = models.ForeignKey(Country,default=1,on_delete=models.CASCADE,related_name='template_country_resume')
-    template_price_resume = models.PositiveIntegerField(default=0, blank=True, null=True)
+    template_price = models.PositiveIntegerField(default=0, blank=True, null=True)
     template_image_resume_icon = models.ImageField(upload_to='media/resume/templates/icon',default='')
     template_image_resume = models.ImageField(upload_to='media/resume/templates/images',default='')
     status = models.IntegerField(choices=choices.CHOICE_STATUS, default=0)
@@ -48,15 +49,19 @@ class ResumeCard(models.Model):
     organization = models.CharField(default='',max_length=100)
     languages = models.CharField(default='',max_length=100)
 
-    work_experience1 = models.CharField(default='',max_length=200)
-    work_experience2 = models.CharField(default='',max_length=200)
-    work_experience3 = models.CharField(default='',max_length=200)
-    work_experience4 = models.CharField(default='',max_length=200)
-    work_experience5 = models.CharField(default='',max_length=200)
-    work_experience6 = models.CharField(default='',max_length=200)
+    work_experience1 = models.TextField(null=True, blank=True)
+    work_experience2 = models.TextField(null=True, blank=True)
+    work_experience3 = models.TextField(null=True, blank=True)
+    work_experience4 = models.TextField(null=True, blank=True)
+    work_experience5 = models.TextField(null=True, blank=True)
+    work_experience6 = models.TextField(null=True, blank=True)
 
     image = models.ImageField(upload_to='media/resume/templates/images', default='')
     resume_card_status = models.IntegerField(choices=choices.CHOICE_CARD_STATUS, default=1)
+
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, null=True, blank=True)
+    paid_template = models.ForeignKey(ResumeTemplateData, on_delete=models.CASCADE, blank=True, null=True)
+
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     modified = models.DateTimeField(auto_now=True, null=True, blank=True)
 

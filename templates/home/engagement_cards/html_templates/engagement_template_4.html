@@ -13,18 +13,22 @@
     <style>
         body{
             background: url('/media/{{ engagement_card_instance.b_image }}') no-repeat;
-            background-size: 26.5cm ;
-            height: 28.95cm;
-
+            background-size: cover;
+            margin: unset !important;
+            height: 100%;
         }
-    </style>
+        html{
+            margin: unset !important;
+            height: 100%;
+        }
+   </style>
 
 </head>
 <body style="">
 {#<img src="media/media/biodata/templates/icon/biodata_template_1.jpeg" width="200">#}
 {#<img src="{% static 'wed_biodata.png' %}" width="200">#}
 <div class="main_content" style="text-align: -webkit-center;">
-    <div style="align-content: center;text-align: center;margin-top: 300px;">
+    <div style="align-content: center;text-align: center;padding-top: 300px;">
         <p style="margin:0px;font-size: 22px;color: #000000;">{{ template_language.gladly_invite_you_to_celebrate_our }}</p>
         <p style="margin:0px;font-size: 100px;color: #000000;">{{ template_language.engagement }}</p>
     </div>
@@ -33,7 +37,7 @@
         <p style="color: #000000" id="symbol_word_and">{{ template_language.symbol_word_and }}</p>
         <p style="color: #000000" id="bride_first_name"> {{ engagement_card_instance.bride_first_name|capfirst }}</p>
     </div>
-    <div style="margin-top: 150px;font-size: 22px;color: #000000;width: 500px;word-wrap: break-word;">
+    <div style="padding-top: 150px;font-size: 22px;color: #000000;width: 500px;word-wrap: break-word;">
         {{ engagement_card_instance.time_of_engagement }}
         {{ engagement_day_name }}, {{ engagement_day }} {{ engagement_month }}, {{ engagement_year }}<br>
         {{ engagement_card_instance.place_of_engagement|capfirst }}<br>
@@ -59,7 +63,7 @@
 
     }
     #couple_name{
-        margin-top: 190px;
+        padding-top: 190px;
         line-height: 10px;
         font-family: 'Sofia';
     {#background: red;#}

@@ -43,10 +43,9 @@
         color: #ffffff;
     }
     #iframe {
-        width: 1028px;
-        height: 1600px;
+        width: 1020px;
+        height: 1420px;
         border: 0px;
-
     }
     @media screen and (-webkit-min-device-pixel-ratio:0) {
         #iframe {
@@ -204,8 +203,32 @@
     </div>
 
     {#  <button class="btn btn-primary" id="submit_form" type="submit" style="margin-top: 10px">Submit form</button>#}
+    {%  if engagement_card_details.payment.payment_status %}
+        <a class="btn btn-primary"id="show_pdf"style="margin-top: 5px;display: none;width: 30%;float: left;margin-left: 5%;margin-right: 5%" target="_blank">Show PDF</a>
+
+    {% else %}
+    <div class="row">
+        <div class="col-md-12" id="payment_btn" style="display: none;margin-top: 10px">
+            <button type="button" class="btn btn-primary" onclick="paynow()">Pay Now & Get PDF</button>
+        </div>
+    </div>
+    {% endif %}
+    <script>
+    function paynow(){
+        var obj_id = $('form').attr('id');
+        if (obj_id > 0) {
+            window.location = '/payment/' + obj_id + "?card_type=engagement_card"
+        }
+        else {
+            alert("Engagement Card Not Found");
+        }
+    }
+
+
+    </script>
+
 </form>
-<div id="iframe_div" style="margin-top:40px;overflow-scrolling: touch">
+<div id="iframe_div" style="margin-top:40px;">
     Output PDF Pages
     <div id="wrap">
         <iframe id="iframe" src=""></iframe>
@@ -254,6 +277,7 @@
         </div>
     </div>
 </div>
+
 <script>
 
     var template_id = '{{ template_id }}';
@@ -336,6 +360,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#payment_btn").css('display', 'block');
                     $('form').attr("id",data['engagement_card_id']);
                     var $iframe = $('#iframe');
                     $iframe.attr('srcdoc', data['html']);

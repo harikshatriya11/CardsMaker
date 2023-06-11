@@ -168,6 +168,11 @@ class BioData(models.Model):
     contact_email = models.CharField(default='', blank=True, null=True, max_length=100)
     contact_mobile = models.CharField(default='', blank=True, null=True, max_length=100)
     biodata_status = models.IntegerField(choices=CHOICE_BIODATA_STATUS, default=1)
+
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE,null=True, blank=True, related_name='biodata_payment')
+    paid_template = models.ForeignKey(TemplateData, on_delete=models.CASCADE, related_name='paid_biodata_template', default='',
+                                 blank=True, null=True)
+
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     modified = models.DateTimeField(auto_now=True, null=True, blank=True)
 

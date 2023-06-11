@@ -129,23 +129,21 @@
       </div>
     </div>
     <div class="col-md-4 mb-3">
-
       <label for="validationCustom04" id="l_place_of_birth">{{ labels.place_of_birth}}</label>
-         <select  class="selectpicker" data-live-search="true" id="place_of_birth">
-         <option value="">Select State</option>
+         <select  class="form-control" data-live-search="true" id="place_of_birth">
+            <option value="">Select State</option>
              {% if request.user.is_authenticated %}
                  {% for states in all_state %}
-                 <option value="{{ states.name }}"{% ifequal states.name biodata.birth_of_place %}selected{% endifequal %}>{{ states.name|truncatechars:20}}</option>
+                     {% if states.country.id == 105 %}
+                         <option value="{{ states.name }}">{{ states.name|truncatechars:20 }}</option>
+                     {% endif %}
                  {% endfor %}
              {% else %}
                  {% for states in all_state %}
-                 <option value="{{ states.name }}"{% if states.name  == biodata.birth_of_place %}selected{% endif %}>{{ states.name|truncatechars:20 }}a</option>
+                 <option value="{{ states.name }}">{{ states.name }}</option>
                  {% endfor %}
              {% endif %}
         </select>
-      <div class="invalid-feedback">
-        Please provide a valid Place.
-      </div>
     </div>
     <div class="col-md-4 mb-3">
       <label for="validationCustom04" id="l_time_of_birth" value="{{ biodata.time_of_birth }}">{{ labels.time_of_birth }}  </label>
@@ -444,6 +442,16 @@
          </div>
      </div>
      </div>
+    {%  if biodata.payment.payment_status %}
+        <a class="btn btn-primary"id="show_pdf"style="margin-top: 5px;display: none;width: 30%;float: left;margin-left: 5%;margin-right: 5%" target="_blank">Show PDF</a>
+
+    {% else %}
+    <div class="row">
+        <div class="col-md-12" id="payment_btn" style="display: none;margin-top: 10px">
+            <button type="button" class="btn btn-primary" onclick="paynow()">Pay Now & Get PDF</button>
+        </div>
+    </div>
+    {% endif %}
 
 
 {#  <button class="btn btn-primary" id="submit_form" type="submit" style="margin-top: 10px;">Submit form</button>#}
@@ -451,7 +459,7 @@
 <div id="iframe_div" style="margin-top:40px;overflow-scrolling: touch">
     Output PDF Pages
     <div id="wrap">
-        <iframe id="iframe" src=""></iframe>
+        <iframe id="iframe" src="" ></iframe>
     </div>
 </div>
 
@@ -472,30 +480,49 @@
 
             <div class="carousel slide multi-item-carousel" id="theCarousel">
                 <div class="carousel-inner" id="{{ template_id }}" >
-                    {% for biodata_image in biodata_template %}
 
-                        {% if forloop.counter < 4 %}
-                            {% cycle '<div class="item active">' '' '' %}
-                        {% else %}
-                            {% cycle '<div class="item">' '' '' %}
-                        {% endif %}
-                            <div class="col-xs-4">
-                                <div style="color: black;{% if biodata_image.id == template_id %}border-style: solid;{% else %}border-style: none;{% endif %}margin-bottom: 5px;"align="center" class="flip-card-front"  href="#1" id="{{ biodata_image.id }}">
-                                    <img id="{{ biodata_image.id }}" src="/media/{{ biodata_image.template_icon_image }}" alt="Avatar" style="width:50%;height:50%;margin: 2%;" class="img-responsive">
+                        {% for biodata_image in biodata_template %}
+
+                            {% if forloop.counter < 4 %}
+                                {% cycle '<div class="item active">' '' '' %}
+                            {% else %}
+                                {% cycle '<div class="item">' '' '' %}
+                            {% endif %}
+                                <div class="col-xs-4">
+                                    <div style="color: black;{% if biodata_image.id == template_id %}border-style: solid;{% else %}border-style: none;{% endif %}margin-bottom: 5px;"align="center" class="flip-card-front"  href="#1" id="{{ biodata_image.id }}">
+                                        <img id="{{ biodata_image.id }}" src="/media/{{ biodata_image.template_icon_image }}" alt="Avatar" style="width:50%;height:50%;margin: 2%;" class="img-responsive">
+                                    </div>
                                 </div>
-                            </div>
-                        {% cycle '' '' '</div>' %}
+                            {% cycle '' '' '</div>' %}
 
-                    {% endfor %}
+                        {% endfor %}
 
-                    <!--  Example item end -->
+                        <!--  Example item end -->
+
                 </div>
-                <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+
+                        <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                        <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function paynow(){
+        var biodata_id = $('form').attr('id');
+        if (biodata_id > 0) {
+            window.location = '/payment/' + biodata_id + "?card_type=wedding_biodata"
+        }
+        else {
+            alert("Biodata Not Found");
+        }
+    }
+
+
+</script>
+
 <script>
 
 
@@ -561,6 +588,12 @@
             contentType: false,
             success: function (data) {
                 $('form').attr("id",data['bio_data_id']);
+
+                {%  if biodata.payment.payment_status %}
+                    $("#show_pdf").css('display','block').attr("href","{% url 'biodata:get_wk_pdf' %}?biodata_id="+data['bio_data_id']+"&content_type=none")
+                {% else %}
+                    $("#payment_btn").css('display', 'block');
+                {% endif %}
                 var $iframe = $('#iframe');
                 $iframe.attr('srcdoc', data['html']);
                 $('html, body').animate({
@@ -773,6 +806,7 @@ $('#biodata_language').change(function(event) {
     },);
 
 </script>
+
 
 </body>
 </html>

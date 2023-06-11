@@ -3,14 +3,15 @@ from django.db import models
 # Create your models here.
 import choices
 from languages.models import  Business
-from users.models import UserDetails
+from users.models import UserDetails, Payment
+
 
 class BusinessTemplateData(models.Model):
     template_name_business = models.CharField(default='', blank=True, null=True, max_length=100)
     template_url_business = models.CharField(default='', blank=True, null=True, max_length=100)
     template_type_business = models.CharField(default='', blank=True, null=True, max_length=100)
     template_country_business = models.ForeignKey(Country,default=1,on_delete=models.CASCADE,related_name='template_country_business')
-    template_price_business = models.PositiveIntegerField(default=0, blank=True, null=True)
+    template_price = models.PositiveIntegerField(default=0, blank=True, null=True)
     template_image_business_icon = models.ImageField(upload_to='media/business/templates/icon',default='')
     template_image_business = models.ImageField(upload_to='media/business/templates/images',default='')
     status = models.IntegerField(choices=choices.CHOICE_STATUS, default=0)
@@ -44,6 +45,9 @@ class BusinessCard(models.Model):
     business_card_status = models.IntegerField(choices=choices.CHOICE_CARD_STATUS, default=1)
     logo = models.ImageField(upload_to='media/business/templates/logo',default='')
     qrcode = models.CharField(default='',max_length=100)
+
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, null=True, blank=True)
+    paid_template = models.ForeignKey(BusinessTemplateData, on_delete=models.CASCADE, blank=True, null=True)
 
 
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)

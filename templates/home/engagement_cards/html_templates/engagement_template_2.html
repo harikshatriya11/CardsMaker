@@ -10,21 +10,30 @@
     <style>
         body{
             background: url('/media/{{ engagement_card_instance.b_image }}') no-repeat;
-            background-size: cover ;
-            height: 36.3cm;
+            background-size: cover;
+            margin: unset !important;
+            height: 100%;
+            width: 100% !important;
         }
-    </style>
+        html{
+            margin: unset !important;
+            height: 100%;
+            width: 100% !important;
+            {#overflow: hidden;#}
+        }
+   </style>
 
 </head>
 <body style="">
 {#<img src="media/media/biodata/templates/icon/biodata_template_1.jpeg" width="200">#}
 {#<img src="{% static 'wed_biodata.png' %}" width="200">#}
 <div class="main_content" style="text-align: -webkit-center;">
-    <div style="align-content: center;text-align: center;">
-        <p style="font-size: 22px;color: #a28dab;">{{ template_language.gladly_invite_you_to_celebrate_our }}</p>
-        <p style="font-size: 70px;color: #a28dab;">{{ template_language.engagement }}</p>
+    <div style="align-content: center;text-align: center; max-width: inherit !important;padding-top: 150px;">
+        <label style="font-size: 22px;color: #a28dab;">{{ template_language.gladly_invite_you_to_celebrate_our }}</label>
+        <br>
+        <label style="font-size: 70px;color: #a28dab;">{{ template_language.engagement }}</label>
     </div>
-    <div style="margin-top: 220px;font-size: 22px;color: #a28dab;width: 250px;word-wrap: break-word;">
+    <div style="padding-top: 170px;font-size: 22px;color: #a28dab;width: 250px;word-wrap: break-word;">
         <p style="font-size: 150px;margin: 0px;">{{ engagement_day }}</p>
         <hr>
         <p style="font-size: 28px;margin: 0px;">{{ engagement_month }}</p>
@@ -38,7 +47,7 @@
         </p>
         <hr>
     </div>
-    <div style="margin-top: 20px;font-size: 22px;color: #a28dab;width: 500px;word-wrap: break-word;">
+    <div style="padding-top: 20px;font-size: 22px;color: #a28dab;width: 500px;word-wrap: break-word;">
         Time : {{ engagement_card_instance.time_of_engagement }}<br>
         {{ engagement_card_instance.place_of_engagement|capfirst }}
     </div>
@@ -54,14 +63,14 @@
 </html>
 <style>
     .main_content{
-        margin-left: 80px;
-        margin-right: 100px;
+        {#margin-left: 80px;#}
+        {#margin-right: 100px;#}
     }
     #engagment_invite{
 
     }
     #couple_name{
-        margin-top: 360px;
+        padding-top: 390px;
     {#background: red;#}
 
     {#display: inline-block;#}
@@ -77,11 +86,7 @@
         text-align: center;
 
     }
-    #bride_first_name{
-        color: #1e2229;
-        font-size: 70px;
-        margin-left: 50%;
-    }
+
     #engagment_invite{
         font-size: 30px;
         text-align: center;

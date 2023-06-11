@@ -1,4 +1,5 @@
 {% load static %}
+{% load templatetags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,7 @@
 <div class="main_content" style="width: 27cm;height:36.95cm;color: #000000;">
     <div class="column" style="float: right;width: 28%;">
         <div style="height: 400px">
-            {% if resume_card_instance.image is not None and  resume_card_instance.image != "" %}
+            {% if resume_card_instance.image and  resume_card_instance.image != "undefined" %}
                 <img src="/media/{{ resume_card_instance.image  }}" width="240px"height="290px" style="margin-top: 30px;margin-left: 19px">
             {% endif %}
         </div>
@@ -106,7 +107,7 @@
                 {% if resume_card_instance.about_profession is None or resume_card_instance.about_profession == '' or resume_card_instance.about_profession == 'undefined'%}
                 {% else %}
                     <div class="label_value_container" style="width: 100%;float: left">
-                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{{ template_language.about_profession}}</label></div>
+                        <div style="width: 50%;float:left;margin-bottom: 8px;"><label>{% replacertag template_language.about_profession '_' ' ' %}</label></div>
                         <div style="width: 50%;float:right;margin-bottom: 8px;" class="label_value">{{ resume_card_instance.about_profession }}</div>
                     </div>
                 {% endif %}
@@ -154,14 +155,14 @@
                     {% if resume_card_instance.work_experience1 is None or resume_card_instance.work_experience1 == '' or resume_card_instance.work_experience1 == 'undefined'%}
                     {% else %}
                         <div class="header" style="width: 100%;float:left;margin-bottom: 8px;"><label>{{ template_language.work_experience}}</label></div>
-                        <div style="width: 100%;float:right;margin-bottom: 8px;" class="label_value">
-                            - {{ resume_card_instance.work_experience1 }}
+                        <div style="page-break-inside: avoid !important;width: 100%;float:right;margin-bottom: 8px;" class="label_value">
+                            - {{ resume_card_instance.work_experience1|safe }}
                         </div>
-                        <div style="width: 100%;float:right;margin-bottom: 8px;" class="label_value">
-                            - {{ resume_card_instance.work_experience2 }}
+                        <div style="page-break-inside: avoid !important;width: 100%;float:right;margin-bottom: 8px;" class="label_value">
+                            - {{ resume_card_instance.work_experience2|safe }}
                         </div>
-                        <div style="width: 100%;float:right;margin-bottom: 8px;" class="label_value">
-                            - {{ resume_card_instance.work_experience3 }}
+                        <div style="page-break-inside: avoid !important;width: 100%;float:right;margin-bottom: 8px;" class="label_value">
+                            - {{ resume_card_instance.work_experience3|safe }}
                         </div>
                     {% endif %}
 

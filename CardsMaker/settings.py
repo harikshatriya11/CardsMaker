@@ -104,7 +104,7 @@ WSGI_APPLICATION = 'CardsMaker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-TESTING_MODE = True
+TESTING_MODE = False
 if TESTING_MODE == True:
     DATABASES = {
         'default': {
@@ -116,9 +116,9 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': "postgresDB",
-            'USER': 'Yaas',
-            'PASSWORD': 'root',
+            'NAME': "myproject",
+            'USER': 'myprojectuser',
+            'PASSWORD': 'Hari2228@',
             'HOST': '127.0.0.1',
             'PORT': '5432',
         }

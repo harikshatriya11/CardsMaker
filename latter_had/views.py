@@ -405,78 +405,79 @@ def CreateLanguageLabel(request):
             add_language = LanguageName.objects.create(language_name=language_name, country_name=country_name,language_abr=language_abr)
             add_language_label = LatterHad.objects.create(language=add_language,label_name=label_name,status=True)
     return HttpResponse(template.render(context,request))
-
-from docx import Document
-
-from docx.shared import Inches
+#
+# from docx import Document
+#
+# from docx.shared import Inches
 
 def word_docs(request):
-    document = Document()
-    data = request.GET
-    response = {}
-    docx_title=str('letterhead')+".docx"
-    # ---- Cover Letter ----
-    latterhad = LatterHadTemplateData.objects.all().last()
-
-    if request.method == 'GET':
-        id = data['latterhad_card_id']
-        latterhad_instance = LatterHadCard.objects.get(id=id)
-        docx_title=str(latterhad_instance.company_name)+".docx"
-        header_section = document.sections[0]
-
-
-        header = header_section.header
-
-        paragraph = header.paragraphs[0]
-
-        paragraph.text = str(latterhad.template_image_latterhad)
-        paragraph.style = document.styles["Header"]
-
-        import xlsxwriter
-
-
-        workbook = xlsxwriter.Workbook('headers_footers.xlsx')
-        worksheet = workbook.add_worksheet('Image')
-
-        # Adjust the page top margin to allow space for the header image.
-        worksheet.set_margins(top=1.3)
-
-        # worksheet.set_header('&L&[Picture]&C&16&"Calibri,Bold"Revenue Report',
-        #                      {'image_left': latterhad.template_image_latterhad})
-
-        workbook.close()
-        document.sections[0].header.add_picture(latterhad.template_image_latterhad, width=Inches(4))
-
-
-
-    document.add_picture(latterhad.template_image_latterhad, width=Inches(4))
-    document.add_heading
-    # document.add_paragraph("%s" % date.today().strftime('%B %d, %Y'))
-    # document.add_paragraph('Dear Sir or Madam:')
-    # document.add_page_break()
-    # Prepare document for download
-
-    # -----------------------------
-    from htmldocx import HtmlToDocx
-
-    new_parser = HtmlToDocx()
-    # btemplate = loader.get_template("home/latterhad_cards/html_templates/latterhad_template_1.html")
-    btemplate = "/home/hira/PycharmProjects/CardsMaker/templates/home/latterhad_cards/html_templates/latterhad_template_1.html"
-    print('template:',btemplate)
-    k = new_parser.parse_html_file(btemplate, "htmltodocs.docs")
-    from io import BytesIO
-    f = BytesIO()
-    document.save(f)
-    length = f.tell()
-    f.seek(0)
-
-    response = HttpResponse(
-        # f.getvalue(),
-        f,
-        content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    )
-
-    response['Content-Disposition'] = 'attachment; filename=' + docx_title
-    response['Content-Length'] = length
-    print(k)
-    return response
+    pass
+    # document = Document()
+    # data = request.GET
+    # response = {}
+    # docx_title=str('letterhead')+".docx"
+    # # ---- Cover Letter ----
+    # latterhad = LatterHadTemplateData.objects.all().last()
+    #
+    # if request.method == 'GET':
+    #     id = data['latterhad_card_id']
+    #     latterhad_instance = LatterHadCard.objects.get(id=id)
+    #     docx_title=str(latterhad_instance.company_name)+".docx"
+    #     header_section = document.sections[0]
+    #
+    #
+    #     header = header_section.header
+    #
+    #     paragraph = header.paragraphs[0]
+    #
+    #     paragraph.text = str(latterhad.template_image_latterhad)
+    #     paragraph.style = document.styles["Header"]
+    #
+    #     import xlsxwriter
+    #
+    #
+    #     workbook = xlsxwriter.Workbook('headers_footers.xlsx')
+    #     worksheet = workbook.add_worksheet('Image')
+    #
+    #     # Adjust the page top margin to allow space for the header image.
+    #     worksheet.set_margins(top=1.3)
+    #
+    #     # worksheet.set_header('&L&[Picture]&C&16&"Calibri,Bold"Revenue Report',
+    #     #                      {'image_left': latterhad.template_image_latterhad})
+    #
+    #     workbook.close()
+    #     document.sections[0].header.add_picture(latterhad.template_image_latterhad, width=Inches(4))
+    #
+    #
+    #
+    # document.add_picture(latterhad.template_image_latterhad, width=Inches(4))
+    # document.add_heading
+    # # document.add_paragraph("%s" % date.today().strftime('%B %d, %Y'))
+    # # document.add_paragraph('Dear Sir or Madam:')
+    # # document.add_page_break()
+    # # Prepare document for download
+    #
+    # # -----------------------------
+    # from htmldocx import HtmlToDocx
+    #
+    # new_parser = HtmlToDocx()
+    # # btemplate = loader.get_template("home/latterhad_cards/html_templates/latterhad_template_1.html")
+    # btemplate = "/home/hira/PycharmProjects/CardsMaker/templates/home/latterhad_cards/html_templates/latterhad_template_1.html"
+    # print('template:',btemplate)
+    # k = new_parser.parse_html_file(btemplate, "htmltodocs.docs")
+    # from io import BytesIO
+    # f = BytesIO()
+    # document.save(f)
+    # length = f.tell()
+    # f.seek(0)
+    #
+    # response = HttpResponse(
+    #     # f.getvalue(),
+    #     f,
+    #     content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    # )
+    #
+    # response['Content-Disposition'] = 'attachment; filename=' + docx_title
+    # response['Content-Length'] = length
+    # print(k)
+    # return response

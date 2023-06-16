@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# import Agora as Agora
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
@@ -29,6 +30,6 @@ urlpatterns = [
     path('bussiness_cards/', include('bussiness_cards.urls')),
     path('latterhad/', include('latter_had.urls')),
     path('', include('users.urls')),
-    path('agora/',Agora.as_view(app_id='6207a7e753084cbfaa451bcb9311f1f1',channel='asdhhcnadc')),
+    # path('agora/',Agora.as_view(app_id='6207a7e753084cbfaa451bcb9311f1f1',channel='asdhhcnadc')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

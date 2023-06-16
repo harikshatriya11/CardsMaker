@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost"]
 
@@ -175,7 +175,7 @@ STATICFILES_DIRS = (os.path.join(str(BASE_DIR)+"/static/"),)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 APPEND_SLASH = False
 if DEBUG:
     RAZOR_KEY_ID = "rzp_test_pRwByYGHjIP0t2"
@@ -185,3 +185,6 @@ else:
     RAZOR_KEY_SECRET = "rzp_test_7nruGgj5EfDxGO"
 
 LOGIN_REDIRECT_URL = '/'
+
+
+# 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

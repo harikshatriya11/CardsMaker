@@ -406,7 +406,8 @@ def CreateLanguageLabel(request):
             add_language_label = LatterHad.objects.create(language=add_language,label_name=label_name,status=True)
     return HttpResponse(template.render(context,request))
 
-from docx import *
+from docx import Document
+
 from docx.shared import Inches
 
 def word_docs(request):

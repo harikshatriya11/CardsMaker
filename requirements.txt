@@ -96,8 +96,6 @@ Markdown
 matplotlib
 msgpack
 msgpack-python
-mysql
-mysqlclient
 networkx
 now
 numpy

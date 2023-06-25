@@ -27,9 +27,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost"]
+ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost", "kraagh.com", "www.kraagh.com"]
 
 
 # Application definition
@@ -116,7 +116,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': "myproject",
+            'NAME': "cardsmaker2023",
             'USER': 'myprojectuser',
             'PASSWORD': 'Hari2228@',
             'HOST': '127.0.0.1',

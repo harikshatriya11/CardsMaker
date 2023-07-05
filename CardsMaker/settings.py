@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'fontawesomefree',
     'languages',
     'users',
@@ -177,7 +178,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 APPEND_SLASH = False
-if TESTING_MODE:
+if DEBUG:
     RAZOR_KEY_ID = "H2K22dD1I3soH9"
     RAZOR_KEY_SECRET = "rzp_test_7nruGgj5EfDxGO"
 else:

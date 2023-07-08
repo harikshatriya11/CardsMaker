@@ -179,11 +179,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 APPEND_SLASH = False
 if DEBUG:
-    RAZOR_KEY_ID = "H2K22dD1I3soH9"
-    RAZOR_KEY_SECRET = "rzp_test_7nruGgj5EfDxGO"
-else:
     RAZOR_KEY_ID = "rzp_test_pRwByYGHjIP0t2"
     RAZOR_KEY_SECRET = "GOfSmvSm0jAlTiwiBoXue8kP"
+else:
+    RAZOR_KEY_ID = "H2K22dD1I3soH9"
+    RAZOR_KEY_SECRET = "rzp_test_7nruGgj5EfDxGO"
 
 LOGIN_REDIRECT_URL = '/'
 

@@ -11,7 +11,7 @@ class WeddingTemplateDataAdmin(ImportExportModelAdmin):
 admin.site.register(WeddingTemplateData, WeddingTemplateDataAdmin)
 
 
-class TemplateImageAdmin(admin.ModelAdmin):
+class TemplateImageAdmin(ImportExportModelAdmin):
     list_display = ('template', 'language', 'id', )
 
 admin.site.register(TemplateImage, TemplateImageAdmin)

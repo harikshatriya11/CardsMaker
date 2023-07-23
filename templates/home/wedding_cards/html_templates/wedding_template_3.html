@@ -59,7 +59,7 @@
     </div>
     <div id="engagment_invite">
 {#        {{ template_language.gladly_invite_you_to_celebrate_our }}<br>#}
-        <p style="font-size: 60px;padding-top: 0px;">{{ template_language.happy }} {{ template_language.wedding }}</p>
+        <label style="font-size: 60px;padding-top: 0px;">{{ template_language.happy }} {{ template_language.wedding }}</label>
         <div id="date_of_wedding">{{ wedding_card_instance.date_of_wedding }}</div>
         <div id="time_of_wedding">{{ wedding_card_instance.time_of_wedding }}</div>
 
@@ -89,7 +89,7 @@
             {% endif %}
 
         </div>
-        <div class="functions_div" style="width: 100%">
+        <div class="functions_div" style="width: 100%;padding-top: 20px">
 {#            <div style="width: 2%;float:left">&nbsp;</div>#}
             {% if wedding_card_instance.function_name4 != '' and wedding_card_instance.function_name4 != none %}
             <div class="function">
@@ -177,7 +177,7 @@
     .couple_name_div_and{ width: 20%;float: left;word-wrap: break-word; padding-top: 100px; }
     .parents{ font-size: 16px; line-height: normal}
     #engagment_invite{ }
-    #couple{ padding-top: 150px; width: 100%;line-height: 10px;font-family: 'Sofia'; margin: auto;text-align: center; }
+    #couple{ padding-top: 50px; width: 100%;line-height: 10px;font-family: 'Sofia'; margin: auto;text-align: center; }
     .couple_name{font-size: 70px;}
     #symbol_word_and{ font-size: 30px;text-align: center;}
     #engagment_invite{text-align: center;width: 100%;}

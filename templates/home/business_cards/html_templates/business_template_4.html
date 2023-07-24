@@ -60,13 +60,29 @@
                     </tr>
                     {% if  business_card_instance.social_id2 != '' and business_card_instance.social_id2 != none %}
                         <tr>
-                            <td class="icon_td"><i class="fa fa-map-marker"></i></td>
+                            {% if 'insta' in business_card_instance.social_id2  %}
+                                <td class="icon_td"><i class="fa fa-instagram"></i></td>
+                            {% elif 'face' in business_card_instance.social_id2  %}
+                                <td class="icon_td"><i class="fa fa-facebook"></i></td>
+                            {% elif 'twit' in business_card_instance.social_id2  %}
+                                <td class="icon_td"><i class="fa fa-twitter"></i></td>
+                            {% else %}
+                                <td class="icon_td"><i class="fa fa-globe"></i></td>
+                            {% endif %}
                             <td colspan="2" >{{ business_card_instance.social_id1 }}</td>
                         </tr>
                     {% endif %}
                     {% if  business_card_instance.social_id2 != '' and business_card_instance.social_id2 != none %}
                         <tr>
-                            <td class="icon_td"><i class="fa fa-map-marker"></i></td>
+                            {% if 'insta' in business_card_instance.social_id2  %}
+                                <td class="icon_td"><i class="fa fa-instagram"></i></td>
+                            {% elif 'face' in business_card_instance.social_id2  %}
+                                <td class="icon_td"><i class="fa fa-facebook"></i></td>
+                            {% elif 'twit' in business_card_instance.social_id2  %}
+                                <td class="icon_td"><i class="fa fa-twitter"></i></td>
+                            {% else %}
+                                <td class="icon_td"><i class="fa fa-globe"></i></td>
+                            {% endif %}
                             <td colspan="2" >{{ business_card_instance.social_id2 }}</td>
                         </tr>
                     {% endif %}

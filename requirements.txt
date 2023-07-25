@@ -102,7 +102,7 @@ numpy
 oauth-provider
 oauth2-provider
 oauthlib
-opencv-python
+
 opt-einsum
 packaging
 paramiko

@@ -29,7 +29,7 @@ SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-if DEBUG
+if DEBUG:
     ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost", "kraagh.com", "www.kraagh.com"]
 else:
     ALLOWED_HOSTS = ["kraagh.com", "www.kraagh.com","https://www.kraagh.com","https://.kraagh.com"]

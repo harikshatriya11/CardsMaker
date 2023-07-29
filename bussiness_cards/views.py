@@ -299,7 +299,7 @@ def business_card_image(request):
         # 'no-outline': None
     }
     business_card_id = request.GET['business_card_id']
-    template_url = request.get_host()+ '/bussiness_cards/template_url/?business_card_id='+business_card_id
+    template_url = 'https://kraagh.com/bussiness_cards/template_url/?business_card_id='+business_card_id
 
     a = imgkit.from_url(template_url, False,options=options)
     # a= b64encode(a).decode('utf-8')

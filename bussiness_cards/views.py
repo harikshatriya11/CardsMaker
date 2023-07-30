@@ -287,7 +287,7 @@ def business_card_image(request):
         'height':'250',
         'format': 'jpg',
         'quality':'100',
-        'disable-smart-width': '',
+
         'encoding': "UTF-8",
         'custom-header' : [
             ('Accept-Encoding', 'gzip')
@@ -299,8 +299,9 @@ def business_card_image(request):
         # 'no-outline': None
     }
     business_card_id = request.GET['business_card_id']
-    template_url = 'https://kraagh.com/bussiness_cards/template_url/?business_card_id='+business_card_id
-
+    template_url = request.META['HTTP_HOST'] + '/bussiness_cards/template_url/?business_card_id='+business_card_id
+    template_url = 'https:kraagh.com/bussiness_cards/template_url/?business_card_id='+business_card_id
+    print(template_url)
     a = imgkit.from_url(template_url, False,options=options)
     # a= b64encode(a).decode('utf-8')
     response ={}
@@ -329,10 +330,26 @@ def get_wk_pdf(request):
     filename = business_card_instance['founder']+' '+business_card_instance['company_name']
     print('filename:',filename)
     print('-------------')
-    response = generate_all_pdf(request, business_card_instance, business_card_instance['btemplate'], filename, show_content)
+    response = business_generate_all_pdf(request, business_card_instance, business_card_instance['btemplate'], filename, show_content)
 
     # pdf = response.rendered_content
     return response
+
+
+def business_generate_all_pdf(request,card_instance,template, filename, show_content):
+    pdf = PDFTemplateResponse(request=request,
+                                   template=template,
+                                   filename=filename,
+                                   context=card_instance,
+                                   show_content_in_browser=show_content,
+                                   cmd_options={'margin-top': 0, 'margin-bottom': 0, 'margin-right': 0,
+                                                'margin-left': 0,'page-height': '190px','page-width': '300px', 'disable-smart-shrinking': False, 'quiet': None,
+                                                'enable-local-file-access': True},
+                                   )
+    # pdf = response.rendered_content
+    return pdf
+
+
 def get_business_card(requset,business_card_id):
     business_card = BusinessCard.objects.get(id=business_card_id)
     business_card_instance = BusinessCard.objects.filter(id=business_card_id).values()[0]

@@ -300,12 +300,13 @@ def business_card_image(request):
     }
     business_card_id = request.GET['business_card_id']
     template_url = request.META['HTTP_HOST'] + '/bussiness_cards/template_url/?business_card_id='+business_card_id
-    template_url = 'https:kraagh.com/bussiness_cards/template_url/?business_card_id='+business_card_id
+    # template_url = 'https://kraagh.com/bussiness_cards/template_url/?business_card_id='+business_card_id
     print(template_url)
     a = imgkit.from_url(template_url, False,options=options)
     # a= b64encode(a).decode('utf-8')
     response ={}
     response     = HttpResponse(a,content_type="image/jpeg")
+    response['Content-Security-Policy'] = "script-src 'self' 'unsafe-inline';"
     response['Content-Disposition'] = "attachment; filename=%s" %  'business_card.jpg'
     return response
 

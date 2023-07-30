@@ -343,7 +343,7 @@ def business_generate_all_pdf(request,card_instance,template, filename, show_con
                                    context=card_instance,
                                    show_content_in_browser=show_content,
                                    cmd_options={'margin-top': 0, 'margin-bottom': 0, 'margin-right': 0,
-                                                'margin-left': 0,'page-height': '190px','page-width': '300px', 'disable-smart-shrinking': False, 'quiet': None,
+                                                'margin-left': 0,'page-height': '185px','page-width': '300px', 'disable-smart-shrinking': False, 'quiet': None,
                                                 'enable-local-file-access': True},
                                    )
     # pdf = response.rendered_content

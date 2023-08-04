@@ -274,7 +274,7 @@
 
 <div class="row">
     <div class="col-md-12" id="payment_btn" style="display: block;margin-top: 10px">
-        <button onclick="if ($('form').attr('id')){window.location='/bussiness_cards/business_card_image/?business_card_id=' + $('form').attr('id')} else {alert('create resume first')}" type="button" class="btn btn-primary" onclick="paynow()">Download Card</button>
+        <button onclick="if ($('form').attr('id')){window.location='/bussiness_cards/business_card_image/?business_card_id=' + $('form').attr('id')} else {alert('create resume first')}" type="button" class="btn btn-primary" onclick="paynow()" style="display: none">Download Card</button>
         <button onclick="if ($('form').attr('id')){window.location='/bussiness_cards/get_wk_pdf/?content_type=download&business_card_id=' + $('form').attr('id')} else {alert('create resume first')}" type="button" class="btn btn-primary" onclick="paynow()">Download PDF</button>
     </div>
 </div>

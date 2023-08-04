@@ -287,6 +287,7 @@ def business_card_image(request):
         'height':'250',
         'format': 'jpg',
         'quality':'100',
+        'javascript-delay': '0100',
 
         'encoding': "UTF-8",
         'custom-header' : [
@@ -302,7 +303,9 @@ def business_card_image(request):
     # template_url = request.META['HTTP_HOST'] + '/bussiness_cards/template_url/?business_card_id='+business_card_id
     template_url = 'https://kraagh.com/bussiness_cards/template_url/?business_card_id='+business_card_id
     print(template_url)
-    a = imgkit.from_url(template_url, False,options=options)
+    config = imgkit.config(wkhtmltoimage="/usr/bin/wkhtmltoimage")
+
+    a = imgkit.from_url(template_url, False,options=options, config=config)
     # a= b64encode(a).decode('utf-8')
     response ={}
     response     = HttpResponse(a,content_type="image/jpeg")

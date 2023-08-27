@@ -42,7 +42,9 @@
             <div class="templates" style="float: left;width: 100%;border-style: none;margin-left: 1%">
                 <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
                 {% for biodata_image in biodata_templates %}
-                    <a href="{% url 'biodata:biodata_form'  biodata_image.id   %}" style="margin: 3%"><img src="/media/{{ biodata_image.template_image }}"width="40%"height="15%"></a>
+                    <a href="{% url 'biodata:biodata_form'  biodata_image.id   %}" style="margin: 3%"><img src="/media/{{ biodata_image.template_image }}"width="40%"height="15%">
+                        {% if biodata_image.template_price %}{{ biodata_image.template_price }} {% else %} 0.00 {% endif %}Rs.
+                    </a>
                 {% endfor %}
             </div>
         </div>
@@ -101,7 +103,9 @@
     <div class="templates" style="float: left;width: 77%;border-style: none;margin-left: 1%">
     <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
            {% for biodata_image in biodata_templates %}
-               <a href="{% url 'biodata:biodata_form'  biodata_image.id   %}" style="margin: 3%"><img src="/media/{{ biodata_image.template_image }}"width="10%"height="15%"></a>
+               <a href="{% url 'biodata:biodata_form'  biodata_image.id   %}" style="margin: 3%"><img src="/media/{{ biodata_image.template_image }}"width="10%"height="15%">
+
+               </a>
            {% endfor %}
     </div>
 

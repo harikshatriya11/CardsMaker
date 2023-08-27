@@ -42,6 +42,7 @@
                 <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
                 {% for business_image in business_templates %}
                     <a href="{% url 'business_cards:business_card_form'    %}?template_id={{ business_image.id }}" style="margin: 3%"><img src="/media/{{ business_image.template_image_business_icon }}"width="40%"height="15%"></a>
+                    {% if business_image.template_price %}{{ business_image.template_price }} {% else %} 0.00 {% endif %}Rs.
                 {% endfor %}
             </div>
         </div>
@@ -100,7 +101,9 @@
     <div class="templates" style="float: left;width: 77%;border-style: none;margin-left: 1%">
     <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
            {% for business_image in business_templates %}
-               <a href="{% url 'business_cards:business_card_form'    %}?template_id={{ business_image.id }}" style="margin: 3%"><img src="/media/{{ business_image.template_image_business_icon }}"width="10%"height="15%"></a>
+               <a href="{% url 'business_cards:business_card_form'    %}?template_id={{ business_image.id }}" style="margin: 3%"><img src="/media/{{ business_image.template_image_business_icon }}"width="20%"height="30%">
+                    {% if business_image.template_price %}{{ business_image.template_price }} {% else %} 0.00 {% endif %}Rs.
+               </a>
            {% endfor %}
     </div>
 

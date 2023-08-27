@@ -41,7 +41,9 @@
             <div class="templates" style="float: left;width: 99%;border-style: none;margin-left: 1%">
                 <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
                 {% for wedding_image in wedding_templates %}
-                    <a href="{% url 'wedding_cards:wedding_form'    %}?wedding_card_id={{ wedding_image.id }}" style="margin: 3%"><img src="/media/{{ wedding_image.template_image_wedding_icon }}"width="40%"height="15%"></a>
+                    <a href="{% url 'wedding_cards:wedding_form'    %}?wedding_card_id={{ wedding_image.id }}" style="margin: 3%"><img src="/media/{{ wedding_image.template_image_wedding_icon }}"width="40%"height="15%">
+                        {% if biodata_image.template_price %}{{ biodata_image.template_price }} {% else %} 0.00 {% endif %}Rs.
+                    </a>
                 {% endfor %}
             </div>
         </div>

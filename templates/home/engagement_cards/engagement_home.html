@@ -40,7 +40,7 @@
                 <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
                 {% for engagement_image in engagement_templates %}
                     <a href="{% url 'engagement_cards:engagement_form'    %}?engagement_card_id={{ engagement_image.id }}" style="margin: 3%"><img src="/media/{{ engagement_image.template_image_engagement_icon }}"width="38%"height="15%">
-                        {% if engagement_image.template_price %}{{ engagement_image.template_price }} {% else %} 0.00 {% endif %}Rs.
+{#                        {% if engagement_image.template_price %}{{ engagement_image.template_price }} {% else %} 0.00 {% endif %}Rs.#}
                     </a>
                 {% endfor %}
             </div>

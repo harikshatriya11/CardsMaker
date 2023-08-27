@@ -25,6 +25,9 @@
             margin: unset !important;
             height: 100%;
         }
+        path{
+            stroke: #e7c165;
+        }
 
     </style>
 
@@ -43,12 +46,12 @@
         </div>
     </div>
     <div class="div2" style="width: 100%;">
-        <div style="width: 50%;margin-left:23%; " class="bot_div" id="company_name">
+        <div style="width: 50%;margin-left:23%;padding-top: 5%; " class="bot_div" id="company_name">
             <p>{{ business_card_instance.contact }}</p>
             <p>{{ business_card_instance.email }}</p>
 
         </div>
-        <div style="width: 20%;margin-left: 2%;margin-top: 18%" class="bot_div">
+        <div style="width: 20%;margin-left: 2%;margin-top: 18%;" class="bot_div">
             <div id="qrcode"style="height:40px">{% qr_from_text business_card_instance.qrcode size="T" %}</div>
         </div>
     </div>

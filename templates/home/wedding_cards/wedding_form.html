@@ -164,6 +164,11 @@
     .carousel-control{
         width: unset !important;
     }
+    .function_boxes{
+        margin-top: 20px;
+        border: #3a3f48 solid 1px;
+        width: 100%;
+    }
 </style>
 
 <form class="needs-validation" id="{% if wedding_card_id != "" or wedding_card_id != none %}{{ wedding_card_id }}{% else %}-1{% endif %}" style="width: 80%"   enctype="multipart/form-data" novalidate>
@@ -190,7 +195,7 @@
                   <label for="validationCustom04" id="l_groom_or_bride">{{ labels.i_am }}</label>
                     <select id="groom_or_bride" class="form-control" >
                         <option id="l_groom" value="0" {% if details.groom_or_bride == '0' %}selected{% endif %}>{{ labels.groom }}</option>
-                        <option id="l_bride" value="1" {% if details.groom_or_bride == '1' %}selected{% endif %}>{{ labels.groom }}>{{ labels.bride }}</option>
+                        <option id="l_bride" value="1" {% if details.groom_or_bride == '1' %}selected{% endif %}>{{ labels.bride }}</option>
                     </select>
                   <div class="valid-feedback">
                     Looks good!
@@ -348,31 +353,41 @@
 {#                            </div>#}
 {#                        {% endfor %}#}
 
+                <div class="function_boxes col-md-12">
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name1">{{ labels.function_name}} </label><input type="text" class="form-control" id="function_name1" placeholder="{{ labels.function_name1}}" value="{% if details.function_name1 %}{{ details.function_name1 }}{% else %}{{ labels.function_name1}}{% endif %}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date1">{{ labels.function_date}} </label><input type="text" class="form-control" id="function_date1" placeholder="{{ labels.function_date}}" value="{{ details.function_date1 }}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place1">{{ labels.function_place}} </label><input type="text" class="form-control" id="function_place1" placeholder="{{ labels.function_place}}" value="{{ details.function_place1 }}"  ></div>
+                </div>
 
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name1">{{ labels.function_name}}1 </label><input type="text" class="form-control" id="function_name1" placeholder="{{ labels.function_name}}1" value="{{ details.function_name1 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date1">{{ labels.function_date}}1 </label><input type="text" class="form-control" id="function_date1" placeholder="{{ labels.function_date}}1" value="{{ details.function_date1 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place1">{{ labels.function_place}}1 </label><input type="text" class="form-control" id="function_place1" placeholder="{{ labels.function_place}}1" value="{{ details.function_place1 }}"  ></div>
+                <div class="function_boxes col-md-12">
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name2">{{ labels.function_name}} </label><input type="text" class="form-control" id="function_name2" placeholder="{{ labels.function_name2}}" value="{% if details.function_name2 %}{{ details.function_name2 }}{% else %}{{ labels.function_name2}}{% endif %}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date2">{{ labels.function_date}} </label><input type="text" class="form-control" id="function_date2" placeholder="{{ labels.function_date}}" value="{{ details.function_date2 }}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place2">{{ labels.function_place}} </label><input type="text" class="form-control" id="function_place2" placeholder="{{ labels.function_place}}" value="{{ details.function_place2 }}"  ></div>
+                </div>
 
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name2">{{ labels.function_name}}2 </label><input type="text" class="form-control" id="function_name2" placeholder="{{ labels.function_name}}2" value="{{ details.function_name2 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date2">{{ labels.function_date}}2 </label><input type="text" class="form-control" id="function_date2" placeholder="{{ labels.function_date}}2" value="{{ details.function_date2 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place2">{{ labels.function_place}}2 </label><input type="text" class="form-control" id="function_place2" placeholder="{{ labels.function_place}}2" value="{{ details.function_place2 }}"  ></div>
+                <div class="function_boxes col-md-12">
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name3">{{ labels.function_name}} </label><input type="text" class="form-control" id="function_name3" placeholder="{{ labels.function_name3}}" value="{% if details.function_name3 %}{{ details.function_name3 }}{% else %}{{ labels.function_name3}}{% endif %}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date3">{{ labels.function_date}} </label><input type="text" class="form-control" id="function_date3" placeholder="{{ labels.function_date}}" value="{{ details.function_date3 }}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place3">{{ labels.function_place}} </label><input type="text" class="form-control" id="function_place3" placeholder="{{ labels.function_place}}" value="{{ details.function_place3 }}"  ></div>
+                </div>
 
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name3">{{ labels.function_name}}3 </label><input type="text" class="form-control" id="function_name3" placeholder="{{ labels.function_name}}3" value="{{ details.function_name3 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date3">{{ labels.function_date}}3 </label><input type="text" class="form-control" id="function_date3" placeholder="{{ labels.function_date}}3" value="{{ details.function_date3 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place3">{{ labels.function_place}}3 </label><input type="text" class="form-control" id="function_place3" placeholder="{{ labels.function_place}}3" value="{{ details.function_place3 }}"  ></div>
+                <div class="function_boxes col-md-12">
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name4">{{ labels.function_name}} </label><input type="text" class="form-control" id="function_name4" placeholder="{{ labels.function_name4}}" value="{% if details.function_name4 %}{{ details.function_name4 }}{% else %}{{ labels.function_name4}}{% endif %}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date4">{{ labels.function_date}} </label><input type="text" class="form-control" id="function_date4" placeholder="{{ labels.function_date}}" value="{{ details.function_date4 }}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place4">{{ labels.function_place}} </label><input type="text" class="form-control" id="function_place4" placeholder="{{ labels.function_place}}" value="{{ details.function_place4 }}"  ></div>
+                </div>
 
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name4">{{ labels.function_name}}4 </label><input type="text" class="form-control" id="function_name4" placeholder="{{ labels.function_name}}4" value="{{ details.function_name4 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date4">{{ labels.function_date}}4 </label><input type="text" class="form-control" id="function_date4" placeholder="{{ labels.function_date}}4" value="{{ details.function_date4 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place4">{{ labels.function_place}}4 </label><input type="text" class="form-control" id="function_place4" placeholder="{{ labels.function_place}}4" value="{{ details.function_place4 }}"  ></div>
+                <div class="function_boxes col-md-12">
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name5">{{ labels.function_name}} </label><input type="text" class="form-control" id="function_name5" placeholder="{{ labels.function_name5}}" value="{% if details.function_name5 %}{{ details.function_name5 }}{% else %}{{ labels.function_name5}}{% endif %}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date5">{{ labels.function_date}} </label><input type="text" class="form-control" id="function_date5" placeholder="{{ labels.function_date}}" value="{{ details.function_date5 }}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place5">{{ labels.function_place}} </label><input type="text" class="form-control" id="function_place5" placeholder="{{ labels.function_place}}" value="{{ details.function_place5 }}"  ></div>
+                </div>
 
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name5">{{ labels.function_name}}5 </label><input type="text" class="form-control" id="function_name5" placeholder="{{ labels.function_name}}5" value="{{ details.function_name5 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date5">{{ labels.function_date}}5 </label><input type="text" class="form-control" id="function_date5" placeholder="{{ labels.function_date}}5" value="{{ details.function_date5 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place5">{{ labels.function_place}}5 </label><input type="text" class="form-control" id="function_place5" placeholder="{{ labels.function_place}}5" value="{{ details.function_place5 }}"  ></div>
-
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name6">{{ labels.function_name}}6 </label><input type="text" class="form-control" id="function_name6" placeholder="{{ labels.function_name}}6" value="{{ details.function_name6 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date6">{{ labels.function_date}}6 </label><input type="text" class="form-control" id="function_date6" placeholder="{{ labels.function_date}}6" value="{{ details.function_date6 }}"  ></div>
-                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place6">{{ labels.function_place}}6 </label><input type="text" class="form-control" id="function_place6" placeholder="{{ labels.function_place}}6" value="{{ details.function_place6 }}"  ></div>
-
+                <div class="function_boxes col-md-12">
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_name6">{{ labels.function_name}} </label><input type="text" class="form-control" id="function_name6" placeholder="{{ labels.function_name6}}" value="{% if details.function_name6 %}{{ details.function_name6 }}{% else %}{{ labels.function_name6}}{% endif %}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_date6">{{ labels.function_date}} </label><input type="text" class="form-control" id="function_date6" placeholder="{{ labels.function_date}}" value="{{ details.function_date6 }}"  ></div>
+                <div class="col-md-4 mb-3"><label for="validationCustom04" class="l_function_place6">{{ labels.function_place}} </label><input type="text" class="form-control" id="function_place6" placeholder="{{ labels.function_place}}" value="{{ details.function_place6 }}"  ></div>
+                </div>
 
 
                     </div>
@@ -764,6 +779,24 @@ $('#wedding_card_language').change(function(event) {
             $(".l_function_date").html(label['function_date']);
             $(".l_function_place").html(label['function_place']);
             $("#l_courteous_name").html(label['courteous_name']);
+
+            $(".l_function_name1").html(label['function_name1']);
+            $("#function_name1").attr('placeholder', label['function_name1']).val(label['function_name1']);
+
+            $(".l_function_name2").html(label['function_name2']);
+            $("#function_name2").attr('placeholder', label['function_name2']).val(label['function_name3']);
+
+            $(".l_function_name3").html(label['function_name3']);
+            $("#function_name3").attr('placeholder', label['function_name3']).val(label['function_name3']);
+
+            $(".l_function_name4").html(label['function_name4']);
+            $("#function_name4").attr('placeholder', label['function_name4']).val(label['function_name4']);
+
+            $(".l_function_name5").html(label['function_name5']);
+            $("#function_name5").attr('placeholder', label['function_name5']).val(label['function_name5']);
+
+            $(".l_function_name6").html(label['function_name6']);
+            $("#function_name6").attr('placeholder', label['function_name6']).val(label['function_name6']);
 
             {#console.log(data);#}
         },

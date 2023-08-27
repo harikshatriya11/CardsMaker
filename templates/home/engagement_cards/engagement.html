@@ -8,7 +8,9 @@
 <div class="container">
    <section class="customer-logos slider">
        {% for engagement_image in engagement_templates %}
-           <a href="{% url 'engagement_cards:engagement_form' %}?engagement_card_id={{ engagement_image.id }}"><div class="slide"><img src="/media/{{ engagement_image.template_image_engagement_icon }}"></div></a>
+            <a href="{% url 'engagement_cards:engagement_form' %}?engagement_card_id={{ engagement_image.id }}"><div class="slide"><img src="/media/{{ engagement_image.template_image_engagement_icon }}">
+                {% if engagement_image.template_price %}{{ engagement_image.template_price }} {% else %} 0.00 {% endif %}Rs.
+           </div></a>
        {% endfor %}
    </section>
 </div>

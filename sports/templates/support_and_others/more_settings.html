@@ -1,0 +1,9 @@
+{% include "base.html" %}
+{% if request.user.is_authenticated %}
+    <div style="margin-top:50%;"align="center">
+{#        <a href="#">Change Password</a><br><br>#}
+{#        <a href="#">Change Language</a><br><br>#}
+{#        <a href="#">Deactivate Account</a><br><br>#}
+        <a href="/sports/tbt/logout" class="button-green">Logout</a><br><br>
+    </div>
+    {% endif %}

@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .player_box{
+            {#background: green;#}
+            width: fit-content;
+            display: inline-block;
+            padding: 5px;
+        }
+        .match_box{
+            background: aliceblue;
+            text-align-last: center;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/loader.css' %}" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+
+{% for a in live_match %}
+    <div class="match_box">
+    <h1>{{ a }}</h1>
+    <h2>
+    {% if a.live == False and a.announced == True %}
+        <a href="/sports/tbt/admin_panel/select_playing11/{{ a.id }}">Select Announced Players</a>
+    {% elif a.live == True %}
+        <a href="/sports/tbt/admin_panel/add_players_points/{{ a.id }}"><button>Add Players Points</button></a>
+        <button onclick="update_teams_total({{ a.id }})">Update Total<i id="right{{ a.id }}" style="color: green;display: none">&#x2713;</i><i class="loader" id="loader{{ a.id }}"></i></button>
+        <a href="/sports/tbt/admin_panel/end_match/{{ a.id }}" onclick="return confirm('Are you sure want to End this Match?')"><button>End this Match (Match will not end before end time)</button></a>
+    {% endif %}
+    </h2>
+    <br>
+    {{ request.url }}
+{#    {% for p in players %}#}
+{#        {% if p.match.id == a.id and p.match.team1 == a.team1 %}#}
+{#        {{ forloop.counter }}<div class="player_box"><label>{{ p }}</label><br><input id="player{{ p.id }}" type="number" /></div>#}
+{#        {% endif %}#}
+{#        {% if forloop.counter == 11 %}<br><br>{% endif %}#}
+{#    {% endfor %}#}
+    </div>
+{% endfor %}
+<script>
+    function update_teams_total(id) {
+        $("#right"+id).css("display", "none");
+        $("#loader"+id).css("display", "block");
+        $.ajax({
+            url: "/sports/tbt/admin_panel/team_total/"+id,
+            success: function (result) {
+                $("#loader"+id).css("display", "none");
+                $("#right"+id).css("display", "block");
+            }
+        });
+    }
+</script>
+</body>
+</html>

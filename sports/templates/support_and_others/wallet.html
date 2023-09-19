@@ -1,0 +1,5 @@
+{% include "base.html" %}
+{% if request.user.is_authenticated %}
+    <a href="/sports/tbt/logout">Logout</a>
+
+{% endif %}

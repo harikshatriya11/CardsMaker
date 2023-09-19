@@ -1,0 +1,112 @@
+{% include 'base.html' %}
+
+<style>
+    a{color:black;text-decoration: none}
+    .match_box{background: #98AFC7;}
+    .team1, .team2, .vs_box{display: inline;width: 32%;}
+    .team1 {float: left}
+    .team1 {float: right;text-align: right}
+    .vs_box {float: right;text-align: center}
+
+    .contest{display: inline;width: 32%;float: left;text-align: center}
+    .mycontest{display: inline;width: 32%;float: right;text-align: center}
+    .myteam{display: inline;width: 32%;float: right;text-align: center}
+
+    {% if created_team|length > 0 %}
+        .footer { position: fixed; left: 0; bottom: 0; width: 100%;color: white;text-align: center;}
+
+    {% else %}
+        .footer { margin-top: 100px; left: 0; bottom: 0; width: 100%;color: white;text-align: center;}
+    {% endif %}
+
+    {#.vs_box {text-align: -webkit-center;text-align-last: center;}#}
+</style>
+<body>
+
+<div class="match_box" >
+    <div class="team_box" >
+        <div class="contest" ><a href="/sports/tbt/contest/{{ match_id }}">Contest</a></div>
+        <div class="mycontest" ><a href="/sports/tbt/mycontest/{{ match_id }}">My Contest</a></div>
+        <div class="myteam" style="background: white;border: green 1px solid"><a href="/sports/tbt/created_team/{{ match_id }}">My Team</a></div>
+    </div>
+</div>
+<br>
+<br>
+{% for m in created_team %}
+
+        <div class='' onclick="preview_team({{ m.id }})"  style='height:100px;padding:4px;background:green;padding-bottom: 110px'>
+            {% if  not m.match.live %}
+                <div style="width: 100%;text-align: right">
+{#                    <a href="/sports/tbt/copy_team/{{ m.id }}"><button onclick="copy_team({{ m.id }})">Copy</button></a>#}
+                    <a href="/sports/tbt/edit_team/{{ m.id }}"><button onclick="Edit_team({{ m.id }})">Edit</button></a>
+                </div>
+            {% endif %}
+        <div style='float:left;margin-top:10px;margin-bottom:20px;font-size:20px;text-align: -webkit-center;'><label class='team_dot' style='padding-left:5px;padding-right:5px;color:white'>&bull;</label>Team({{ m.TeamCount }})
+        {% if m.match.live %}<br>{{ m.total_points }}{% endif%}
+        </div>
+        <div style='float:right;text-align: -webkit-center;'>
+        <label style='float:left;padding-right:20px'>(C)<br><img style="border-radius: 50px;height: 30px;width: 30px" src='{{ m.captain.player.image.url }}'><br>{{ m.captain.player.abr_name }}</label>
+        <label style='float:right;padding-right:2px'>(VC)<br><img style="border-radius: 50px;height: 30px;width: 30px" src='{{ m.vice_captain.player.image.url }}'><br>{{ m.vice_captain.player.abr_name }}</label>
+        </div>
+
+        </div>
+    <br><br>
+{% endfor %}
+<div class="footer">
+    <a href="/sports/tbt/add_team/{{ match_id }}" style="background: green;"><button style='left: 0;bottom: 0;width: 100%;text-align: center;background: green;color: white;font-size: 20px' onclick='join_contest_selected_team()' id='join_contest_selected_team'>Add Team</button></a>
+</div>
+
+<div id="myModal" class="modal" style="display: none;">
+    <!-- Modal content -->
+    <div class="modal-content" style="text-align: -webkit-center;background-repeat: no-repeat;background-size: 100% 100%;background-image: url('{{ request.base_url }}/media/cricket_field6.jpg');background-color: green">
+
+        <div style="width: 100%">
+            <br>
+{#            <div style="float:left;font-size: 30px;color: white"><label style="margin-left: 5px;font: bold;">&#x21e4;</label></div>#}
+            <div style="float: right;color: white"><span style=";margin-right: 10px;color: white !important;" class="close" onclick="close_preview()"><label style="margin: 5px;color: black"> Close x</label></span></div>
+
+
+        </div>
+        <div id="team_preview_box" style="background: green !important;"></div>
+    </div>
+</div>
+
+<script>
+
+    // When the user clicks anywhere outside of the modal, close it
+    var modal = document.getElementById("myModal");
+
+    function preview_team(id){
+        $.ajax({
+
+            url : '{{ request.base_url }}/sports/tbt/team_preview/',
+            type : 'POST',
+            dataType:'json',
+            traditional: true,
+            data : {
+                'team_id' :id,
+                'match_id' : '{{ match_id }}',
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+
+            success : function(data) {
+                console.log(data)
+                $("#team_preview_box").html(data['team_preview_html']);
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+request+":"+error);
+            }
+        });
+        modal.style.display = "block";
+
+    }
+    function close_preview(){
+        modal.style.display = "none";
+
+    }
+
+</script>
+</body>
+
+</html>

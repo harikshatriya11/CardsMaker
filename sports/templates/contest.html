@@ -1,0 +1,277 @@
+{% load mathfilters %}
+{% include 'base.html' %}
+
+<style>
+    a{color:black;text-decoration: none}
+    .match_box{padding-bottom: 20px}
+    .contest_box{background: #d9dee3;margin: 2%;border-radius: 30px;padding: 3%;}
+    .team1, .team2, .vs_box{display: inline;width: 32%;}
+    .prize_pool, .entry_fee{display: inline;width: 32%;}
+
+    .contest{display: inline;width: 32%;float: left;text-align: center}
+    .mycontest{display: inline;width: 32%;float: right;text-align: center}
+    .myteam{display: inline;width: 32%;float: right;text-align: center}
+
+    .prize_pool {float: left}
+    .entry_fee {float: right;text-align: right}
+    .vs_box {float: right;text-align: center}
+    {#.vs_box {text-align: -webkit-center;text-align-last: center;}#}
+</style>
+<body>
+<div class="match_box" >
+    <div class="team_box" >
+        <div class="contest" style="background: white;border: green 1px solid"><a>Contest</a></div>
+        <div class="mycontest"><a href="/sports/tbt/mycontest/{{ match_id }}">My Contest</a></div>
+        <div class="myteam"><a href="/sports/tbt/created_team/{{ match_id }}">My Team</a></div>
+    </div>
+</div>
+<br>
+
+<div class="">
+    {% for c in contest %}
+
+            <div class="contest_box">
+                <a href="/sports/tbt/contest_details/{{ c.id }}">
+                    <div class="prize_pool">Prize Pool <br>{{ c.prize_pool }}</div>
+                    <div class="entry_fee">Entry Fee<br>{{ c.entry_fee }}</div>
+                    <br>
+
+                    <div class="spot" style="display: inline;background: gray;width: 90%;float: left;margin: 5%;border-radius: 10px">
+                        <div class="spot" style="background:green;display:inline;width: {% widthratio c.count_contests  c.limit 1  %}%;float: left;border-radius: 10px"><div style="color: green;border-radius: 10px;">.</div></div>
+                    </div>
+                    <br>
+
+                    <div class="cup_box" style="width: 100%;">
+
+                        {{ c.limit }}Spots: {{ c.limit|sub:c.count_contests_spots }} left spot
+                    </div>
+                </a>
+                <div class="cup_box" style="width: 100%;margin-bottom: 5px;">
+                    <div class="" style="float: right;">
+                        {% if  not c.match_contest.live and not c.match_contest.end %}
+                        <button onclick="join_contest('{{ c.id }}')" id="myBtn" class="btn-primary" style="background: green;border-radius: 10px;color: white !important;" >Join Contest</button>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+{#                <div class="cup_box" style="display: inline;float: left"><br>{{ c.limit }} Spots</div>#}
+{#                <div class="cup_box" style="display: inline;float: right">{{ c.limit|sub:c.count_contests }}</div>#}
+
+            </div>
+        <br>
+    {% endfor %}
+</div>
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 0px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0px;
+        border: 1px solid #888;
+        width: 100%;;
+    {#height:100vh;#}
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+
+<!-- Trigger/Open The Modal -->
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="created_team" style="margin: 5px;margin-bottom: 100px;"></div>
+        <div class="footer">
+            <div id="preview" style="background: green;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Preview</div>
+            <div onclick="create_team()" id="create"style="background: grey;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Next</div>
+        </div>
+    </div>
+</div>
+{#<div id="myModal2" class="modal2">#}
+{#    <!-- Modal content -->#}
+{#    <div class="modal-content">#}
+{#        <span class="close">&times;</span>#}
+{#        <div id="created_team" style="margin: 5px;margin-bottom: 100px;">Joined Contest Successfully</div>#}
+{#    </div>#}
+{#</div>#}
+<script>
+    {#$("#myBtn a").click(function(e) {#}
+    {#    // Do something#}
+    {#    #}
+    {#});#}
+    // Get the modal
+    var selected_team_id =[];
+    var join_contest_id;
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementsByClassName("created_team");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    {#btn.onclick = function() {#}
+    {##}
+    {#}#}
+    function join_contest(id){
+        selected_team_id = [];
+        $.ajax({
+
+            url : '{{ request.base_url }}/sports/tbt/joined_contest_teams/',
+            type : 'POST',
+            dataType:'json',
+            traditional: true,
+            data : {
+                'join_contest_id' : id,
+                'match_id' : '{{match_id}}',
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+
+            success : function(data) {
+                join_contest_id = id;
+                var teams  = "";
+                {#console.log(data[0]['contest_name_jc_id'])#}
+                console.log(data['status']);
+                {#console.log(data);#}
+
+                {#$("#created_team").html("");#}
+                document.getElementById("created_team").innerHTML = "";
+
+                {#var teams = "{% for ct in created_team %}"+#}
+                if (data['status'] == 200 ){
+                    for (var i=0;i< data['unselected_team'].length;i++){
+                        console.log("teams");
+                        var a ="<div class='' id='selected_team_box"+data['unselected_team'][i]["id"]+"' onclick='selected_team("+data['unselected_team'][i]["id"]+")' style='height:60px;padding:4px;background:green'>"+
+                            "<div style='float:left;margin-top:20px;font-size:30px;'><label class='team_dot' style='padding-left:5px;padding-right:5px;color:white'>&bull;</label>Team (T"+data['unselected_team'][i]["TeamCount"]+")</div>"+
+                            "<div style='float:right;text-align: -webkit-center;'>"+
+                            "<label style='float:left;padding-right:20px'>(C)<br><img src=''><br>"+data['unselected_team'][i]["captain__player__abr_name"]+"</label>"+
+                            "<label style='float:right;padding-right:2px'>(VC)<br><img src=''><br>"+data['unselected_team'][i]["vice_captain__player__abr_name"]+"</label>"+
+                            "</div></div><br>"
+                        teams = teams + a;
+                    }
+
+
+                    teams = teams + "<br><button style='left: 0;bottom: 0;width: 100%;text-align: center;' onclick='join_contest_selected_team()' id='join_contest_selected_team'>Add Team</button>";
+                    {#$("#created_team").append('');#}
+                    console.log("teams:"+teams);
+                    document.getElementById("created_team").innerHTML = teams;
+                    modal.style.display = "block";
+                }
+                else if (data['status'] == 201){
+                    alert("You can't Join with more than 22 teams");
+                }
+                else if (data['status'] == 202){
+                    {#window.location.href = "/sports/tbt/add_team/{{ match_id }}";#}
+                    window.location.href = "/sports/tbt/add_team/{{ match_id }}?contest_id="+id+"&edit_team=False";
+                }
+
+            },
+            error : function(request,error)
+            {
+                alert("Request: Error");
+            }
+        });
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    function selected_team(id){
+        console.log($("#selected_team_box"+id).css('background-color'));
+        if( $("#selected_team_box"+id).css('background-color') === 'rgb(0, 128, 0)') {
+            selected_team_id.push(id);
+            $("#selected_team_box"+id).css("background","lightgreen").find(".team_dot").css("color","black");
+
+        }
+        else{
+
+            var index = selected_team_id.indexOf(id);
+            if (index !== -1) {
+                selected_team_id.splice(index, 1);
+            }
+            $("#selected_team_box"+id).css("background","green").find(".team_dot").css("color","white");
+        }
+
+    console.log(selected_team_id);
+
+    }
+
+    function join_contest_selected_team(){
+        if (selected_team_id.length === 0){
+            alert("Please Select atleast one team");
+        }
+        else {
+            $.ajax({
+
+                url : '{{ request.base_url }}/sports/tbt/join_contest/',
+                type : 'POST',
+                dataType:'json',
+                traditional: true,
+                data : {
+                    'selected_team_id' : [selected_team_id],
+                    'join_contest_id' : join_contest_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+
+                success : function(data) {
+                    alert("Joined contest successfully");
+                    window.location.href = "/sports/tbt/contest/{{ match_id }}";
+
+
+                },
+                error : function(request,error)
+                {
+                    alert("Request: "+request+":"+error);
+                }
+            });
+        }
+
+    }
+
+</script>
+</body>
+</html>

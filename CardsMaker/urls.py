@@ -29,6 +29,7 @@ urlpatterns = [
     path('resume/', include('resume.urls')),
     path('bussiness_cards/', include('bussiness_cards.urls')),
     path('latterhad/', include('latter_had.urls')),
+    path('sports/', include('sports.urls')),
     path('', include('users.urls')),
     # path('agora/',Agora.as_view(app_id='6207a7e753084cbfaa451bcb9311f1f1',channel='asdhhcnadc')),
 

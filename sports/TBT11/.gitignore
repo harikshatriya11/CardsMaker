@@ -1,0 +1,16 @@
+**/migrations
+*.DS_Store
+**/__pycache__
+**/.DS_Store
+*/migrations
+/media
+
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+venv
+tbt/__pycache__/
+
+/static/admin/

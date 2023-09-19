@@ -6,7 +6,21 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class="col-md-12" style="text-align-last: center;">
+    {% if request.user.is_authenticated %}
+    <a href="/sports/tbt/" >
+        <img src="/media/media/cricket2023_ODI_world_cup.jpg/" width="500" height="200" />
 
+    </a>
+    {% else %}
+    <a href="#" data-target="#myModal" data-toggle="modal" >
+        <img src="/media/media/cricket2023_ODI_world_cup.jpg/" width="500" height="200" />
+
+    </a>
+    {% endif %}
+
+</div>
+<br>
         <div><a href="{% url 'biodata:biodata_home' %}" style="color: #1e2229">BioData Templates</a></div>
         {% include 'home/biodata/biodata.html' %}
         <div><a href="{% url 'engagement_cards:engagement_home' %}" style="color: #1e2229">Engagement Card Templates</a></div>

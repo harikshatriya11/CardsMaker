@@ -114,7 +114,7 @@ def registeration(request):
             return JsonResponse({"status": 203, "data": 'please enter more than 4 character'}, status=203)
         elif password == '' or password == None or len(password) < 7:
             print("password failed")
-            return JsonResponse({"status": 204, "data": 'please enter password correct'}, status=204)
+            return JsonResponse({"status": 204, "data": 'please enter correct password'}, status=204)
         else:
             create_user = User.objects.create_user(username=username, password = password)
             create_user.is_active = True
@@ -123,6 +123,8 @@ def registeration(request):
             user.save()
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                from sports.TBT11.tbt.models import AccountBalance
+                AccountBalance.objects.create(user=user)
                 dj_login(request, user)
     response = JsonResponse({"status": 200, "data": 'i'}, status=200)
     return response

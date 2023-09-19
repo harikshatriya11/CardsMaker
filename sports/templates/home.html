@@ -1,0 +1,57 @@
+{% include 'base.html' %}
+    <style>
+        body {
+            margin-top: 20px;
+        }
+        a{ width:100%;color:black;text-decoration: none;font-size: 20px;}
+        .match_box{background: #d9dee3;margin: 1vh;padding: 3%; border-radius: 10px}
+        .team1, .team2, .vs_box{display: inline;width: 32%;}
+        .team1 {float: left}
+        .team1 {float: right;text-align: right}
+        .vs_box {float: right;text-align: center}
+        .won_by {font-size: 10px}
+
+        {#.vs_box {text-align: -webkit-center;text-align-last: center;}#}
+
+    </style>
+<body>
+{% include 'payment/add_money.html' %}
+
+<div style="margin-top: 40px">
+<div style="display: inline-flex;width: 100%;height: fit-content;overflow-y: scroll">
+    {% for m in match_live %}
+        {% if m.live or m.end %}
+            <a href="/sports/tbt/contest/{{ m.id }}" >
+                <div class="match_box" style="width: 40vh;">
+                    <div class="cup_box">{{ m.cup }} </div>
+                    <div class="team_box" >
+                        <div class="team1">{{ m.team1.name_abr }} </div>
+                        <div class="team2">{{ m.team2.name_abr }} </div>
+                    </div>
+                    <div class="won_by">{{ m.won_by }}. </div>
+                </div>
+            </a>
+            <br>
+        {% endif %}
+    {% endfor %}
+</div>
+<div>
+    {% for m in match_upcoming %}
+        {% if not m.live and not m.end %}
+            <a href="/sports/tbt/contest/{{ m.id }}" >
+                <div class="match_box">
+                    <div class="cup_box">{{ m.cup }} </div>
+                    <div class="team_box" >
+                        <div class="team1">{{ m.team1 }} </div>
+                        <div class="vs_box">{{ m.time }} </div>
+                        <div class="team2">{{ m.team2 }} </div>
+                    </div>
+                </div>
+            </a>
+            <br>
+        {% endif %}
+    {% endfor %}
+</div>
+</div>
+</body>
+</html>

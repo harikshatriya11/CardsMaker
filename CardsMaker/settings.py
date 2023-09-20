@@ -117,7 +117,7 @@ WSGI_APPLICATION = 'CardsMaker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-TESTING_MODE = True
+TESTING_MODE = False
 if TESTING_MODE == True:
     DATABASES = {
         'default': {

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import sys
-
+from decouple import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.template.context_processors import static
 from django_countries import settings
@@ -27,8 +27,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
+DEBUG = config('DEBUG', default=False, cast=bool)
 if DEBUG:
     ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost", "kraagh.com", "www.kraagh.com"]
 else:
@@ -117,7 +117,7 @@ WSGI_APPLICATION = 'CardsMaker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-TESTING_MODE = False
+TESTING_MODE = config('TESTING_MODE', default=False, cast=bool)
 if TESTING_MODE == True:
     DATABASES = {
         'default': {

@@ -163,7 +163,7 @@
     <div class="modal-content" id="modal-content">
         <span class="close" style=""><button>Close &times;</button></span>
         <br>
-        <div id="created_team" style="margin: 5px;margin-bottom: 100px;background: green"></div>
+        <div id="created_team" style="margin: 5px;margin-bottom: 100px;"></div>
         <div class="footer">
 {#            <div id="preview" style="background: green;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Preview</div>#}
 {#            <div onclick="create_team()" id="create"style="background: grey;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Next</div>#}
@@ -193,12 +193,12 @@
                 console.log(data)
                 if (data['status'] == 200){
                     $("#created_team").html(data['team_preview_html']);
-                    $("#modal-content").css({'text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/cricket_field6.jpg")','background-color': 'none'});
+                    $("#modal-content").css({'text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'none'});
                 }
 
                 else if (data['status'] == 201){
                     $("#created_team").html(data['team_preview_html']).css({'color':'white','background':'black','font-size':'20px'});
-                    $("#modal-content").css({'padding-top':'50%','text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/cricket_field6.jpg")','background-color': 'none'});
+                    $("#modal-content").css({'padding-top':'50%','text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'none'});
                 }
 
             },
@@ -245,12 +245,12 @@
                     player_details = player_details + "</tbody></table><br>";
 
                     $("#created_team").html(player_details);
-                    {#$("#modal-content").css({'text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/cricket_field6.jpg")','background-color': 'green'});#}
+                    {#$("#modal-content").css({'text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'green'});#}
                 }
 
                 else if (data['status'] == 201){
                     $("#created_team").html(data['team_preview_html']).css({'color':'white','background':'black','font-size':'20px'});
-                    {#$("#modal-content").css({'padding-top':'50%','text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/cricket_field6.jpg")','background-color': 'green'});#}
+                    {#$("#modal-content").css({'padding-top':'50%','text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'green'});#}
                 }
 
             },

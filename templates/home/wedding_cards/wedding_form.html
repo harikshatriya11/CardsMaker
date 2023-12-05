@@ -183,9 +183,11 @@
                 <div class="form-row" >
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom04" id="l_wedding_card_language">{% if all_languages|length > 1 %}Choose Language{% endif %}</label>
+                    {{ language.language_name }}::{{ wedding_cards.language_name.language.language_name }}
                         <select  id="wedding_card_language" class="form-control">
                             {% for language in all_languages %}
-                                <option value="{{ language.id }}" {% if language.language_name == wedding_cards.language_name.language.language_name %}selected{% endif %}>{{ language.language }}</option>
+
+                                <option value="{{ language.id }}" {% if language.language_name == wedding_cards.language_name.language.language_name and language.language_name and wedding_cards.language_name.language.language_name %}selected{% endif %}>{{ language.language }}</option>
                             {% endfor %}
                         </select>
                     </div>

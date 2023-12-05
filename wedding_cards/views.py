@@ -35,7 +35,7 @@ def WeddingForm(request):
     template = loader.get_template("home/wedding_cards/wedding_form.html")
 
     try:
-        labels = Wedding.objects.get(language=2)
+        labels = Wedding.objects.all().first()
         labels = labels.label_name
         d = json.loads(labels)
         print(type(d))

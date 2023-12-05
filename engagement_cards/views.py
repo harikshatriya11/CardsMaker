@@ -38,7 +38,7 @@ def EngagementForm(request):
             languages_name = Engagement.objects.filter(status=0)
             response['all_languages'] = [{'language_name':l.language,'id':l.id} for l in languages_name]
             print('lang:',response['all_languages'])
-            labels = Engagement.objects.get(language=2)
+            labels = languages_name.first()
             labels = labels.label_name
             d = json.loads(labels)
             print(type(d))

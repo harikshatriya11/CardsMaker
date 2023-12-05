@@ -42,9 +42,10 @@ def BioDataForm(request,id):
         languages_name = Biodata.objects.filter(status=0)
         response['all_languages'] = [{'language_name':l.language,'id':l.id} for l in languages_name]
         print('lang:',response['all_languages'])
-        labels = Biodata.objects.get(language=2)
+        labels = languages_name.first()
         labels = labels.label_name
         d = json.loads(labels)
+        print(d)
         print(type(d))
         response['labels'] =d
         if request.user.is_authenticated:
@@ -488,7 +489,7 @@ def BioDataUpdateForm(request,id):
         print('biodata_city', response['biodata_city'])
         response['all_languages'] = [{'language_name':l.language.language_name,'id':l.id} for l in languages_name]
         print('lang:',response['all_languages'])
-        labels = Biodata.objects.get(language=2)
+        labels = languages_name.first()
         labels = labels.label_name
         d = json.loads(labels)
         # print(type(d))

@@ -7,17 +7,19 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <div class="col-md-12" style="text-align-last: center;">
-{#    {% if request.user.is_authenticated %}#}
-{#    <a href="/sports/tbt/" >#}
+    {% if request.user.is_authenticated %}
+    <a href="/sports/tbt/"  style="text-underline: blue">
 {#        <img src="/media/media/cricket2023_ODI_world_cup.jpg/" width="500" height="200" />#}
-{##}
-{#    </a>#}
-{#    {% else %}#}
-{#    <a href="#" data-target="#myModal" data-toggle="modal" >#}
-{#        <img src="/media/media/cricket2023_ODI_world_cup.jpg/" width="500" height="200" />#}
-{##}
-{#    </a>#}
-{#    {% endif %}#}
+        <img src="/media/cricket/cricket_home4.jpg" width="500" height="200" />
+
+        <p style="opacity: 0.7;font-size:20px !important;background: green;position: absolute;bottom: 30%;left:30%;color:#ffffff !important;padding: 20px">Play Fantasy Cricket<br>Free Entry & Win Prize<br>Share More Win More</p>
+    </a>
+    {% else %}
+    <a href="#" data-target="#myModal" data-toggle="modal" >
+        <img src="/media/media/cricket2023_ODI_world_cup.jpg/" width="500" height="200" />
+
+    </a>
+    {% endif %}
 
 </div>
 <br>

@@ -15,6 +15,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 # Create your views here.
 from django.template import loader
+from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
 from sports.TBT11.tbt.models import *
@@ -930,3 +931,29 @@ def starsport_score(request):
     links_with_text = []
     score_livematch = score_soup.find(class_="ds-text-tight-s ds-font-bold ds-uppercase")
     return HttpResponse(score_livematch)
+
+class RequestWithdrawalListView(View):
+    template = loader.get_template("request_withdrawal_list.html")
+    def get(self, request):
+        print('*'*40)
+        obj = RequestedWithdrawal.objects.filter(user=request.user).order_by('-id')
+        context = {
+            'obj':obj
+        }
+        # return render(request, self.template, context)
+        return HttpResponse(self.template.render(context, request))
+
+    def post(self, request):
+        pass
+
+
+def request_withdrawal(request):
+    balance = AccountBalance.objects.filter(user=request.user).first()
+    if balance.widthdrawal >= 100:
+        print('asdc')
+        balance.widthdrawal = 0
+
+        RequestedWithdrawal.objects.create(user=request.user, amount=balance.widthdrawal, balance=balance,
+                                           user_name=request.user.username, userId=request.user.id)
+    balance.save()
+    return redirect('/sports/tbt/request_withdrawal_list/')

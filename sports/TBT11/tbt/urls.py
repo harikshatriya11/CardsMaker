@@ -25,6 +25,8 @@ app_name = 'tbt'
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', views.Home, name='home'),
+    path('request_withdrawal_list/', views.RequestWithdrawalListView.as_view(), name='request_withdrawal_list'),
+    path('request_withdrawal/', views.request_withdrawal, name='request_withdrawal'),
     path('contest/<int:id>', views.MatchContest, name='contest'),
     path('mycontest/<int:id>', views.MyContest, name='mycontest'),
     path('created_team/<int:id>', views.CreatedTeams, name='created_team'),

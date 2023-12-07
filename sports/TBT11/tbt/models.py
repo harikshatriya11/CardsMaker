@@ -262,3 +262,18 @@ class LiveMatchTeam(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     def __str__(self):
         return '{}'.format(self.version_code)
+
+
+class RequestedWithdrawal(models.Model):
+    balance = models.ForeignKey(AccountBalance, on_delete=models.SET_NULL, null=True,blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True)
+    user_name = models.CharField(default='', blank=True,max_length=100)
+    userId = models.CharField(default='', blank=True,max_length=50)
+    amount = models.CharField(default='', blank=True,max_length=50)
+    paid = models.BooleanField(default=False)
+    rejected = models.BooleanField(default=False)
+    reject_reason = models.TextField(default='', blank=True,null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return '{}'.format(self.user)

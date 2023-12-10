@@ -211,6 +211,9 @@ def AddTeam(request, id):
             response['team'] = team
             response['edit_team'] = False
             response['contest_id'] = contest_id
+            if contest_id:
+                selected_team_id = d["selected_team_id"]
+                join_contest_id = d["join_contest_id"]
             return HttpResponse(template.render(response, request))
 
     else:
@@ -297,13 +300,14 @@ def CreateTeams(request):
         elif contest_id > 0:
             print('test1')
             contest = Contest.objects.get(id=contest_id)
-            limit_count = JoinedContest.objects.filter(contest_name_jc_id = contest_id).count()
-            if int(contest.limit) >= limit_count:
-                JoinedContest.objects.create(joined_user=request.user,contest_name_jc_id = contest_id,selected_team_id =create_team.id)
-                response['msg'] = "Joined Contest Successfully"
-                print('joined contest')
-                print('test2')
-                return JsonResponse({'status':201,'msg':"Joined Contest Successfully"})
+            limit_count = JoinedContest.objects.filter(contest_name_jc_id = contest_id)
+            if int(contest.limit) >= len(limit_count):
+                if limit_count.filter(joined_user=request.user).count() < contest.team_limit:
+                    JoinedContest.objects.create(joined_user=request.user,contest_name_jc_id = contest_id,selected_team_id =create_team.id)
+                    response['msg'] = "Joined Contest Successfully"
+                    print('joined contest')
+                    print('test2')
+                    return JsonResponse({'status':201,'msg':"Joined Contest Successfully"})
             else:
                 print('contest full')
                 response['msg'] = "Contest Full"
@@ -311,7 +315,7 @@ def CreateTeams(request):
                 return JsonResponse({'status':201,'msg':"Contest Full"})
     # except:
         print("error in contest Joining")
-        return JsonResponse({'status':200,'msg':"Created Team"})
+        return JsonResponse({'status':200,'msg':f"Created Team:{contest_id}"})
 
         return JsonResponse({'status':200,'msg':"Created Team"})
     else:

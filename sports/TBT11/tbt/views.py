@@ -211,9 +211,9 @@ def AddTeam(request, id):
             response['team'] = team
             response['edit_team'] = False
             response['contest_id'] = contest_id
-            if contest_id:
-                selected_team_id = d["selected_team_id"]
-                join_contest_id = d["join_contest_id"]
+            # if contest_id:
+            #     selected_team_id = d["selected_team_id"]
+            #     join_contest_id = d["join_contest_id"]
             return HttpResponse(template.render(response, request))
 
     else:

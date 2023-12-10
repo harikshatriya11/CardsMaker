@@ -316,7 +316,7 @@ def CreateTeams(request):
                         remain_entry_fee = account_balance.deposit - contest.entry_fee_value
                         if remain_entry_fee > 0:
                             deposit = -(remain_entry_fee)
-                        account_balance.widthdrawal = deposit
+                        account_balance.deposit = deposit
                     if -remain_entry_fee > 0:
                         remain_entry_fee = account_balance.widthdrawal - contest.entry_fee_value
                         if remain_entry_fee > 0:

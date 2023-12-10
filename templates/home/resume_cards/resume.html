@@ -9,7 +9,7 @@
    <section class="customer-logos slider">
        {% for resume_image in resume_templates %}
            <a href="{% url 'resume:resume_form' %}?template_id={{ resume_image.id }}"><div class="slide"><img src="/media/{{ resume_image.template_image_resume_icon }}">
-                {% if resume_image.template_price %}{{ resume_image.template_price }} {% else %} 0.00 {% endif %}Rs.
+{#                {% if resume_image.template_price %}{{ resume_image.template_price }} {% else %} 0.00 {% endif %}Rs.#}
            </div></a>
        {% endfor %}
    </section>

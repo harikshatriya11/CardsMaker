@@ -21,7 +21,7 @@ channels
 channels-redis
 chardet
 choice
-chronometry
+
 click
 colorama
 colouration
@@ -33,7 +33,7 @@ daphne
 decorator
 defusedxml
 dill
-disk
+
 distlib
 distro
 dj-config-url
@@ -109,10 +109,10 @@ paramiko
 parso
 path
 paypal
-pdf
+
 pdfkit
 pdfminer.six
-pdftotree
+
 pexpect
 phonenumbers
 pickleshare
@@ -147,7 +147,7 @@ PyWavelets
 PyYAML
 pyzbar
 qrcode
-ravenclaw
+
 rdflib
 redis
 regex
@@ -162,9 +162,9 @@ scipy
 selectivesearch
 Send2Trash
 service-identity
-silverware
+
 six
-sklearn
+
 slytherin
 social-auth-app-django
 social-auth-core

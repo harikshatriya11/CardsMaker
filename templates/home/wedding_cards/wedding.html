@@ -9,7 +9,7 @@
    <section class="customer-logos slider">
        {% for wedding_image in wedding_templates %}
            <a href="{% url 'wedding_cards:wedding_form' %}?template_id={{ wedding_image.id }}"><div class="slide"><img src="/media/{{ wedding_image.template_image_wedding_icon }}">
-                {% if wedding_image.template_price %}{{ wedding_image.template_price }} {% else %} 0.00 {% endif %}Rs.
+{#                {% if wedding_image.template_price %}{{ wedding_image.template_price }} {% else %} 0.00 {% endif %}Rs.#}
            </div></a>
        {% endfor %}
    </section>

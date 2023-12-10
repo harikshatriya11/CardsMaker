@@ -9,7 +9,11 @@
 <div class="container">
    <section class="customer-logos slider">
        {% for biodata_image in biodata_templates %}
-           <a href="{% url 'biodata:biodata_form'  biodata_image.id   %}"><div class="slide"><img src="/media/{{ biodata_image.template_icon_image }}">{% if biodata_image.template_price %}{{ biodata_image.template_price }} {% else %} 0.00 {% endif %}Rs.</div></a>
+           <a href="{% url 'biodata:biodata_form'  biodata_image.id   %}">
+               <div class="slide"><img src="/media/{{ biodata_image.template_icon_image }}">
+{#               {% if biodata_image.template_price %}{{ biodata_image.template_price }} {% else %} 0.00 {% endif %}Rs.#}
+                </div>
+           </a>
        {% endfor %}
    </section>
 </div>

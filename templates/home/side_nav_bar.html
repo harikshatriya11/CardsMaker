@@ -71,15 +71,20 @@
   <main class="page-content">
     <div class="container-fluid">
         <h2 id="web_name" style="text-align: center">
-
-            <a href="{% url 'users:home' %}" style="color: #000000;font-size: 2rem">
+            {% if '/sports/tbt/' in request.path  %}
+                <a href="" style="color: #000000;font-size: 2rem">
+            {% else %}
+                <a href="{% url 'users:home' %}" style="color: #000000;font-size: 2rem">
+            {% endif %}
 
                 Kraagh
                 <img src="/media/media/kraagh_fav_icon.jpg" style="border-radius: 50%;width: 30px !important; " >
 {#                <img src="/media/media/kraagh_icon.jpg"  />#}
             </a>
         </h2>
+    <p style="text-align: center">This site totally relies on ad revenue, and all services and contests are free. Please disable ad blockers for this site.</p>
         {% if '/sports/' in request.path  %}
+            
             <a href="/sports/tbt/request_withdrawal/" class="btn bg-success" style="float: right;width: fit-content">Request Withdrawal</a>
         {% endif %}
 

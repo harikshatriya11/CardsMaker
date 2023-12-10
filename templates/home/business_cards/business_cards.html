@@ -9,7 +9,7 @@
    <section class="customer-logos slider">
        {% for business_image in business_templates %}
            <a href="{% url 'business_cards:business_card_form' %}?template_id={{ business_image.id }}"><div class="slide"><img src="/media/{{ business_image.template_image_business_icon }}">
-               {% if biodata_image.template_price %}{{ biodata_image.template_price }} {% else %} 0.00 {% endif %}Rs.
+{#               {% if biodata_image.template_price %}{{ biodata_image.template_price }} {% else %} 0.00 {% endif %}Rs.#}
            </div></a>
        {% endfor %}
    </section>

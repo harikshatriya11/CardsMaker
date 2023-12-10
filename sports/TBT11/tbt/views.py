@@ -301,7 +301,29 @@ def CreateTeams(request):
             print('test1')
             contest = Contest.objects.get(id=contest_id)
             limit_count = JoinedContest.objects.filter(contest_name_jc_id = contest_id)
-            if int(contest.limit) >= len(limit_count):
+            account_balance = AccountBalance.objects.filter(user = request.user).first()
+
+            if account_balance and contest.entry_fee_value > 0:
+                amount = account_balance.bonus+account_balance.widthdrawal+account_balance.deposit
+                if amount >= contest.entry_fee_value:
+                    remain_entry_fee =  contest.entry_fee_value - account_balance.bonus
+                    if remain_entry_fee > 0:
+                        bonus = 0
+                    else:
+                        bonus = -remain_entry_fee
+                    account_balance.bonus = bonus
+                    if -remain_entry_fee > 0:
+                        remain_entry_fee = account_balance.deposit - contest.entry_fee_value
+                        if remain_entry_fee > 0:
+                            deposit = -(remain_entry_fee)
+                        account_balance.widthdrawal = deposit
+                    if -remain_entry_fee > 0:
+                        remain_entry_fee = account_balance.widthdrawal - contest.entry_fee_value
+                        if remain_entry_fee > 0:
+                            widthdrawal = -(remain_entry_fee)
+                        account_balance.widthdrawal = widthdrawal
+                    account_balance.save()
+
                 if limit_count.filter(joined_user=request.user).count() < contest.team_limit:
                     JoinedContest.objects.create(joined_user=request.user,contest_name_jc_id = contest_id,selected_team_id =create_team.id)
                     response['msg'] = "Joined Contest Successfully"

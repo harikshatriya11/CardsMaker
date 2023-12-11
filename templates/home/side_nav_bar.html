@@ -5,6 +5,21 @@
 {% endif %}
 
 <style>
+    @media only screen and (max-width: 767px) {
+  .withdrawal_note {
+    font-size: 5px;
+  }
+    .ad_blockers_note {
+    font-size: 5px;
+        color: gray;
+  }
+    .fantasy_cricket_not {
+        font-size: 10px !important;
+  }
+    
+        
+        
+}
     .sup_free{
         background: greenyellow;padding: 2px;border-radius: 5px;color:black;font-weight: bold;
     }
@@ -82,7 +97,7 @@
 {#                <img src="/media/media/kraagh_icon.jpg"  />#}
             </a>
         </h2>
-    <p style="text-align: center">This site totally relies on ad revenue, and all services and contests are free. Please disable ad blockers for this site.</p>
+    <p class="ad_blockers_note" style="text-align: center">This site totally relies on ad revenue, and all services and contests are free. Please disable ad blockers for this site.</p>
         {% if '/sports/' in request.path  %}
             
             <a href="/sports/tbt/request_withdrawal/" class="btn bg-success" style="float: right;width: fit-content">Request Withdrawal</a>

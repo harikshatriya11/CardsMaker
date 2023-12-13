@@ -12,12 +12,14 @@
         .won_by {font-size: 10px}
 
         {#.vs_box {text-align: -webkit-center;text-align-last: center;}#}
-
+        .row{
+            display: inline !important;
+        }
     </style>
 <body>
 {% include 'base.html' %}
 {% include 'home/side_nav_bar.html' %}
-<h7 class="withdrawal_note"  style="color: red;width: 400px;text-align: center"><font color="black">Please Note:</font> Amount will be transferred to your mobile number's UPI account every Sunday only. <br>Withdrawal functionality has not been implemented on this site yet. </h7>
+<p class="withdrawal_note"  style="color: red;text-align: center"><font color="black">Please Note:</font> Amount will be transferred to your mobile number's UPI account every Sunday only. Withdrawal functionality has not been implemented on this site yet. </p>
 {#{% include 'payment/add_money.html' %}#}
 
 <div style="margin-top: 40px">
@@ -25,7 +27,7 @@
     {% for m in match_live %}
         {% if m.live or m.end %}
             <a href="/sports/tbt/contest/{{ m.id }}" >
-                <div class="match_box" style="width: 40vh;">
+                <div class="match_box" style="">
                     <div class="cup_box">{{ m.cup }} </div>
                     <div class="team_box" >
                         <div class="team1">{{ m.team1.name_abr }} </div>

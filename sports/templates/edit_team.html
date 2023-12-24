@@ -134,7 +134,7 @@
 <div style='margin-left: auto;margin-right: auto;text-align: center;'>
     <br /><hr /><br /></div>
 <div class="footer">
-    <div id="preview" onclick="preview_team({{ m.id }})" style="background: green;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Preview</div>
+    <div id="preview" onclick="preview_team({{ m.id }});trunchatecharsjs();" style="background: green;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Preview</div>
     <div onclick="next()" id="create"style="background: grey;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Next</div>
 </div>
 {% include 'c_vc_select.html' %}
@@ -723,6 +723,9 @@ $("#create").css("background","green")
         body {
             padding: 20px 0;
         }
+    }
+    .players_type{
+        background: unset !important;
     }
 </style>
 </body>

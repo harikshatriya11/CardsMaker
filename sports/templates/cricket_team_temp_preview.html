@@ -114,4 +114,22 @@
 </div>
 
 </div>
+<script>
+    function trunchatecharsjs() {
+
+        $(document).ready(function() {
+            // Iterate over each element with class "player_name"
+            $('.player_name').each(function() {
+
+                // Check if the length of text is greater than 16
+                if ($(this).text().length > 16) {
+                    // Truncate the text and append ellipsis
+                    $(this).text($(this).text().substring(0, 16) + '...');
+                }
+            });
+        });
+
+    }
+
+</script>
 </body>

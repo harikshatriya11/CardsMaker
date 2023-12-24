@@ -36,6 +36,7 @@
         border-radius: 50px;
         background: white !important;
         margin: 10px;
+        margin-bottom: -30px !important;
         {#border-radius: 50px;#}
     }
 
@@ -47,7 +48,7 @@
     }
     .players_box{
         display: inline-flex !important;
-        margin-top: 10px;
+        margin-top: 2px !important;
         flex-wrap: wrap;
         width: 100%;
         place-content: center;
@@ -56,11 +57,11 @@
     .{{ match.team1 }}, .{{ match.team2 }}{
         width: 28% !important;
         display: inline !important;
-        margin: 2%;
+        margin: 2px;
     }
     .{{ match.team1 }} .player_name{
-        color: white;
-        background: black;
+        color: white !important;
+        background: black !important;
         width: 100%;
         padding-left: 5px;
         padding-right: 5px;
@@ -68,8 +69,8 @@
         {#font-size: 18px;#}
     }
     .{{ match.team2 }} .player_name{
-        color: black;
-        background: white;
+        color: black !important;
+        background: white !important;
         width: 100%;
         padding-left: 5px;
         padding-right: 5px;
@@ -85,15 +86,20 @@
         color: white !important;
     }
     .player_name{
+        white-space: pre;
 
     }
     .players_type{
         color: white;
+        background: gray;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 15px;
     }
 </style>
 </head>
 <body>
-<div style="margin-top: 8%">
+<div style="margin-top: 10px">
 {#    {% if p.player%}#}
 {#    #}
 {#    {% endif %} #}
@@ -105,7 +111,7 @@
             {% if p.player.team == match.team1 %}
                 <div class="{{ p.player.team }}">
                     <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
-                    <label class="player_name">{{ p.player.abr_name }}</label><br>
+                    <label class="player_name"> {% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
                     <label class="player_points">
 
                         {% if captain.player.id == p.player.id %} {{captain_total}}(C)
@@ -117,7 +123,7 @@
             {% if p.player.team == match.team2 %}
                 <div class="{{ p.player.team }}">
                     <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
-                    <label class="player_name">{{ p.player.abr_name }}</label><br>
+                    <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
                     <label class="player_points">
                         {% if captain.player.id == p.player.id %} {{captain_total}}(C)
                             {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
@@ -138,7 +144,7 @@
                 <div class="{{ p.player.team }}">
                     <label class="player_points">
                         <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
-                        <label class="player_name">{{ p.player.abr_name }}</label><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
                         <label class="player_points">
 
                             {% if captain.player.id == p.player.id %} {{captain_total}}(C)
@@ -152,7 +158,7 @@
                 <div class="{{ p.player.team }}">
                     <label class="player_points">
                         <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
-                        <label class="player_name">{{ p.player.abr_name }}</label><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
                         <label class="player_points">
                             {% if captain.player.id == p.player.id %} {{captain_total}}(C)
                                 {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
@@ -175,7 +181,7 @@
 
                     <label class="player_points">
                         <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
-                        <label class="player_name">{{ p.player.abr_name }}</label><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
                         <label class="player_points">
                             {% if captain.player.id == p.player.id %} {{captain_total}}(C)
                                 {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
@@ -188,7 +194,7 @@
                 <div class="{{ p.player.team }}">
                     <label class="player_points">
                         <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
-                        <label class="player_name">{{ p.player.abr_name }}</label><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
                         <label class="player_points">
                             {% if captain.player.id == p.player.id %} {{captain_total}}(C)
                                 {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
@@ -211,7 +217,7 @@
 
                     <label class="player_points">
                         <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
-                        <label class="player_name">{{ p.player.abr_name }}</label><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
                         <label class="player_points">
                             {% if captain.player.id == p.player.id %} {{captain_total}}(C)
                                 {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
@@ -224,7 +230,7 @@
                 <div class="{{ p.player.team }}">
                     <label class="player_points">
                         <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
-                        <label class="player_name">{{ p.player.abr_name }}</label><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
                         <label class="player_points">
                             {% if captain.player.id == p.player.id %} {{captain_total}}(C)
                             {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)

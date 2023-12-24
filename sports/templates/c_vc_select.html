@@ -55,7 +55,7 @@ cursor: pointer;
         <span class="close">&times;</span>
         <div id="c_vc_selected_team" style="margin: 30px;margin-bottom: 100px;"></div>
         <div class="footer">
-            <div id="preview" onclick="preview_team({{ m.id }})" style="background: green;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Preview</div>
+            <div id="preview" onclick="preview_team({{ m.id }});trunchatecharsjs();" style="background: green;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Preview</div>
             <div onclick="create_team()" id="create_save" style="background: grey;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Save</div>
         </div>
     </div>

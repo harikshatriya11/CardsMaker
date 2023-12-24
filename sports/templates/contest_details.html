@@ -30,9 +30,11 @@
     /* The Close Button */
     .close {
         color: #aaaaaa;
-        float: right;
-        font-size: 28px;
+        float: right !important;
+        font-size: 20px !important;
         font-weight: bold;
+        width: fit-content !important;
+        border-radius: 15px !important;
     }
 
     .close:hover,
@@ -162,7 +164,6 @@
     <!-- Modal content -->
     <div class="modal-content" id="modal-content">
         <span class="close" style=""><button>Close &times;</button></span>
-        <br>
         <div id="created_team" style="margin: 5px;margin-bottom: 100px;"></div>
         <div class="footer">
 {#            <div id="preview" style="background: green;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Preview</div>#}

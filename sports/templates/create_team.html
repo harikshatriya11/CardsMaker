@@ -20,6 +20,14 @@
     {% endif %}
 
     {#.vs_box {text-align: -webkit-center;text-align-last: center;}#}
+    .close {
+        color: #aaaaaa;
+        float: right !important;
+        font-size: unset !important;
+        font-weight: bold;
+        width: fit-content !important;
+        border-radius: 15px !important;
+    }
 </style>
 <body>
 
@@ -34,11 +42,11 @@
 <br>
 {% for m in created_team %}
 
-        <div class='' onclick="preview_team({{ m.id }})"  style='height:100px;padding:4px;background:green;padding-bottom: 110px'>
+        <div class='' onclick="preview_team({{ m.id }});trunchatecharsjs();"  style='height:100px;padding:4px;background:green;padding-bottom: 110px'>
             {% if  not m.match.live %}
                 <div style="width: 100%;text-align: right">
 {#                    <a href="/sports/tbt/copy_team/{{ m.id }}"><button onclick="copy_team({{ m.id }})">Copy</button></a>#}
-                    <a href="/sports/tbt/edit_team/{{ m.id }}"><button onclick="Edit_team({{ m.id }})">Edit</button></a>
+                    <a href="/sports/tbt/edit_team/{{ m.id }}"><button onclick="Edit_team({{ m.id }});close_preview();">Edit</button></a>
                 </div>
             {% endif %}
         <div style='float:left;margin-top:10px;margin-bottom:20px;font-size:20px;text-align: -webkit-center;'><label class='team_dot' style='padding-left:5px;padding-right:5px;color:white'>&bull;</label>Team({{ m.TeamCount }})

@@ -33,14 +33,14 @@ from gazpacho import Soup
 key = Fernet.generate_key()
 fernet = Fernet(key)
 def Home(request):
-    response =  {}
+    response = {}
     balance = ''
     androidVersion = AndroidApp.objects.latest('version_code')
     if request.user.is_authenticated:
         response =  {}
         template = loader.get_template("home.html")
         match_live = Match.objects.filter(Q(live=True) | Q(end=True)).order_by('-id')
-        match_upcoming = Match.objects.filter(live=False,end=False,date = datetime.date.today())
+        match_upcoming = Match.objects.filter(live=False,end=False, date__gte=datetime.date.today())
 
         response['match_live'] = match_live
         response['match_upcoming'] = match_upcoming
@@ -305,31 +305,40 @@ def CreateTeams(request):
 
             if account_balance and contest.entry_fee_value > 0:
                 amount = account_balance.bonus+account_balance.widthdrawal+account_balance.deposit
-                if amount >= contest.entry_fee_value:
-                    remain_entry_fee =  contest.entry_fee_value - account_balance.bonus
-                    if remain_entry_fee > 0:
-                        bonus = 0
-                    else:
-                        bonus = -remain_entry_fee
-                    account_balance.bonus = bonus
-                    if -remain_entry_fee > 0:
-                        remain_entry_fee = account_balance.deposit - contest.entry_fee_value
-                        if remain_entry_fee > 0:
-                            deposit = -(remain_entry_fee)
-                        account_balance.deposit = deposit
-                    if -remain_entry_fee > 0:
-                        remain_entry_fee = account_balance.widthdrawal - contest.entry_fee_value
-                        if remain_entry_fee > 0:
-                            widthdrawal = -(remain_entry_fee)
-                        account_balance.widthdrawal = widthdrawal
-                    account_balance.save()
-
                 if limit_count.filter(joined_user=request.user).count() < contest.team_limit:
-                    JoinedContest.objects.create(joined_user=request.user,contest_name_jc_id = contest_id,selected_team_id =create_team.id)
+
+                    if amount >= contest.entry_fee_value:
+                        remain_entry_fee = contest.entry_fee_value - account_balance.bonus
+                        if remain_entry_fee > 0:
+                            bonus = 0
+                        else:
+                            bonus = -remain_entry_fee
+                        account_balance.bonus = bonus
+                        if -remain_entry_fee > 0:
+                            remain_entry_fee = account_balance.deposit - contest.entry_fee_value
+                            if remain_entry_fee > 0:
+                                deposit = -(remain_entry_fee)
+                            account_balance.deposit = deposit
+                        if -remain_entry_fee > 0:
+                            remain_entry_fee = account_balance.widthdrawal - contest.entry_fee_value
+                            if remain_entry_fee > 0:
+                                widthdrawal = -(remain_entry_fee)
+                            account_balance.widthdrawal = widthdrawal
+                        account_balance.save()
+
+                    JoinedContest.objects.create(joined_user=request.user, contest_name_jc_id=contest_id,
+                                                 selected_team_id=create_team.id)
                     response['msg'] = "Joined Contest Successfully"
                     print('joined contest')
                     print('test2')
-                    return JsonResponse({'status':201,'msg':"Joined Contest Successfully"})
+                    return JsonResponse({'status': 201, 'msg': "Joined Contest Successfully"})
+            elif contest.entry_fee_value == 0 and limit_count.filter(joined_user=request.user).count() < contest.team_limit:
+                JoinedContest.objects.create(joined_user=request.user, contest_name_jc_id=contest_id,
+                                             selected_team_id=create_team.id)
+                response['msg'] = "Joined Contest Successfully"
+                print('joined contest')
+                print('test2')
+                return JsonResponse({'status': 201, 'msg': "Joined Contest Successfully"})
             else:
                 print('contest full')
                 response['msg'] = "Contest Full"
@@ -367,7 +376,8 @@ def TeamPreview(request):
         players.append(team.player11)
 
         print(match.live, team.username_ct, request.user)
-
+        response['captain_total'] = int(team.captain.total) * 2
+        response['vice_captain_total'] = int(team.vice_captain.total) * 1.5
         if not match.live and team.username_ct == request.user:
             response['players'] = players
             response['captain'] = team.captain
@@ -380,6 +390,7 @@ def TeamPreview(request):
             response['captain'] = team.captain
             response['vice_captain'] = team.vice_captain
             response['captain_total'] = int(team.captain.total)*2
+            print(f"response:{response['captain_total']}")
             response['vice_captain_total'] = int(team.vice_captain.total)*1.5
             team_preview_html = template.render(response)
         else:

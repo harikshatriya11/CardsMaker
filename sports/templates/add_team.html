@@ -358,7 +358,8 @@
             success : function(data) {
                 {#alert('Data: '+data);#}
                 alert("Team Created Successfully");
-                window.location.href = "/sports/tbt/created_team/{{ match_id }}";
+                {#window.location.href = "/sports/tbt/created_team/{{ match_id }}";#}
+                window.location.href = "/sports/tbt/contest/{{ contest_id }}";
 
             },
             error : function(request,error)

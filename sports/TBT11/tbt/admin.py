@@ -35,10 +35,15 @@ class MainDynamicListDisplayAdmin(admin.ModelAdmin):
         fields = self.get_model_fields(model)
         return fields
 
+print('asdc')
+@admin.register(Player)
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ['id', "full_name", "abr_name", "player_place", "team", "country", "country_abr" ,"image"]
+    list_editable = ["full_name", "abr_name", "player_place", "team", "country", "country_abr" ,"image"]
+    list_display_links = ['id']
+    list_per_page = 400
+print('asdc')
 
-
-class PlayerAdmin(ImportExportModelAdmin):
-    search_fields=['full_name']
 class TeamAdmin(ImportExportModelAdmin):
     pass
 
@@ -50,7 +55,7 @@ admin.site.register(UserPDetails, DynamicListDisplayAdmin)
 admin.site.register(Sport, DynamicListDisplayAdmin)
 admin.site.register(Cup)
 admin.site.register(Team, TeamAdmin)
-admin.site.register(Player, PlayerAdmin)
+# admin.site.register(Player, PlayerAdmin)
 admin.site.register(Match)
 admin.site.register(Contest)
 admin.site.register(CreatedTeam)

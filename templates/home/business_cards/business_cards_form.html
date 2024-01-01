@@ -313,7 +313,7 @@
     <div>
         <button class="btn btn-primary" id="submit_form" style="float: left;margin-right:15px;color: #ffffff;background: #6c7b88"> Submit</button>
 {#        <button style="float: right;margin-left: 15px;color: #ffffff;background: #6c7b88;"  class="btn btn-primary">Top</button>#}
-        <button id="rzp-button1" style="float: right;margin-left: 15px;color: #ffffff;background: #6c7b88;"  class="btn btn-primary" onclick="paynow()">Get PDF</button>
+        <button id="rzp-button1" style="float: right;margin-left: 15px;color: #ffffff;background: #6c7b88;"  class="btn btn-primary" onclick="if ($('form').attr('id')){window.location='/bussiness_cards/get_wk_pdf/?content_type=download&business_card_id=' + $('form').attr('id')} else {alert('create resume first')}">Get PDF</button>
 
     </div>
     <div class="row" style="margin-top: 10px"><br>

@@ -30,6 +30,7 @@ SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = config('DEBUG', default=False, cast=bool)
+print(f'DEBUG_MODE:{DEBUG}')
 if DEBUG:
     ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost", "kraagh.com", "www.kraagh.com"]
 else:
@@ -120,6 +121,7 @@ WSGI_APPLICATION = 'CardsMaker.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 TESTING_MODE = config('TESTING_MODE', default=False, cast=bool)
 if TESTING_MODE == True:
+    print('Testing')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -127,6 +129,7 @@ if TESTING_MODE == True:
         }
     }
 else:
+    print('Production')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -191,7 +194,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 APPEND_SLASH = False
+
 if DEBUG:
+    print(f'DEBUG:{DEBUG}')
     RAZOR_KEY_ID = "rzp_test_pRwByYGHjIP0t2"
     RAZOR_KEY_SECRET = "GOfSmvSm0jAlTiwiBoXue8kP"
 else:

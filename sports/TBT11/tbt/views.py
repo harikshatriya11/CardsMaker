@@ -209,6 +209,7 @@ def AddTeam(request, id):
             response['players'] = players.filter(id__in=sqaud_team_list)
             response['match_id'] = id
             response['team'] = team
+            response['match'] = team.first()
             response['edit_team'] = False
             response['contest_id'] = contest_id
             # if contest_id:

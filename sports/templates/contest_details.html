@@ -126,11 +126,7 @@
 {#                                {% else %}#}
 {#                                {% endif %}#}
 
-                                {% if ut.joined_user %}
-                                    {{ ut.joined_user }}
-                                {% else %}
-                                    anonymous_user{{ ut.id }}
-                                {% endif %}
+                                {{ ut.joined_user }}
 
 
                                 (T{{ ut.selected_team.TeamCount }})<br>winning {{ ut.won }} Rs.</td>
@@ -143,11 +139,7 @@
                     <tr style="background: lightgray" onclick="view_team_details({{ ut.selected_team.id }})">
                         <td style='text-align-last: center;'>{{ ut.team_rank }}</td>
                         <td>
-                            {% if ut.joined_user.first_name %}
-                                {{ ut.joined_user.first_name }}
-                            {% else %}
-                                anonymous_user{{ ut.id }}
-                            {% endif %}
+                            {{ ut.joined_user }}
                             ({{ ut.selected_team.TeamCount }}) <br>winning {{ ut.won }} Rs.</td>
                         <td>{{ ut.selected_team.total_points }}</td>
                     </tr>

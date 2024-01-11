@@ -400,7 +400,7 @@ def TeamPreview(request):
             response['match'] = Match.objects.get(id=match_id)
             response['captain'] = team.captain
             response['vice_captain'] = team.vice_captain
-            team_preview_html = "Match Not started Yet"
+            team_preview_html = "Match Not Started"
         return JsonResponse({'status':status,'team_preview_html':team_preview_html})
     else:
         return redirect('/')

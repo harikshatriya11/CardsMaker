@@ -190,8 +190,8 @@
                 }
 
                 else if (data['status'] == 201){
-                    $("#created_team").html(data['team_preview_html']).css({'color':'white','background':'black','font-size':'20px'});
-                    $("#modal-content").css({'padding-top':'50%','text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'none'});
+                    $("#created_team").html(data['team_preview_html']);
+                    {#$("#modal-content").css({'padding-top':'50%','text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'none'});#}
                 }
 
             },

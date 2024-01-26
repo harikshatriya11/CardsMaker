@@ -39,7 +39,6 @@ def SplashScreen(request):
 
 @csrf_exempt
 def Home(request):
-    redirect('/sports/tbt/')
     print('Home')
     template = loader.get_template("home/home.html")
     response = {}

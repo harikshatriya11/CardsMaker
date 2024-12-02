@@ -301,7 +301,7 @@ def business_card_image(request):
     }
     business_card_id = request.GET['business_card_id']
     # template_url = request.META['HTTP_HOST'] + '/bussiness_cards/template_url/?business_card_id='+business_card_id
-    template_url = 'https://kraagh.com/bussiness_cards/template_url/?business_card_id='+business_card_id
+    template_url = 'https://premium11.com/bussiness_cards/template_url/?business_card_id='+business_card_id
     print(template_url)
     config = imgkit.config(wkhtmltoimage="/usr/bin/wkhtmltoimage")
 

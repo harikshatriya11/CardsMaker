@@ -31,14 +31,14 @@ SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 
 DEBUG = config('DEBUG', default=True, cast=bool)
 if DEBUG:
-    ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost", "kraagh.com", "www.kraagh.com"]
+    ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost", "premium11.com", "www.premium11.com"]
 else:
-    ALLOWED_HOSTS = ["kraagh.com", "www.kraagh.com","https://www.kraagh.com","https://.kraagh.com"]
+    ALLOWED_HOSTS = ["premium11.com", "www.premium11.com","https://www.premium11.com","https://.premium11.com"]
 CORS_ALLOWED_ORIGINS = [
-    'kraagh.com',
-    'www.kraagh.com',
-    'https://www.kraagh.com',
-    'https://.kraagh.com'
+    'premium11.com',
+    'www.premium11.com',
+    'https://www.premium11.com',
+    'https://.premium11.com'
 ]
 # Application definition
 

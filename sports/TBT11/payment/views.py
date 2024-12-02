@@ -29,7 +29,7 @@ def payment(request):
     if request.user.first_name:firstname = request.user.first_name
     else:firstname = request.user
     if request.user.email:email = request.user.email
-    else: email = str(request.user.username) + "kraagh@gmail.com"
+    else: email = str(request.user.username) + "premium11@gmail.com"
     try:
         if request.GET.get('amount'):amount = request.GET.get('amount')
         else:amount="1"
@@ -79,7 +79,7 @@ def generate_hash(request, txnid):
 
 # create hash string using all the fields
 def get_hash_string(request, txnid):
-    email = "kraagh@gmail.com"
+    email = "premium11@gmail.com"
     hash_string = constants.KEY+"|"+txnid+"|"+str(constants.PAID_FEE_AMOUNT)+"|"+constants.PAID_FEE_PRODUCT_INFO+"|"
     hash_string += request.user.first_name+"|"+email+"|"
     hash_string += "||||||||||"+constants.SALT

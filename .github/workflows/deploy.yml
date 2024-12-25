@@ -25,7 +25,7 @@ jobs:
 
     - name: Deploy to DigitalOcean
       run: |
-        ssh -o StrictHostKeyChecking=no user@139.59.88.123 << 'EOF'
+        ssh -o StrictHostKeyChecking=no root@139.59.88.123 << 'EOF'
         cd /home/CardsMaker
         git pull origin main
         source venv/bin/activate

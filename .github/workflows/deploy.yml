@@ -28,7 +28,7 @@ jobs:
         echo "$SSH_PRIVATE_KEY" > /tmp/private_key && chmod 600 /tmp/private_key
 
         # Start the SSH session and run all commands within the session
-        ssh -i /tmp/private_key -o StrictHostKeyChecking=no root@133.59.88.123 << 'EOF'
+        ssh -i /tmp/private_key -o StrictHostKeyChecking=no root@139.59.88.123 << 'EOF'
         cd /home/CardsMaker
         git pull origin main
         source venv/bin/activate

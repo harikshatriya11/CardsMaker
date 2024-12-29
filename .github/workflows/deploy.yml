@@ -24,7 +24,9 @@ jobs:
 
     - name: Deploy to DigitalOcean
       run: |
-        ssh -o StrictHostKeyChecking=no root@139.59.88.123 << 'EOF'
+        echo "$SSH_PRIVATE_KEY" > /tmp/private_key && chmod 600 /tmp/private_key && \
+        ssh -i /tmp/private_key -o StrictHostKeyChecking=no root@139.59.88.123 && \
+        rm /tmp/private_key
         cd /home/CardsMaker
         git pull origin main
         source venv/bin/activate

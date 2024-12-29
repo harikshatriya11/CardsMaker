@@ -1,0 +1,44 @@
+{% load static %}
+{% include 'base.html' %}
+<style>
+    .download_div{
+        color: white;
+        border-radius: 35px;
+        background: green; width: fit-content;
+        padding: 25px;
+    }
+    .download_button{
+        text-decoration: none;
+
+    }
+    body{
+        text-align: -webkit-center;
+        background: url("/media/media/background/cricket_ground.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100vh;
+        {#margin-top: 50%;#}
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+
+    }
+    #logo{
+        width: 100px;
+        margin-top: 5%;
+        border-radius: 35px;
+    }
+</style>
+<img id="logo" src="/media/media/logo/any11play_logo_white.png">
+<div>
+
+    <p>Welcome to Any11</p>
+    <p>Download and Join the fantasy sports</p>
+    <p>You can join Contest win cash</p>
+    <p>There is many ads based contest. you can watch ads and join Contest for free to win a real money</p>
+</div>
+<a href="{{ android.apk_file.url }}" class="download_button">
+    <div class="download_div">
+            <small style="font-size: 20px">Download Android App</small><br>
+            <small style="font-size: 8px"> Click here to download </small>
+    </div>
+</a>

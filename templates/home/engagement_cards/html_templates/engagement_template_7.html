@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    {#    <link href='https://fonts.googleapis.com/css?family=Snell Roundhand' rel='stylesheet'>#}
+
+
+
+    <style>
+        body{
+            background: url('/media/{{ engagement_card_instance.b_image }}') no-repeat;
+            background-size: cover;
+            margin: unset !important;
+            height: 100%;
+        }
+        html{
+            margin: unset !important;
+            height: 100%;
+        }
+   </style>
+
+</head>
+<body style="">
+{#<img src="media/media/biodata/templates/icon/biodata_template_1.jpeg" width="200">#}
+{#<img src="{% static 'wed_biodata.png' %}" width="200">#}
+<div class="main_content" style="text-align: -webkit-center;">
+    <div style="align-content: center;text-align: center;padding-top: 150px;">
+        <p style="font-size: 22px;color: gold;">{{ template_language.gladly_invite_you_to_celebrate_our }}</p>
+        <p style="font-size: 100px;color: #e2d06c;">{{ template_language.engagement }}</p>
+    </div>
+    <div id="couple_name" >
+        <p style="color: #000F1F" id="groom_first_name"> {{ engagement_card_instance.groom_first_name|capfirst }}</p>
+        <p style="color: #000F1F" id="symbol_word_and">{{ template_language.symbol_word_and }}</p>
+        <p style="color: #000F1F" id="bride_first_name"> {{ engagement_card_instance.bride_first_name|capfirst }}</p>
+    </div>
+    <div style="padding-top: 320px;font-size: 22px;color: gold;width: 500px;word-wrap: break-word;">
+        {{ engagement_card_instance.time_of_engagement }}
+        {{ engagement_day_name }}, {{ engagement_day }} {{ engagement_month }}, {{ engagement_year }}<br>
+        {{ engagement_card_instance.place_of_engagement|capfirst }}<br>
+        {{ engagement_card_instance.contact_mobile }}
+
+    </div>
+
+    {#    <div id="engagment_invite">#}
+    {#        {{ template_language.gladly_invite_you_to_celebrate_our }}<br>#}
+    {#        <p style="font-size: 100px;line-height: 20px">{{ template_language.engagement }}</p>#}
+    {#        <div id="date_of_engagement">{{ engagement_day_name }}, {{ engagement_day }} {{ engagement_month }}, {{ engagement_year }}</div>#}
+    {#        <div id="date_of_engagement">{{ engagement_card_instance.time_of_engagement }}</div>#}
+    {#        <div id="date_of_engagement">{{ engagement_card_instance.place_of_engagement|capfirst }}</div>#}
+    {#    </div>#}
+</div>
+</body>
+</html>
+<style>
+    .main_content{
+        margin-left: 80px;
+        margin-right: 100px;
+    }
+    #engagment_invite{
+
+    }
+    #couple_name{
+        padding-top: 30px;
+        line-height: 10px;
+        font-family: 'Sofia';
+    {#background: red;#}
+        width: 47%;
+    {#display: inline-block;#}
+    }
+    #groom_first_name{
+        color: #000F1F;
+        font-size: 70px;
+
+    }
+    #symbol_word_and{
+        color: #000F1F;
+        font-size: 70px;
+        text-align: center;
+
+    }
+    #bride_first_name{
+        color: #000F1F;
+        font-size: 70px;
+
+    }
+    #engagment_invite{
+        font-size: 30px;
+        text-align: center;
+
+    }
+</style>

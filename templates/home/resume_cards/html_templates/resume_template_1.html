@@ -1,0 +1,225 @@
+{% load static %}
+{% load templatetags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <style>
+        table{
+            width: 100%;
+        }
+        td{
+            font-size: 16px !important;
+            word-wrap: break-word;
+            padding-top: 40px;
+
+        }
+        tr{
+            margin: 10px 0 10px 0 !important;
+        }
+    </style>
+</head>
+<body style="">
+{#<img src="media/media/biodata/templates/icon/biodata_template_1.jpeg" width="200">#}
+{#<img src="{% static 'wed_biodata.png' %}" width="200">#}
+<div class="main_content" >
+<div class="left">
+    <div class="left1"><p class="name">{{ resume_card_instance.name|capfirst }}</p></div>
+    <div class="left2" >
+        <h1 align="center">Skills And Profession</h1>
+            <table style="text-align: left;margin: 10px"align="center">
+                {% if resume_card_instance.profession is None or resume_card_instance.profession == '' or resume_card_instance.profession == 'undefined'%}
+                {% else %}
+                    <tr >
+                        <td ><label>{{ template_language.profession}}</label></td>
+                        <td >{{ resume_card_instance.profession }}</td>
+                    </tr>
+                {% endif %}
+                {% if resume_card_instance.about_profession is None or resume_card_instance.about_profession == '' or resume_card_instance.about_profession == 'undefined'%}
+                {% else %}
+                    <tr >
+                        <td ><label>{% replacertag template_language.about_profession '_' ' ' %}</label></td>
+                        <td >{{ resume_card_instance.about_profession }}</td>
+                    </tr>
+                {% endif %}
+                {% if resume_card_instance.skills is None or resume_card_instance.skills == '' or resume_card_instance.skills == 'undefined'%}
+                {% else %}
+                    <tr >
+                        <td ><label>{{ template_language.skills|capfirst}}</label></td>
+                        <td >{{ resume_card_instance.skills|capfirst }}</td>
+                    </tr>
+                {% endif %}
+                {% if resume_card_instance.highest_qualification == 'none' or resume_card_instance.highest_qualification == '' or resume_card_instance.highest_qualification == '0'%}
+                {% else %}
+                    <tr>
+                        <td ><label>{%  replacertag template_language.highest_qualification '_' ' ' %}</label></td>
+                        <td >{{ resume_card_instance.highest_qualification }}</td>
+                    </tr>
+                {% endif %}
+                {% if resume_card_instance.institute is None or resume_card_instance.institute == '' or resume_card_instance.institute == 'undefined'%}
+                {% else %}
+                    <tr >
+                        <td ><label>{{ template_language.institute|capfirst}}</label></td>
+                        <td >{{ resume_card_instance.institute|capfirst }}</td>
+                    </tr>
+                {% endif %}
+                {% if resume_card_instance.pass_out_year is None or resume_card_instance.pass_out_year == '' or resume_card_instance.pass_out_year == 'undefined'%}
+                {% else %}
+                    <tr >
+                        <td ><label>{{ template_language.pass_out_year}}</label></td>
+                        <td >{{ resume_card_instance.pass_out_year }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+    </div>
+    <div class="left3">
+        <h1 align="center">Other Details</h1>
+        <table style="text-align: left;margin: 10px"align="center">
+            {% if resume_card_instance.date_of_birth == 'none' or resume_card_instance.date_of_birth == '' or resume_card_instance.date_of_birth == 'undefined'%}
+            {% else %}
+                <tr>
+                    <td>{{ template_language.date_of_birth|capfirst|capfirst }}:</td>
+                    <td>{{ resume_card_instance.date_of_birth }}</td>
+                </tr>
+            {% endif %}
+            {% if resume_card_instance.address == 'none' or resume_card_instance.address == '' or resume_card_instance.address == 'undefined'%}
+            {% else %}
+            <tr>
+                <td>{{ template_language.address|capfirst }}:</td>
+                <td>{{ resume_card_instance.address }}</td>
+            </tr>
+            {% endif %}
+            {% if resume_card_instance.contact == 'none' or resume_card_instance.contact == '' or resume_card_instance.contact == 'undefined'%}
+            {% else %}
+                <tr>
+                    <td>{{ template_language.contact|capfirst }}:</td>
+                    <td>{{ resume_card_instance.contact }}</td>
+                </tr>
+            {% endif %}
+            {% if resume_card_instance.gmail == 'none' or resume_card_instance.gmail == '' or resume_card_instance.gmail == 'undefined'%}
+            {% else %}
+                <tr>
+                    <td>{{ template_language.gmail|capfirst }}:</td>
+                    <td>{{ resume_card_instance.gmail }}</td>
+                </tr>
+            {% endif %}
+            {% if resume_card_instance.linkedin == 'none' or resume_card_instance.linkedin == '' or resume_card_instance.linkedin == 'undefined'%}
+            {% else %}
+                <tr>
+                    <td>{{ template_language.linkedin|capfirst }}:</td>
+                    <td>{{ resume_card_instance.linkedin }}</td>
+                </tr>
+            {% endif %}
+            {% if resume_card_instance.social_account == 'none' or resume_card_instance.social_account == '' or resume_card_instance.social_account == 'undefined'%}
+            {% else %}
+                <tr>
+                    <td>{{ template_language.social_account|capfirst }}:</td>
+                    <td>{{ resume_card_instance.social_account }}</td>
+                </tr>
+            {% endif %}
+
+
+
+        </table>
+    </div>
+</div>
+<div class="right">
+    {% if resume_card_instance.image and resume_card_instance.image != 'undefined' %}
+        <div class="img_div" >
+            <div>
+
+            </div>
+            <div style="width: 35%;float: right">
+                <img style="" src="/media/{{ resume_card_instance.image }}">
+            </div>
+        </div>
+        <hr>
+    {% endif %}
+
+    <div class="work_experience" style="padding:0 10px 10px 10px">
+        <h1>{{ template_language.work_experience|capfirst }}</h1>
+        <table style="text-align: left">
+            {% if resume_card_instance.work_experience1 %}
+                <tr><td>{{ resume_card_instance.work_experience1|safe }}</td></tr>
+            {% endif %}
+            {% if resume_card_instance.work_experience2 %}
+                <tr><td>{{ resume_card_instance.work_experience2|safe }}</td></tr>
+            {% endif %}
+            {% if resume_card_instance.work_experience3 %}
+                <tr><td>{{ resume_card_instance.work_experience3|safe }}</td></tr>
+            {% endif %}
+            {% if resume_card_instance.work_experience4 %}
+                <tr><td>{{ resume_card_instance.work_experience4|safe }}</td></tr>
+            {% endif %}
+            {% if resume_card_instance.work_experience5 %}
+                <tr><td>{{ resume_card_instance.work_experience5|safe }}</td></tr>
+            {% endif %}
+            {% if resume_card_instance.work_experience6 %}
+                <tr><td>{{ resume_card_instance.work_experience6|safe }}</td></tr>
+            {% endif %}
+
+        </table>
+    </div>
+{#    <div class="education" style="padding: 10px">#}
+{#        <header>{{ template_language.education|capfirst }}</header>#}
+{#        <div>({{ resume_card_instance.pass_out_year }}) {{ resume_card_instance.institute }}</div>#}
+{#    </div>#}
+
+</div>
+</div>
+<style>
+    html, body{
+            {#background: url('/media/{{ resume_card_instance.b_image }}') no-repeat;#}
+            {#background-size: 26.5cm auto;#}
+            background: #ffffff;
+            margin: unset !important;
+            height: 100%;
+        }
+    .main_content {display: flex;width: 100%;height: 100%}
+    header{font-size: 30px;font-weight: bold;}
+
+    .left {width: 40%;background: #000000;height: 100%}7m
+    .left1 {width:100%;height: 14%;overflow: hidden;background: #000000;color: #ffffff;font-size:25px;padding: 5px}
+    .left2 {width:100%;height: 40%;overflow: hidden;background: gray;color: #000000;display: block;}
+    .left3 {width:100%;height: 40%;overflow: hidden;background: #000000;;color: #ffffff;}
+    .name {width: 100%;padding: 13%;padding-left: 0 !important;text-align: -webkit-center;}
+    img {padding: 5px;border-radius: 10px; height: 100%;width: 100%;float: right;}
+    .img_div {height: 14%;width: 100%;overflow: hidden}
+
+    .right {width: 60%;background:darkgrey ;color: #000000; height: 100% !important;}
+
+    {#.div_line {border-left: 3px solid black;height: 8%;position: absolute;left: 90%;margin-left: -3px;top: 0;}#}
+    {#.div_square {margin-right:0;border-right: 3px solid black;background: red;height: 8%;position: absolute;left: 90%;margin-left: -3px;top: 0;}#}
+</style>
+{% if resume_card_instance.resume_card_status == 1 %}
+{#    <div class="watermark1">#}
+{#    Kragh Cards Maker#}
+{#    </div>#}
+{#    <div class="watermark1">#}
+{#    Kragh Cards Maker#}
+{#    </div>#}
+{#    <div class="watermark1">#}
+{#    Kragh Cards Maker#}
+{#    </div>#}
+{% endif %}
+</body>
+</html>
+<style>
+
+    {% if resume_card_instance.resume_card_status == 1 %}
+        .watermark1{
+            content: "DRAFT";
+            color: grey;
+            font-size: 120px;
+            /* text-align: center; */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            {#transform: translate(-80%, -80%);#}
+            {#opacity:0.1#}
+        }
+    {% endif %}
+</style>

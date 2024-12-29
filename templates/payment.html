@@ -1,0 +1,48 @@
+{% load static %}
+{% block content %}
+{% include 'home/base.html' %}
+{% include 'home/side_nav_bar.html' %}
+{% include 'home/register.html' %}
+
+<div class="container text-center">
+    <div>
+        <div>{{ obj.first_name }} {{ obj.last_name }}</div>
+        <div style="white-space: pre">{{ obj.template.template_price }}.00 INR</div>
+        <br>
+        <div><img src="{{ obj.template.template_image.url }}" width="80" height="100"></div>
+        <br>
+        <div>{{ payment_obj.user.first_name }} {{ payment_obj.user.last_name }}</div>
+    </div>
+    <button type="button" class="btn btn-lg"  id="rzp-button1" onclick="paynow()">Get PDF</button>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+        $(document).ready(function () {
+            var options = {
+                "key": "{{ api_key }}",
+                "amount": "{{ amount }}",
+                "currency": "INR",
+                "name": "Premium11 Card Maker",
+                "description": "Premium11 Digital Payment",
+                "image": "{% static 'image/logo.svg' %}",
+                "order_id": "{{ payment_obj.gateway_id }}",
+                "callback_url": "{{ url }}",
+                "prefill": {
+                    "name": "{{ payment_obj.user.first_name }}",
+                    "email": "{{ payment_obj.user.business_email }}",
+                    "contact": "{{ payment_obj.user.contact_no }}"
+                },
+                "theme": {
+                    "color": "#ff5c00"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            document.getElementById('rzp-button1').onclick = function(e){
+                rzp1.open();
+                e.preventDefault();
+            }
+        });
+
+</script>
+{% endblock %}

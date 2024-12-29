@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/loader.css' %}" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h1>{{ live_match }}</h1>
+    {{ live_match.date }}<button style="margin-left: 30px" onclick="update_teams_total({{ live_match.id }})">Update Teams Total<i id="right{{ live_match.id }}" style="color: white;display: none">&#x2713;</i><i class="loader" id="total_loader{{ live_match.id }}"></i></button>
+</div>
+<br>
+<div class="player_box">
+{% for p in players %}
+    <div class="players">
+        <div class="player_points">
+            <div class="player_name">{{ p }}<br><button onclick="update_player_points({{ p.id }})">Update</button><div class="loader"></div></div>
+            <div class="points_label" >Run<br><input value="{{ p.run }}" id="run{{ p.id }}" type="number"></div>
+            <div class="points_label" >4's<br><input value="{{ p.four }}" id="fours{{ p.id }}" type="number"></div>
+            <div class="points_label" >6's<br><input value="{{ p.six }}" id="sixes{{ p.id }}" type="number"></div>
+            <div class="points_label" >S/R<br><input value="{{ p.strike_runrate }}" id="strike_rate{{ p.id }}" type="number"></div>
+            <div class="points_label" >Balls<br><input value="{{ p.ball }}" id="balls{{ p.id }}" type="number"></div>
+            <div class="points_label" >Duck<br><input value="{{ p.duck }}"  id="duck{{ p.id }}" type="number"></div>
+            <div class="points_label" >wicket<br><input value="{{ p.wicket }}"  id="wicket{{ p.id }}" type="number"></div>
+            <div class="points_label" >Wicket Bonus<br><input value="{{ p.wicket_bonus }}"  id="wicket_bonus{{ p.id }}" type="number"></div>
+            <div class="points_label" >LBW/Bowled<br><input value="{{ p.lbw_bowled_bonus }}"  id="lbw_bowled{{ p.id }}" type="number"></div>
+            <div class="points_label" >Maiden Over<br><input value="{{ p.maiden_over }}"  id="maiden_over{{ p.id }}" type="number"></div>
+            <div class="points_label" >Economy<br><input value="{{ p.economy }}"  id="economy{{ p.id }}" type="number"></div>
+            <div class="points_label" >Catch<br><input value="{{ p.catch }}"  id="catch{{ p.id }}" type="number"></div>
+            <div class="points_label" >Catch Bonus<br><input value="{{ p.catch_bonus }}"  id="bonus_catch{{ p.id }}" type="number"></div>
+            <div class="points_label" >RunOut/Stumping<br><input value="{{ p.runout_stumping }}"  id="runout_stumping{{ p.id }}" type="number"></div>
+            <div class="player_name" >{{ p }}<br><button onclick="update_player_points({{ p.id }})">Update</button></div>
+            <div class="loader"></div>
+        </div>
+    </div>
+    <br>
+    <hr>
+{% endfor %}
+</div>
+<script>
+    function update_player_points(id) {
+        $(".loader").html("");
+        $(".loader").css("display", "block")
+
+        {#var run = $("#run"+id).val();#}
+        {#alert("run:"+run);#}
+        $("#right"+id).css("display", "none")
+        $("#loader"+id).css("display", "block")
+        $.ajax({
+            url : '{{ request.base_url }}/sports/tbt/admin_panel/add_players_points/{{ live_match.id }}',
+            type : 'POST',
+            dataType:'json',
+            traditional: true,
+            data : {
+                'player_id':id,
+                'run':$("#run"+id).val(),
+                'four':$("#fours"+id).val(),
+                'six':$("#sixes"+id).val(),
+                'strike_runrate':$("#strike_rate"+id).val(),
+                'ball':$("#balls"+id).val(),
+                'run_bonus':$("#balls"+id).val(),
+                'duck':$("#duck"+id).val(),
+                'wicket':$("#wicket"+id).val(),
+                'wicket_bonus':$("#wicket_bonus"+id).val(),
+                'lbw_bowled_bonus':$("#lbw_bowled"+id).val(),
+                'maiden_over':$("#maiden_over"+id).val(),
+                'economy':$("#economy"+id).val(),
+                'catch':$("#catch"+id).val(),
+                'catch_bonus':$("#bonus_catch"+id).val(),
+                'runout_stumping':$("#runout_stumping"+id).val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success : function(data) {
+                $(".loader").css("display", "none");
+                if (data['status'] == 200){
+                    $(".loader").html("&#8593;").css("color","green");
+                }
+                else  if (data['status'] == 201){
+                    $(".loader").html("!").css("color","red");
+                }
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+request+":"+error);
+            }
+        });
+    }
+    function update_teams_total(id) {
+        $("#right"+id).css("display", "none");
+        $("#total_loader"+id).css("display", "block");
+        $.ajax({
+            url: "/sports/tbt/admin_panel/team_total/"+id,
+            success: function (result) {
+                $("#total_loader"+id).css("display", "none");
+                $("#right"+id).css("display", "block");
+            }
+        });
+    }
+</script>
+<style>
+    .player_box{
+        display: inline;
+    }
+    .players{
+        width: 800px;
+    }
+    .player_points{
+        display: inline-flex;
+        text-align: -webkit-center;
+    }
+    input{
+        width: 100px;
+    }
+    .points_label{
+        margin: 5px;
+        width: fit-content;
+    }
+    .player_name{
+        width: 100px;
+        overflow: hidden;
+        font-weight: bold;
+    }
+    button{
+        background: green;
+        border-radius: 3px;
+        color: white;
+    }
+</style>
+</body>
+</html>

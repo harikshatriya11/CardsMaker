@@ -1,0 +1,313 @@
+{% load static %}
+{% load mathfilters %}
+
+{% include 'home/base.html' %}
+<body>
+{% include 'home/side_nav_bar.html' %}
+{% include 'home/register.html' %}
+
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+
+{#<script>#}
+{#    $(document).ready(function(){#}
+{#  $(".flip").click(function(){#}
+{#   if ($(this).find($(".panel")).is(":hidden")) {#}
+{#       $("i").removeClass("fa-angle-up").addClass("fa-angle-down");#}
+{#       $(".panel").slideUp();#}
+{#       $(this).find($(".panel")).slideToggle("slow");#}
+{#       $("i", this).removeClass("fa-angle-down").addClass("fa-angle-up");#}
+{#   }#}
+{##}
+{#  });#}
+{#  $(".title_header").click(function(){#}
+{##}
+{#   $("i").removeClass("fa-angle-up").addClass("fa-angle-down");#}
+{#       $(".panel").slideUp();#}
+{#  });#}
+{#});#}
+{#</script>#}
+<style>
+    .form-row{
+        margin: 2%;
+    }
+    .flip{
+        margin-top: 2%;
+    }
+    .title_header{
+        color: #ffffff;
+    }
+
+</style>
+
+<select style="float: left" id="wedding_card_language">
+    {% for language in all_languages %}
+         <option value="{{ language.id }}" {% if language.language_name == wedding_card_details.language_name %}selected{% endif %}>{{ language.language_name }}</option>
+    {% endfor %}
+</select>
+<form class="needs-validation" id="{{ wedding_card_details.id }}" style="min-width: 40%"   enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+   <div class="flip" style="background:#6c7b88;border-style:solid ;box-shadow: #464a52 ;border-radius: 12px; text-underline: #1e2229;font-weight: bold">
+       <p class="title_header" style="background: #6c7b88;margin: auto;margin-left: 2%;">{{ labels.personal_details }}<i class="fa fa-angle-down" style="float:right;margin-right: 4%;"></i></p>
+
+<div class="panel" style="display: block;background: #ffffff" >
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_groom_or_bride">{{ labels.i_am }}</label>
+        <select id="groom_or_bride" class="form-control" >
+            <option id="l_groom" value="0" {% if wedding_card_details.groom_or_bride == 0 %}selected{% endif %}>{{ labels.groom }}</option>
+            <option id="l_bride" value="1" {% if wedding_card_details.groom_or_bride == 1 %}selected{% endif %}>{{ labels.bride }}</option>
+        </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+      <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_groom_first_name">{{ labels.groom_first_name }}</label>
+      <input type="text" class="form-control" id="groom_first_name" placeholder="{{ labels.groom_first_name }}" value="{{ wedding_card_details.groom_first_name }}"  required>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_bride_first_name">{{ labels.bride_first_name }}</label>
+      <input type="text" class="form-control" id="bride_first_name" placeholder="{{ labels.bride_first_name }}" value="{{ wedding_card_details.bride_first_name }}"  >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_date_of_wedding">{{ labels.date_of_wedding }}</label>
+      <input type="date" class="form-control" id="date_of_wedding" placeholder="{{ labels.date_of_wedding}}" value="{{ wedding_card_details.date_of_wedding|date:"Y-m-d"}}" >
+      <div class="invalid-feedback">
+        Please provide a valid Date.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+
+      <label for="validationCustom04" id="l_place_of_wedding">{{ labels.place_of_wedding}}</label>
+      <input type="text" class="form-control" id="place_of_wedding" value="{{ wedding_card_details.place_of_wedding  }}"  placeholder="{{ labels.place_of_wedding}}"  >
+      <div class="invalid-feedback">
+        Please provide a valid Place.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_time_of_wedding">{{ labels.time_of_wedding }}</label>
+      <input type="time" class="form-control" id="time_of_wedding" value="{{ wedding_card_details.time_of_wedding|time:'H:i:00'   }}"  placeholder="{{ labels.time_of_wedding}}"  >
+      <div class="invalid-feedback">
+        Please provide a valid Time.
+      </div>
+    </div>
+  </div>
+<div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_groom_father">{{ labels.groom_father }}</label>
+      <input type="text" class="form-control" id="groom_father" value="{{ wedding_card_details.groom_father  }}"  placeholder="{{ labels.groom_father }}"  >
+      <div class="invalid-feedback">
+        Please provide a valid Cast.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_groom_mother">{{ labels.groom_mother }}</label>
+      <input type="text" class="form-control" id="groom_mother" value="{{ wedding_card_details.groom_mother  }}"  placeholder="{{ labels.groom_mother }}"  >
+      <div class="invalid-feedback">
+        Please provide a valid Gotra.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_special_guest_name">{{ labels.special_guest_name }}</label>
+      <input type="text" class="form-control" id="special_guest_name" value="{{ wedding_card_details.special_guest_name  }}"  placeholder="{{ labels.special_guest_name }}"  >
+      <div class="invalid-feedback">
+        Please provide a valid Zodiac.
+      </div>
+    </div>
+  </div>
+      <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_bride_father">{{ labels.bride_father }}</label>
+      <input type="text" class="form-control" id="bride_father" value="{{ wedding_card_details.bride_father  }}"  placeholder="{{ labels.bride_father }}"    >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_bride_mother">{{ labels.bride_mother }}</label>
+      <input type="text" class="form-control" id="bride_mother" value="{{ wedding_card_details.bride_mother  }}"  placeholder="{{ labels.bride_mother }}"    >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+           <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_contact_mobile">{{ labels.contact_mobile }}</label>
+      <input type="text" class="form-control" id="contact_mobile" value="{{ wedding_card_details.contact_mobile  }}"  placeholder="{{ labels.contact_mobile }}"    >
+
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  </div>
+        </div>
+       </div>
+    <div>
+{#  <button class="btn btn-primary" id="submit_form" type="submit" style="margin-top: 5px;width: 30%;float: left">Submit form</button>#}
+{#  <a class="btn btn-primary"id="show_pdf"style="margin-top: 5px;display: none;width: 30%;float: left;margin-left: 5%;margin-right: 5%" target="_blank">Show PDF</a>#}
+    <div class="row">
+        <div class="col-md-12" id="payment_btn" style="display: none;margin-top: 10px">
+            <button type="button" class="btn btn-primary" onclick="paynow()"> Get PDF</button>
+        </div>
+    </div>
+{#  <a class="btn btn-primary"id="download_pdf"style="margin-top: 5px;display: none;width: 30%;float: left">Download </a>#}
+{#    <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_HaLdzF1VPOjcJV" async> </script> </form>#}
+
+</div>
+  <button class="btn btn-primary" id="submit_form" type="submit" style="margin-top: 10px">Submit form</button>
+</form>
+<div id="iframe_div" style="min-width: 48%;margin-left: 1%;">
+   Output PDF Pages <iframe id="iframe" srcdoc="" width="100%" height="100%" style="border:1px solid black;justify-content: center"></iframe>
+</div>
+
+<div style="height: 100%;width: 10%;margin-left: 1%;height: 1188px;background: #ffffff;overflow-y: scroll">
+<div class="flip-card" >
+  <div class="flip-card-inner"style="">
+      {% for biodata_image in biodata_template %}
+<div class="flip-card-front">
+      <img id="{{ biodata_image.id }}" src="/media/{{ biodata_image.template_image }}" alt="Avatar" style="width:90%;height:100%;margin: 2%;">
+    </div>
+      {% endfor %}
+  </div>
+</div>
+</div>
+ </div>
+    </div>
+
+  </main>
+  <!-- page-content" -->
+</div>
+<script>
+    function paynow(){
+        var id = $('form').attr('id');
+        if (id > 0) {
+            window.location = '/payment/' + id + "?card_type=wedding"
+        }
+        else {
+            alert("Wedding Card Not Found");
+        }
+    }
+
+
+</script>
+<script>
+
+    var template_id = '{{ template_id }}';
+    console.log(template_id);
+    var create_wedding_card_url = '{% url "wedding_cards:CreateWeddingCard" %}';
+    $("#submit_form").click(function (event) {
+        event.preventDefault();
+
+ var data = new FormData();
+    {#data.append('files[]', $('#image').prop('files')[0]);#}
+    {#console.log($('#image').prop('files')[0]);#}
+    var groom_name_length = $("#groom_first_name").val().length;
+    var bride_name_length = $("#groom_first_name").val().length;
+    var date_of_wedding = $("#date_of_wedding").val();
+    console.log(date_of_wedding);
+    var time_of_wedding = $("#time_of_wedding").val();
+    var place_of_wedding = $("#place_of_wedding").val().length;
+    console.log(groom_name_length);
+
+   if (groom_name_length < 2 ) {
+        alert("Groom Name required with atleast 3 characters");
+    }
+   else if ( bride_name_length < 2 ){
+       alert("Bride Name required with atleast 3 characters");
+   }
+    else if ( date_of_wedding == "" ){
+           alert("Date of Wedding required with atleast 3 characters");
+       }
+    else if ( time_of_wedding == "" ){
+           alert("Time of Wedding required with atleast 3 characters");
+       }
+    else if ( place_of_wedding < 2 ){
+           alert("Place of Wedding required with atleast 3 characters");
+       }
+    else {
+        formdata = new FormData();
+        formdata.append('wedding_card_id', $('form').attr('id'));
+        formdata.append('template_id', template_id);
+        {#formdata.append('image', $('#image').prop('files')[0]);#}
+        formdata.append('groom_or_bride', $('#groom_or_bride').val());
+        formdata.append('groom_first_name', $('#groom_first_name').val());
+        formdata.append('bride_first_name', $('#bride_first_name').val());
+        formdata.append('date_of_wedding', $('#date_of_wedding').val());
+        formdata.append('time_of_wedding', $('#time_of_wedding').val());
+        formdata.append('place_of_wedding', $('#place_of_wedding').val());
+        formdata.append('groom_father', $('#groom_father').val());
+        formdata.append('groom_mother', $('#groom_mother').val());
+        formdata.append('bride_father', $('#bride_father').val());
+        formdata.append('bride_mother', $('#bride_mother').val());
+        formdata.append('special_guest_name', $('#special_guest_name').val());
+        formdata.append('contact_mobile', $('#contact_mobile').val());
+        {#formdata.append('language', $('#language').val());#}
+        formdata.append('language_id', $('#wedding_card_language').val());
+        formdata.append('csrfmiddlewaretoken', '{{csrf_token}}');
+        jQuery.ajax({
+            url: create_wedding_card_url,
+            type: "POST",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $('form').attr("id",data['wedding_card_id']);
+                var $iframe = $('#iframe');
+                $iframe.attr('srcdoc', data['html']);
+            }
+        });
+    }
+    });
+
+</script>
+<script>
+$('#wedding_card_language').change(function(event) {
+    event.preventDefault();
+    $.ajax({
+        type:"POST",
+        url : "{% url 'wedding_cards:selected_language' %}",
+        data : {'wedding_language_id':$(this).val(),
+            'csrfmiddlewaretoken':'{{ csrf_token }}'},
+        success : function(response) {
+            data = response;
+            console.log(data);
+            var label = data['labels']
+            console.log('label:');
+            console.log(label['foo']);
+            $("#l_groom_or_bride").html(label['i_am']);
+            $("#l_groom").html(label['groom']);
+            $("#l_bride").html(label['bride']);
+            $("#l_groom_first_name").html(label['groom_first_name']);
+            $("#l_groom_or_bride").html(label['l_groom_or_bride']);
+            $("#l_bride_first_name").html(label['bride_first_name']);
+            $("#l_date_of_wedding").html(label['date_of_wedding']);
+            $("#l_time_of_wedding").html(label['time_of_wedding']);
+            $("#l_place_of_wedding").html(label['place_of_wedding']);
+            $("#l_bride_father").html(label['bride_father']);
+            $("#l_bride_mother").html(label['bride_mother']);
+            $("#l_groom_father").html(label['groom_father']);
+            $("#l_groom_mother").html(label['groom_mother']);
+            $("#l_special_guest_name").html(label['special_guest_name']);
+            $("#l_contact_mobile").html(label['contact_mobile']);
+
+            console.log(data);
+        },
+        error: function() {
+            alert('Error occured');
+        }
+    });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+{% include 'base.html' %}
+
+<body>
+<div class="swipegory">
+    <nav>
+        <ul>
+            <li><a href="#item1">WK</a></li>
+            <li><a href="#item2">Bat</a></li>
+            <li><a href="#item3">All-R</a></li>
+            <li><a href="#item4">Bowl</a></li>
+            {#            <li><a href="#item5">CSS 3</a></li>#}
+            {#            <li><a href="#item6">HTML 5</a></li>#}
+            {#            <li><a href="#item7">PHP</a></li>#}
+        </ul>
+    </nav>
+    <ul class="panes">
+        <li>
+            {% for p in players %}
+                {% for t in team %}
+                    {% if p.player_place == '3' %}
+
+                        {% if p.team == t.team1 %}
+                            <div id="player{{ p.id }}" class="player" onclick="select_player({{p.id}})"style="color: black;width: 100%">
+                                <div class="select_player_name" style="display: inline;float: left;width: 80%"><label>{{ p.abr_name }}</label><br><label style="font-size: 12px;">{{ p.get_played_last_match_display }}</label></div>
+                                <div class="select_player" onclick="select_player({{p.id}})"style="display: inline;float: right;width: 20%;text-align: right"><label class="plus_sign">+</label><br><label style="font-size: 12px;">{{ p.team.name_abr }}</label></div>
+                            </div>
+                            <br><hr>
+                        {% elif p.team == t.team2 %}
+                            <div id="player{{ p.id }}" class="player" onclick="select_player({{p.id}})"style="color: black;width: 100%">
+                                <div class="select_player_name" style="display: inline;float: left;width: 80%"><label>{{ p.abr_name }}</label><br><label style="font-size: 12px;">{{ p.get_played_last_match_display }}</label></div>
+                                <div class="select_player" onclick="select_player({{p.id}})"style="display: inline;float: right;width: 20%;text-align: right"><label class="plus_sign">+</label><br><label style="font-size: 12px;">{{ p.team.name_abr }}</label></div>
+                            </div>
+                            <br><hr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+            {% endfor %}
+        </li>
+        <li>
+            {% for p in players %}
+                {% for t in team %}
+                    {% if p.player_place == '1' %}
+
+                        {% if p.team == t.team1 %}
+                            <div id="player{{ p.id }}" class="player" onclick="select_player({{p.id}})"style="color: black;width: 100%">
+                                <div class="select_player_name" style="display: inline;float: left;width: 80%"><label>{{ p.abr_name }}</label><br><label style="font-size: 12px;">{{ p.get_played_last_match_display }}</label></div>
+                                <div class="select_player" onclick="select_player({{p.id}})"style="display: inline;float: right;width: 20%;text-align: right"><label class="plus_sign">+</label><br><label style="font-size: 12px;">{{ p.team.name_abr }}</label></div>
+                            </div>
+                            <br><hr>
+                        {% elif p.team == t.team2 %}
+                            <div id="player{{ p.id }}" class="player" onclick="select_player({{p.id}})"style="color: black;width: 100%">
+                                <div class="select_player_name" style="display: inline;float: left;width: 80%"><label>{{ p.abr_name }}</label><br><label style="font-size: 12px;">{{ p.get_played_last_match_display }}</label></div>
+                                <div class="select_player" onclick="select_player({{p.id}})"style="display: inline;float: right;width: 20%;text-align: right"><label class="plus_sign">+</label><br><label style="font-size: 12px;">{{ p.team.name_abr }}</label></div>
+                            </div>
+                            <br><hr>
+                        {% endif %}
+
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </li>
+        <li>
+            {% for p in players %}
+                {% for t in team %}
+                    {% if p.player_place == '4' %}
+
+                        {% if p.team == t.team1 %}
+                            <div id="player{{ p.id }}" class="player" onclick="select_player({{p.id}})"style="color: black;width: 100%">
+                                <div class="select_player_name" style="display: inline;float: left;width: 80%"><label>{{ p.abr_name }}</label><br><label style="font-size: 12px;">{{ p.get_played_last_match_display }}</label></div>
+                                <div class="select_player" onclick="select_player({{p.id}})"style="display: inline;float: right;width: 20%;text-align: right"><label class="plus_sign">+</label><br><label style="font-size: 12px;">{{ p.team.name_abr }}</label></div>
+                            </div>
+                            <br><hr>
+                        {% elif p.team == t.team2 %}
+                            <div id="player{{ p.id }}" class="player" onclick="select_player({{p.id}})"style="color: black;width: 100%">
+                                <div class="select_player_name" style="display: inline;float: left;width: 80%"><label>{{ p.abr_name }}</label><br><label style="font-size: 12px;">{{ p.get_played_last_match_display }}</label></div>
+                                <div class="select_player" onclick="select_player({{p.id}})"style="display: inline;float: right;width: 20%;text-align: right"><label class="plus_sign">+</label><br><label style="font-size: 12px;">{{ p.team.name_abr }}</label></div>
+                            </div>
+                            <br><hr>
+                        {% endif %}
+
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </li>
+        <li>
+            {% for p in players %}
+                {% for t in team %}
+                    {% if p.player_place == '2' %}
+
+                        {% if p.team == t.team1 %}
+                            <div id="player{{ p.id }}" class="player" onclick="select_player({{p.id}})"style="color: black;width: 100%">
+                                <div class="select_player_name" style="display: inline;float: left;width: 80%"><label>{{ p.abr_name }}</label><br><label style="font-size: 12px;">{{ p.get_played_last_match_display }}</label></div>
+                                <div class="select_player" onclick="select_player({{p.id}})"style="display: inline;float: right;width: 20%;text-align: right"><label class="plus_sign">+</label><br><label style="font-size: 12px;">{{ p.team.name_abr }}</label></div>
+                            </div>
+                            <br><hr>
+                        {% elif p.team == t.team2 %}
+                            <div id="player{{ p.id }}" class="player" onclick="select_player({{p.id}})"style="color: black;width: 100%">
+                                <div class="select_player_name" style="display: inline;float: left;width: 80%"><label>{{ p.abr_name }}</label><br><label style="font-size: 12px;">{{ p.get_played_last_match_display }}</label></div>
+                                <div class="select_player" onclick="select_player({{p.id}})"style="display: inline;float: right;width: 20%;text-align: right"><label class="plus_sign">+</label><br><label style="font-size: 12px;">{{ p.team.name_abr }}</label></div>
+                            </div>
+                            <br><hr>
+                        {% endif %}
+
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </li>
+    </ul>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
+<script src="script.js"></script>
+
+
+<div style='margin-left: auto;margin-right: auto;text-align: center;'>
+    <br /><hr /><br /></div>
+<div class="footer">
+    <div id="preview" style="background: green;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Preview</div>
+    <div id="create"style="background: grey;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Create</div>
+
+</div>
+<script>
+    var total_player = 0;
+    function select_player(id){
+
+
+        {#alert($("#"+id).find("select_player_name"));#}
+        if ($("#player"+id).find(".select_player_name")[0]){
+            {#$(""+ a).css("background","red");#}
+
+            $("#player"+id).find(".select_player_name").css("background","red");
+            $("#player"+id).find(".select_player_name").removeClass("select_player_name").addClass("selected_player_name");
+            $("#player"+id).find(".select_player").removeClass("select_player").addClass("selected_player").css("background","red");
+            $("#player"+id).find(".plus_sign").removeClass("plus_sign").addClass("minus_sign").html("-");
+            total_player = total_player + 1;
+            if (total_player == 11 ){
+                $("#create").addClass("create").css("background", "green");
+            }
+        }
+        else if ($("#player"+id).find(".selected_player_name")[0]){
+            {#$(""+ a).css("background","red");#}
+
+            $("#player"+id).find(".selected_player_name").css("background","white");
+            $("#player"+id).find(".selected_player_name").removeClass("selected_player_name").addClass("select_player_name");
+            $("#player"+id).find(".selected_player").removeClass("selected_player").addClass("select_player").css("background","white");;
+            $("#player"+id).find(".minus_sign").removeClass("minus_sign").addClass("plus_sign").html("+");
+            total_player = total_player - 1;
+            if (total_player != 11 ){
+                $("#create").removeClass("create").css("background", "grey");
+            }
+        }
+        else {
+            alert("ff");
+            $("#"+id).find("select_player_name").removeClass();
+            $("#"+id).find("select_player_name").addClass("select_player_name");
+        }
+        $("#"+id).find("select_player_name").css('background','red');
+        $("#"+id).find("select_player").css('background','red');
+    }
+</script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21769945-4', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+<script>
+    var autoAdjustHeight = true;
+
+    // update on click
+    $('nav a').on('mousedown', function(e){
+        e.preventDefault();
+        var goTo = $(this).parent().index();
+        swipegoryUpdate(goTo);
+    });
+
+    // update on touch
+    $("ul.panes").swipe({
+        swipeStatus:function(event, phase, direction, distance, duration, fingerCount) {
+            var translateString = 'translate3d(0px, 0px, 0px)';
+
+
+
+            var transitionDuration = $('nav li.cur').css('transitionDuration');
+            var speed = transitionDuration;
+
+            if(phase == 'move') {
+                speed = '0ms';
+                if(direction == 'left') {
+                    translateString = 'translate3d(-' + distance + 'px, 0px, 0px)';
+                    $('.panes li.cur').css('marginLeft', '-'+ distance +'px');
+                }
+                else if(direction == 'right') {
+                    translateString = 'translate3d(' + distance + 'px, 0px, 0px)';
+                    $('.panes li.cur').css('marginLeft', distance +'px');
+                }
+                $('nav li.cur').css({
+                    transitionDuration: speed,
+                    transform: translateString
+                });
+
+            }
+            else if (phase == 'end') {
+                // reset transform3D
+                var marginLeft = $('nav li.cur').css('marginLeft');
+                $('nav li.cur').attr('style', '').css('marginLeft', marginLeft);
+                $('.panes li.cur').attr('style', '');
+            }
+        },
+        swipeLeft:function(event, direction, distance, duration, fingerCount) {
+            //This only fires when the user swipes left
+            var goTo = $('nav li.cur').index();
+            goTo++;
+            swipegoryUpdate(goTo);
+        },
+        swipeRight:function(event, direction, distance, duration, fingerCount) {
+            //This only fires when the user swipes left
+            var goTo = $('nav li.cur').index();
+            goTo--;
+            swipegoryUpdate(goTo);
+        },
+        threshold: 50,
+        triggerOnTouchEnd: false,
+        allowPageScroll: "vertical",
+        excludedElements: "button, input, select, textarea, .noSwipe"
+    });
+
+
+
+    // update on load
+    $(window).load(function() {
+        swipegoryUpdate(0);
+    });
+
+    function swipegoryUpdate(goTo) {
+        var listItems = $('nav li');
+        var panes = $('.panes');
+        var prev = goTo - 1;
+        var next = goTo + 1;
+        if(goTo >= 0 && goTo < listItems.length) {
+            listItems.removeClass('prev').removeClass('cur').removeClass('next').removeClass('before').removeClass('after');
+            $('li', panes).removeClass('prev').removeClass('cur').removeClass('next').removeClass('before').removeClass('after');
+
+
+
+            listItems.each(function(i) {
+                var li = $(this);
+                var pane = $('li:eq('+i+')', panes);
+
+                li.attr('style', '');
+
+                if(i == prev) {
+                    li.addClass('prev');
+                    li.css('margin-left', '0');
+                    pane.addClass('prev');
+                }
+                else if(i == next) {
+                    li.addClass('next');
+                    li.css('margin-left', '-' + li.outerWidth() + 'px');
+                    pane.addClass('next');
+                }
+                else if(i < goTo) {
+                    li.addClass('before');
+                    li.css('margin-left', '-' + li.outerWidth() + 'px');
+                    pane.addClass('before');
+                }
+                else if(i == goTo) {
+                    li.addClass('cur');
+                    var marginLeft = li.outerWidth() / 2;
+
+                    li.css('margin-left', '-' + marginLeft + 'px');
+                    pane.addClass('cur');
+
+                    if(autoAdjustHeight == true) {
+                        $('.swipegory').css('height', pane.outerHeight() + li.outerHeight());
+                    }
+
+                }
+                else if(i > goTo) {
+                    li.addClass('after');
+                    li.css('margin-left', '0');
+                    pane.addClass('after');
+                }
+            });
+        }
+    }
+</script>
+<style>
+    .footer { position: fixed; left: 0; bottom: 0; width: 100%;color: white;text-align: center;}
+    * {
+        box-sizing: border-box;
+    }
+    html,
+    body {
+        height: 100%;
+    }
+    body {
+        padding: 0;
+        background: #eee;
+        font: 16px/2em 'Montserrat', sans-serif;
+    }
+    img {
+        max-width: 150px;
+        heigth: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    h1 {
+        text-align: center;
+        font-size: 26px;
+        margin: 10px 0 20px 0;
+    }
+    p {
+        margin: 0 0 20px 0;
+    }
+    p.footer {
+        font-size: 12px;
+        text-align: center;
+    }
+    .swipegory {
+        position: relative;
+        max-width: 320px;
+        height: 480px;
+        margin: 0 auto;
+        background: #fff;
+        padding-top: 70px;
+        overflow: hidden;
+        transition: 1s height;
+        transform: translate3d(0, 0, 0);
+        margin-bottom: 5px;
+    }
+    .swipegory nav ul {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        background: #333;
+    }
+    .swipegory nav li {
+        position: absolute;
+        top: 0;
+        left: 100%;
+        display: block;
+        transition: 1s all;
+        transform: translate3d(0, 0, 0);
+        line-height: 70px;
+        height: 70px;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+    .swipegory nav li.prev {
+        left: 0;
+    }
+    .swipegory nav li.cur {
+        left: 50%;
+    }
+    .swipegory nav li.cur a {
+        color: #fff;
+    }
+    .swipegory nav li.cur a:after {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+    .swipegory nav li.next {
+        left: 100%;
+    }
+    .swipegory nav li.before {
+        left: 0;
+    }
+    .swipegory nav li.after {
+        left: 100%;
+    }
+    .swipegory nav li a {
+        position: relative;
+        color: #999;
+        text-decoration: none;
+        padding: 0 20px;
+        height: 70px;
+        line-height: 70px;
+        display: block;
+        overflow: hidden;
+        transition: 1s color;
+    }
+    .swipegory nav li a:after {
+        content: ' ';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: cyan;
+        width: 100%;
+        height: 3px;
+        opacity: 0;
+        transition: 1s all;
+        transform: translate3d(0, 3px, 0);
+    }
+    .swipegory ul.panes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        cursor: move;
+    }
+    .swipegory ul.panes li {
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 100%;
+        padding: 20px 20px 0 20px;
+        transition: 1s all;
+        transform: translate3d(0, 0, 0);
+    }
+    .swipegory ul.panes li.prev {
+        transform: translate3d(-200%, 0, 0);
+    }
+    .swipegory ul.panes li.cur {
+        transform: translate3d(-100%, 0, 0);
+    }
+    .swipegory ul.panes li.next {
+        transform: translate3d(0, 0, 0);
+    }
+    .swipegory ul.panes li.before {
+        transform: translate3d(-200%, 0, 0);
+    }
+    .swipegory ul.panes li.after {
+        transform: translate3d(0, 0, 0);
+    }
+    @media all and (min-width: 320px) {
+        body {
+            padding: 20px 0;
+        }
+    }
+</style>
+</body>
+</html>

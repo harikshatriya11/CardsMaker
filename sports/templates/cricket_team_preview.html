@@ -1,0 +1,255 @@
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 0px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0px;
+        border: 1px solid #888;
+        width: 100%;
+        height:100vh;
+
+    }
+
+    /* The Close Button */
+    .close {
+        color:green;
+        float: right;
+        font-size: 12px;
+        font-weight: bold;
+        border-radius: 50px;
+        background: white !important;
+        margin: 10px;
+        margin-bottom: -30px !important;
+        {#border-radius: 50px;#}
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .players_box{
+        display: inline-flex !important;
+        margin-top: 2px !important;
+        flex-wrap: wrap;
+        width: 100%;
+        place-content: center;
+        text-align: -webkit-center;
+    }
+    .{{ match.team1 }}, .{{ match.team2 }}{
+        width: 28% !important;
+        display: inline !important;
+        margin: 2px;
+    }
+    .{{ match.team1 }} .player_name{
+        color: white !important;
+        background: gray !important;
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 12px;
+        {#font-size: 18px;#}
+    }
+    .{{ match.team2 }} .player_name{
+        color: black !important;
+        background: gray !important;
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 12px;
+        {#font-size: 18px;#}
+    }
+    .player_image{
+        border-radius: 50%;
+        width:50px;
+        height:50px;
+    }
+    .player_points{
+        color: white !important;
+    }
+    .players_type{
+        color: white;
+        background: gray;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 15px;
+    }
+
+    .player_name{
+        white-space: pre;
+        background: gray;
+        border-radius: 10px;
+        margin: 2px;
+        padding-left: 2px;
+        padding-right: 2px;
+
+    }
+
+</style>
+</head>
+<body>
+<div style="margin-top: 10px">
+{#    {% if p.player%}#}
+{#    #}
+{#    {% endif %} #}
+
+    <label class="players_type">WICKET-KEEPERS</label>
+<div id="wk" class="players_box">
+
+    {% for p in players %}
+        {% if p.player.player_place == '3' %}
+            {% if p.player.team == match.team1 %}
+                <div class="{{ p.player.team }}">
+                    <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
+                    <label class="player_name"> {% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
+                    <label class="player_points">
+
+                        {% if captain.player.id == p.player.id %} {{captain_total}}(C)
+                        {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
+                        {% else %} {{ p.total }}{% endif %}
+                    </label>
+                </div>
+            {% endif %}
+            {% if p.player.team == match.team2 %}
+                <div class="{{ p.player.team }}">
+                    <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
+                    <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
+                    <label class="player_points">
+                        {% if captain.player.id == p.player.id %} {{captain_total}}(C)
+                            {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
+                        {% else %} {{ p.total }}{% endif %}
+                    </label>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+<br>
+    <label class="players_type">BATTERS</label>
+<div id="bat" class="players_box">
+
+    {% for p in players %}
+        {% if p.player.player_place == '1' %}
+            {% if p.player.team == match.team1 %}
+                <div class="{{ p.player.team }}">
+                    <label class="player_points">
+                        <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
+                        <label class="player_points">
+
+                            {% if captain.player.id == p.player.id %} {{captain_total}}(C)
+                                {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
+                            {% else %} {{ p.total }}{% endif %}
+                        </label>
+                    </label>
+                </div>
+            {% endif %}
+            {% if p.player.team == match.team2 %}
+                <div class="{{ p.player.team }}">
+                    <label class="player_points">
+                        <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
+                        <label class="player_points">
+                            {% if captain.player.id == p.player.id %} {{captain_total}}(C)
+                                {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
+                            {% else %} {{ p.total }}{% endif %}
+                        </label>
+                    </label>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+    <br>
+    <label class="players_type">ALL-ROUNDER</label>
+<div id="all-r" class="players_box">
+
+    {% for p in players %}
+        {% if p.player.player_place == '4' %}
+            {% if p.player.team == match.team1 %}
+                <div class="{{ p.player.team }}">
+
+                    <label class="player_points">
+                        <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
+                        <label class="player_points">
+                            {% if captain.player.id == p.player.id %} {{captain_total}}(C)
+                                {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
+                            {% else %} {{ p.total }}{% endif %}
+                        </label>
+                    </label>
+                </div>
+            {% endif %}
+            {% if p.player.team == match.team2 %}
+                <div class="{{ p.player.team }}">
+                    <label class="player_points">
+                        <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
+                        <label class="player_points">
+                            {% if captain.player.id == p.player.id %} {{captain_total}}(C)
+                                {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
+                            {% else %} {{ p.total }}{% endif %}
+                        </label>
+                    </label>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+    <br>
+    <label class="players_type">BOWLERS</label>
+<div id="bowl" class="players_box">
+
+    {% for p in players %}
+        {% if p.player.player_place == '2' %}
+            {% if p.player.team == match.team1 %}
+                <div class="{{ p.player.team }}">
+
+                    <label class="player_points">
+                        <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
+                        <label class="player_points">
+                            {% if captain.player.id == p.player.id %} {{captain_total}}(C)
+                                {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
+                            {% else %} {{ p.total }}{% endif %}
+                        </label>
+                    </label>
+                </div>
+            {% endif %}
+            {% if p.player.team == match.team2 %}
+                <div class="{{ p.player.team }}">
+                    <label class="player_points">
+                        <img class="player_image" src="/media/{% if p.player.image == "" or p.player.image == none %}players/players.png{% else %}{{ p.player.image }}{% endif %}"><br>
+                        <label class="player_name">{% if p.player.abr_name|length < 16 %}{{ p.player.abr_name }}{% else %}{{ p.player.abr_name|truncatechars:16|slice:"-1" }}.{% endif %}</label><br>
+                        <label class="player_points">
+                            {% if captain.player.id == p.player.id %} {{captain_total}}(C)
+                            {% elif vice_captain.player.id == p.player.id %}{{ vice_captain_total }}(VC)
+                            {% else %} {{ p.total }}{% endif %}
+                        </label>
+                    </label>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+
+</div>
+</body>

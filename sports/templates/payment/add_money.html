@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    #add_money {border-radius: 10px;position: fixed;top:10px;right: 10px;background: green;}
+    .w3-black, .w3-hover-black:hover {color: #fff!important;    background-color: unset !important;
+    }
+</style>
+<div id="add_money">
+    <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">{{ balance }}Rs. Add Cash</button>
+</div>
+<div class="w3-container">
+
+
+
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <form action="/sports/payment/" class="form">
+                    <div class="form-row"><br><br>
+                        <label class="form-control">Add Cash To Wallet</label><br><br>
+                        <input class="form-control" name="amount" type="number" /><br><br>
+                        <button type="submit" class="form-control">Submit</button><br><br>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            text-align-last: center;
+            margin-top: 10%;
+        }
+        a{
+            background: green;
+            text-align-last: center;
+            font-size: 40px;
+            text-decoration: none;
+            margin-top: 10px;
+            line-height: 100px;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+{#        path('create_match/', admin_panel.CreateMatch, name='create_match'),#}
+{#        path('live_cricket_match/', admin_panel.LiveCricketMatch, name='live_cricket_match'),#}
+{#        path('add_players_points/<int:match_id>', admin_panel.AddPlayersPoints, name='add_players_points'),#}
+{#        path('select_playing11/<int:match_id>', admin_panel.SelectPlaying11, name='select_playing11'),#}
+{#        path('team_total/<int:contest_id>', admin_panel.TeamTotal, name='team_total'),#}
+<div>
+    <a href="/sports/tbt/admin_panel/create_match/">create match</a><br>
+    <a href="/sports/tbt/admin_panel/live_cricket_match/">live cricket match</a><br>
+    <a href="/sports/tbt/admin_panel/upcoming_cricket_match/">Upcomming cricket match</a><br>
+    <a href="">home</a>
+    {% if request.user.is_superuser %}
+        <a href="/admin/">Admin Panel</a>
+    {% endif %}
+</div>
+</body>
+</html>

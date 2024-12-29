@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "796832211973",
+    "project_id": "brandbasket-db5a7",
+    "storage_bucket": "brandbasket-db5a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796832211973:android:95a748b103ed74c541e86c",
+        "android_client_info": {
+          "package_name": "com.example.tingtong"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX6z-Gu-88AmxLF_9x2icX9c7HtYbCBrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

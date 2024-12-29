@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- include the Agora Web SDK -->
+    <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.1.1.js"></script>
+</head>
+<body>
+
+<!-- HTML for the video call UI -->
+<div id="video-call">
+  <div id="local-video">join local</div>
+  <div id="remote-video">join remote</div>
+</div>
+
+<!-- JavaScript code to initialize and start the video call -->
+<script>
+  // Initialize the Agora client
+  const client = AgoraRTC.createClient({mode: 'live', codec: 'vp8'});
+
+  // Initialize the local video stream
+  const localStream = AgoraRTC.createStream({
+    streamID: 12345,
+    audio: true,
+    video: true,
+    screen: false
+  });
+
+  // Initialize the remote video container
+  const remoteContainer = document.getElementById('remote-video');
+  var  uid = 'asdcsdcsiniasidci';
+
+  // Join an Agora channel
+  client.join('6207a7e753084cbfaa451bcb9311f1f1', 'dfa', null, (uid) => {
+    // Initialize the local video stream
+    localStream.init(() => {
+      // Play the local video stream
+      localStream.play('local-video');
+      // Publish the local video stream to the channel
+      client.publish(localStream);
+    });
+  });
+
+  // Handle incoming remote video streams
+  client.on('stream-added', (evt) => {
+    const stream = evt.stream;
+    client.subscribe(stream, () => {
+      const remoteVideo = document.createElement('div');
+      remoteVideo.id = `remote-video-${stream.getId()}`;
+      remoteVideo.style.width = '100%';
+      remoteVideo.style.height = '100%';
+      remoteContainer.appendChild(remoteVideo);
+      stream.play(remoteVideo.id);
+    });
+  });
+</script>
+
+</body>
+</html>

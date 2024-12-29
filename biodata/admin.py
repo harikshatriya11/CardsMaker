@@ -1,4 +1,6 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
+
 from .models import *
 # Register your models here.
 class EducationInline(admin.TabularInline):
@@ -18,5 +20,15 @@ class OtherDetailAdmin(admin.ModelAdmin):
     inlines = [ EducationInline, PaternalInline, MaternalInline, ImageInline]
 
 admin.site.register(BioData, OtherDetailAdmin)
-admin.site.register(LanguageName)
-admin.site.register(LabelName)
+
+class LanguageNameAdmin(ImportExportModelAdmin):
+    pass
+admin.site.register(LanguageName, LanguageNameAdmin)
+
+class LabelNameAdmin(ImportExportModelAdmin):
+    pass
+admin.site.register(LabelName, LabelNameAdmin)
+
+class TemplateDataAdmin(ImportExportModelAdmin):
+    pass
+admin.site.register(TemplateData, TemplateDataAdmin)

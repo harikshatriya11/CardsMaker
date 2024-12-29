@@ -7,10 +7,10 @@ CHOICE_STATUS = (
     (1, 'INACTIVE'),
 )
 CHOICE_BIODATA_STATUS = (
-    (0, 'DRAFT'),
-    (1, 'PUCHASED'),
-    (2, 'WATCHED_ADS'),
-    (3, 'DELETED'),
+    (1, 'DRAFT'),
+    (2, 'PUCHASED'),
+    (3, 'WATCHED_ADS'),
+    (4, 'DELETED'),
 )
 CHOICE_DIET = (
     (0, ''),

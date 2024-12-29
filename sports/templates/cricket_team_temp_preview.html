@@ -1,0 +1,135 @@
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 0px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0px;
+        border: 1px solid #888;
+        width: 100%;
+        height:100vh;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .players_box{
+        display: inline-flex !important;
+        margin-top: 10px;
+        flex-wrap: wrap;
+        width: 100%;
+        place-content: center;
+        text-align: -webkit-center;
+    }
+    .{{ match.team1 }}, .{{ match.team2 }}{
+        width: 28% !important;
+        display: inline !important;
+        margin: 2%;
+    }
+    .{{ match.team1 }} .player_name{
+        color: white !important;
+        background: black;
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+        {#font-size: 18px;#}
+    }
+    .{{ match.team2 }} .player_name{
+        color: black !important;
+        background: white;
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+        {#font-size: 18px;#}
+    }
+    .player_image{
+        border-radius: 50%; width:50px; height: 50px;
+    }
+    .player_points{
+        color: white !important;
+    }
+    .player_name{
+
+    }
+    .players_type{
+        color: white;
+    }
+</style>
+</head>
+<body>
+<div style="margin-top: 8%">
+{#    {% if p.player%}#}
+{#    #}
+{#    {% endif %} #}
+    <div id="myModal_team_preview" class="modal" style="display: none;">
+        <!-- Modal content -->
+        <div class="modal-content" style="text-align: -webkit-center;background-repeat: no-repeat;background-size: 100% 100%;background-image: url('{{ request.base_url }}/media/media/cricket_field6.jpg');background-color: green">
+
+            <div style="width: 100%">
+                {#            <div style="float:left;font-size: 30px;color: white"><label style="margin-left: 5px;font: bold;">&#x21e4;</label></div>#}
+                <div style="float: right;font-size: 30px;color: white"><span style="margin-right: 10px;font-weight: bold;color: white !important;" class="close" onclick="close_preview()"><label style="margin-left: 5px;font-weight: bold;color:#000000">Close x</label></span></div>
+
+
+            </div>
+            <div id="team_preview_box">
+                <br>
+                <label class="players_type">WICKET-KEEPERS</label>
+                <div id="wicket_keeper" class="players_box"></div>
+                <label class="players_type">BATTERS</label>
+                <div id="better" class="players_box"></div>
+                <label class="players_type">ALL-ROUNDER</label>
+                <div id="all_rounder" class="players_box"></div>
+                <label class="players_type">BOWLER</label>
+                <div id="bowler" class="players_box"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<script>
+    function trunchatecharsjs() {
+
+        $(document).ready(function() {
+            // Iterate over each element with class "player_name"
+            $('.player_name').each(function() {
+
+                // Check if the length of text is greater than 16
+                if ($(this).text().length > 16) {
+                    // Truncate the text and append ellipsis
+                    $(this).text($(this).text().substring(0, 16) + '...');
+                }
+            });
+        });
+
+    }
+
+</script>
+</body>

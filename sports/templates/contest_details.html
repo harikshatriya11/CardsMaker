@@ -1,0 +1,517 @@
+{% include 'base.html' %}
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 0px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: #ffffff; /* Fallback color */
+        background-color: #ffffff; /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0px;
+        border: 1px solid #888;
+        width: 100%;;
+    {#height:100vh;#}
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right !important;
+        font-size: 20px !important;
+        font-weight: bold;
+        width: fit-content !important;
+        border-radius: 15px !important;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .nav-tab-pill{
+        padding: 12px;
+        margin-right: 4px;
+        margin-left: 4px;
+        {#background: red;#}
+        border-radius: 5px;
+        {#border-right: solid red 1px;#}
+    }
+    .shadow-fade{
+        display: none;
+    }
+    .active{
+        display: block !important;
+    }
+    ul{
+        padding-inline-start: 0px !important;
+    }
+    .Contest_details{
+        display: inline-flex;background: lightgray;width: 100%;
+
+    }
+    td{
+        {#border: 1px solid black;#}
+        border-bottom: 1px solid tan;
+        height: 50px;
+        word-wrap: break-word;
+    }
+    table{
+        width: 100%;
+        border-spacing: 0px;
+    }
+    {# td {#}
+        {#border: 1px solid black;#}
+        {# box-shadow: 0px 0px 1px 0px #888888;#}
+    {#     box-shadow: 0px 0px 1px 0px  red;#}
+    {#    padding: 5px;#}
+    {#}#}
+    {#table { border-collapse: collapse; }#}
+    {#tr:nth-child(3) { border-bottom: solid thin; }#}
+</style>
+<div  >
+    <div class="Contest_details">
+        <div class="" style="float: left;text-align: -webkit-center">
+            <div>{{ contest.match_contest.team1 }}<br>Vs<br>{{ contest.match_contest.team2 }}</div>
+            <br>
+            <div>{{ contest.match_contest.date }} - {{ contest.match_contest.time }}</div>
+        </div>
+        <div class="" style="float: right;">
+            <div>{{contest.entry_fee  }}</div>
+            {% if  not contest.match_contest.live and not contest.match_contest.end %}
+            <button onclick="join_contest({{ contest.id }})" id="myBtn" class="btn-primary" style="background: green;border-radius: 10px;color:white" >Join Contest</button>
+            {% endif %}
+        </div>
+    </div>
+<br>
+<div class="" style="display: inline-flex;width: 100%;margin: 2px">
+    <div  onclick="team_list({{ contest.id }}, 'details_list')" class="nav-tab-pill" id="details" >Details</div>
+    <div onclick="team_list({{ contest.id }}, 'team_list')" class="nav-tab-pill" id="team" style="background: lightgreen">Contest</div>
+    <div onclick="team_list({{ contest.id }}, 'player_list')" class="nav-tab-pill" id="player">Player Statics</div>
+    <hr>
+</div>
+    <div  class="shadow-fade active" id="team_list" >
+        <table>
+            <thead>
+                <th>
+                    <tr>
+                        <td style='text-align-last: center;'>Rank</td>
+                        <td>All Team</td>
+                        <td>Points</td>
+                    </tr>
+                </th>
+            </thead>
+            <tbody>
+                {% for ut in user_team %}
+                    {% if ut.joined_user == request.user %}
+                        <tr style="background: #ffe9ce" onclick="view_team_details({{ ut.selected_team.id }})">
+                            <td style='text-align-last: center;'>{{ ut.team_rank }}</td>
+                            <td>
+{#                                {% if profile_user_info.image %}#}
+{#                                    <img src="{{ profile_user_info.image.url }}" width="50px">#}
+{#                                {% else %}#}
+{#                                {% endif %}#}
+
+                                {{ ut.joined_user }}
+
+
+                                (T{{ ut.selected_team.TeamCount }})<br>winning {{ ut.won }} Rs.</td>
+                            <td>{{ ut.selected_team.total_points }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                {% for ut in team %}
+
+                    <tr style="background: lightgray" onclick="view_team_details({{ ut.selected_team.id }})">
+                        <td style='text-align-last: center;'>{{ ut.team_rank }}</td>
+                        <td>
+                            {{ ut.joined_user }}
+                            ({{ ut.selected_team.TeamCount }}) <br>winning {{ ut.won }} Rs.</td>
+                        <td>{{ ut.selected_team.total_points }}</td>
+                    </tr>
+
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="shadow-fade" id="details_list">Details</div>
+    <div class="shadow-fade" id="player_list">Player Statics</div>
+</div>
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" id="modal-content">
+        <span class="close" style=""><button>Close &times;</button></span>
+        <div id="created_team" style="margin: 5px;margin-bottom: 100px;"></div>
+        <div class="footer">
+{#            <div id="preview" style="background: green;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Preview</div>#}
+{#            <div onclick="create_team()" id="create"style="background: grey;width: 40%;margin-left: 5%;float: left;border-radius: 5px">Next</div>#}
+        </div>
+    </div>
+</div>
+
+<script>
+    function view_team_details(team_id){
+
+        $("#myModal").css("display", "block");
+        $("#created_team").html("");
+        $("#modal-content").css({'height': '100vh','text-align': '-webkit-center','background-repeat': 'no-repeat;background-size: 100% 100%','background-image': 'none','background-color': 'none'})
+        $.ajax({
+
+            url : '{{ request.base_url }}/sports/tbt/team_preview/',
+            type : 'POST',
+            dataType:'json',
+            traditional: true,
+            data : {
+                'team_id' :team_id,
+                'match_id' : '{{contest.match_contest.id}}',
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+
+            success : function(data) {
+                console.log(data)
+                if (data['status'] == 200){
+                    $("#created_team").html(data['team_preview_html']);
+                    $("#modal-content").css({'text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'none'});
+                }
+
+                else if (data['status'] == 201){
+                    $("#created_team").html(data['team_preview_html']);
+                    {#$("#modal-content").css({'padding-top':'50%','text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'none'});#}
+                }
+
+            },
+            error : function(request,error)
+            {
+                console.log("Request: "+request+":"+error);
+            }
+        });
+
+    }
+    function player_details(player_id){
+
+        $("#myModal").css("display", "block");
+        $("#created_team").html("");
+        $("#modal-content").css({'height': '100vh','text-align': '-webkit-center','background-repeat': 'no-repeat;background-size: 100% 100%','background-image': 'none','background-color': 'none'})
+        $.ajax({
+
+            url : '{{ request.base_url }}/sports/tbt/player_details/',
+            type : 'POST',
+            dataType:'json',
+            traditional: true,
+            data : {
+                'player_id' :player_id,
+                'match_id' : '{{contest.match_contest.id}}',
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+
+            success : function(data) {
+                if (data['status'] == 200){
+                    var player_details = "<table style='width: 100%;border-spacing: 0px;'><thead><th><tr>"+
+                        "<td style='text-align-last: left;'>Details</td>"+
+                        "<td >Points</td>"+
+                        "</tr></th></thead><tbody>";
+                    $.each( data['player_details'], function( key, value ) {
+
+                        {#console.log(key+":i:"+value);#}
+                        {#console.log("det:"+data['details'][i]);#}
+                        var a ="<tr style='background: #ffffff;' >"+
+                            "<td style='text-align-last: left;'>"+key.toUpperCase()+"</td>"+
+                            "<td>"+value+"</td>"+
+                            "</tr>";
+                        player_details = player_details + a;
+                    });
+                    player_details = player_details + "</tbody></table><br>";
+
+                    $("#created_team").html(player_details);
+                    {#$("#modal-content").css({'text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'green'});#}
+                }
+
+                else if (data['status'] == 201){
+                    $("#created_team").html(data['team_preview_html']).css({'color':'white','background':'black','font-size':'20px'});
+                    {#$("#modal-content").css({'padding-top':'50%','text-align': '-webkit-center','background-repeat': 'no-repeat','background-size': '100% 100%','background-image': 'url("{{ request.base_url }}/media/media/cricket_field6.jpg")','background-color': 'green'});#}
+                }
+
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+request+":"+error);
+            }
+        });
+
+    }
+    function team_list(contest_id,pill){
+
+        var teams = "";
+        $.ajax({
+
+            url : '{{ request.base_url }}/sports/tbt/contest_details/'+contest_id,
+            type : 'POST',
+            dataType:'json',
+            traditional: true,
+            data : {
+                'pill' : pill,
+                'match_id' : '{{contest.match_contest.id}}',
+                'contest_id' : contest_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success : function(data) {
+                document.getElementById(pill).innerHTML = "";
+                {#console.log(Object.values(data));#}
+                $(".shadow-fade").css("display","none").html("");
+                $(".nav-tab-pill").css("background","none");
+                console.log(pill.replace("_list", ""));
+                $("#"+pill.replace("_list", "")).css("background","lightgreen");
+
+                {#details = JSON.parse(data['details']);#}
+                {#console.log(details);#}
+                if (data['status'] == 200 && pill == 'team_list'){
+                    console.log(Object.values(data));
+                    teams = "<table style='width: 100%;border-spacing: 0px;'><thead><th><tr>"+
+                        "<td style='text-align-last: center;'>Rank</td>"+
+                        "<td>All Team</td>"+
+                        "<td>Points</td>"+
+                        "</tr></th></thead><tbody>";
+                    for (var i=0;i< data['user_team'].length;i++){
+                        var a ="<tr style='background: #ffe9ce;' onclick='view_team_details("+data['user_team'][i]['selected_team_id']+")'>"+
+                            "<td style='text-align-last: center;'>"+data['user_team'][i]['team_rank']+"</td>"+
+                            "<td>"+data['user_team'][i]['joined_user__username']+"(T"+data['user_team'][i]['selected_team__TeamCount']+")<br>winning "+data['user_team'][i]['won']+" Rs.</td>"+
+                            "<td>"+data['user_team'][i]['selected_team__total_points']+"</td>"+
+                            "</tr>";
+                        teams = teams + a;
+                    }
+                    for (var i=0;i< data['team'].length;i++){
+
+                        var a ="<tr style='background: lightgray' onclick='view_team_details("+data['team'][i]['selected_team_id']+")'>"+
+                            "<td style='text-align-last: center;'>"+data['team'][i]['team_rank']+"</td>"+
+                            "<td>"+data['team'][i]['joined_user__username']+"(T"+data['user_team'][i]['selected_team__TeamCount']+")<br>winning "+data['user_team'][i]['won']+" Rs.</td>"+
+                            "<td>"+data['team'][i]['selected_team__total_points']+"</td>"+
+                            "</tr>";
+                        teams = teams + a;
+                    }
+
+                    {#teams = teams + "</tbody></table><br><button style='left: 0;bottom: 0;width: 100%;text-align: center;' onclick='join_contest_selected_team()' id='join_contest_selected_team'>Add Team</button>";#}
+                    {#$("#created_team").append('');#}
+
+                    document.getElementById(pill).innerHTML = teams;
+                    $("#"+pill).css("display","block");
+                    {#modal.style.display = "block";#}
+                }
+                if (data['status'] == 200 && pill == 'details_list'){
+                    {#details = [JSON.parse(data['details'])];#}
+                    console.log(data[0]);
+                    console.log(data['details']);
+                    {#var trainindIdArray = details.replace("[","").replace("]","").split(',');#}
+                    {#var trainindIdArray = details.replace("",;#}
+
+                    teams = "<table style='width: 100%;border-spacing: 0px;'><thead><th><tr>"+
+                        "<td style='text-align-last: center;'>Rank</td>"+
+                        "<td style='text-align-last: center;'>Prize</td>"+
+                        "</tr></th></thead><tbody>";
+                    $.each( data['details'], function( key, value ) {
+
+                        {#console.log(":i:"+i);#}
+                        {#console.log("det:"+data['details'][i]);#}
+                        var a ="<tr style='background: #ffffff;'>"+
+                            "<td style='text-align-last: center;'>"+key+"</td>"+
+                            "<td style='text-align-last: center;'>"+value+"</td>"+
+                            "</tr>";
+                        teams = teams + a;
+                    });
+                    teams = teams + "</tbody></table><br>";
+                    document.getElementById(pill).innerHTML = teams;
+                    $(".active").removeClass("active");
+                    $("#"+pill).addClass("active");
+
+                }
+                if (data['status'] == 200 && pill == 'player_list'){
+                    {#details = [JSON.parse(data['details'])];#}
+                    console.log(data[0]);
+                    console.log(data['players']);
+                    {#var trainindIdArray = details.replace("[","").replace("]","").split(',');#}
+                    {#var trainindIdArray = details.replace("",;#}
+
+                    teams = "<table style='width: 100%;border-spacing: 0px;'><thead><th><tr>"+
+                        "<td style='text-align-last: center;'>Points</td>"+
+                        "<td >player</td>"+
+                        "</tr></th></thead><tbody>";
+                    $.each( data['players'], function( key, value ) {
+
+                        console.log(":i:"+value);
+                        {#console.log("det:"+data['details'][i]);#}
+                        var a ="<tr style='background: #ffffff;' onclick='player_details("+value['id']+")' >"+
+                            "<td style='text-align-last: center;'>"+value['total']+"</td>"+
+                            "<td>"+value['player__full_name']+"</td>"+
+                            "</tr>";
+                        teams = teams + a;
+                    });
+                    teams = teams + "</tbody></table><br>";
+                    document.getElementById(pill).innerHTML = teams;
+                    $(".active").removeClass("active");
+                    $("#"+pill).addClass("active");
+
+                }
+                else if (data['status'] == 201){
+                    alert("Something Went Wrong");
+                }
+                else if (data['status'] == 202){
+
+
+                }
+
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+request+":"+error);
+            }
+        });
+    }
+</script>
+<script>
+    var selected_team_id =[];
+    var join_contest_id;
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementsByClassName("created_team");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    function join_contest(id){
+        selected_team_id = [];
+        $.ajax({
+
+            url : '{{ request.base_url }}/sports/tbt/joined_contest_teams/',
+            type : 'POST',
+            dataType:'json',
+            traditional: true,
+            data : {
+                'join_contest_id' : id,
+                'match_id' : '{{contest.match_contest.id}}',
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+
+            success : function(data) {
+                join_contest_id = id;
+                var teams  = "";
+                {#console.log(data[0]['contest_name_jc_id'])#}
+                console.log(data['status']);
+                {#console.log(data);#}
+
+                {#$("#created_team").html("");#}
+                document.getElementById("created_team").innerHTML = "";
+
+                {#var teams = "{% for ct in created_team %}"+#}
+                if (data['status'] == 200 ){
+                    for (var i=0;i< data['unselected_team'].length;i++){
+                        console.log("teams");
+                        var a ="<div class='' id='selected_team_box"+data['unselected_team'][i]["id"]+"' onclick='selected_team("+data['unselected_team'][i]["id"]+")' style='height:60px;padding:4px;background:green'>"+
+                            "<div style='float:left;margin-top:20px;font-size:30px;'><label class='team_dot' style='padding-left:5px;padding-right:5px;color:white'>&bull;</label>Team (T"+data['unselected_team'][i]["TeamCount"]+")</div>"+
+                            "<div style='float:right;text-align: -webkit-center;'>"+
+                            "<label style='float:left;padding-right:20px'>(C)<br><img src=''><br>"+data['unselected_team'][i]["captain__player__abr_name"]+"</label>"+
+                            "<label style='float:right;padding-right:2px'>(VC)<br><img src=''><br>"+data['unselected_team'][i]["vice_captain__player__abr_name"]+"</label>"+
+                            "</div></div><br>"
+                        teams = teams + a;
+                    }
+
+                    teams = teams + "<br><button style='left: 0;bottom: 0;width: 100%;text-align: center;' onclick='join_contest_selected_team()' id='join_contest_selected_team'>Add Team</button>";
+                    {#$("#created_team").append('');#}
+                    console.log("teams:"+teams);
+                    document.getElementById("created_team").innerHTML = teams;
+                    modal.style.display = "block";
+                }
+                else if (data['status'] == 201){
+                    alert("You can't Join with more than 22 teams");
+                }
+                else if (data['status'] == 202){
+
+                    window.location.href = "/sports/tbt/add_team/{{ contest.match_contest.id }}?contest_id={{ contest.id }}&edit_team=False";
+                }
+
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+request+":"+error);
+            }
+        });
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    function selected_team(id){
+        console.log($("#selected_team_box"+id).css('background-color'));
+        if( $("#selected_team_box"+id).css('background-color') === 'rgb(0, 128, 0)') {
+            selected_team_id.push(id);
+            $("#selected_team_box"+id).css("background","lightgreen").find(".team_dot").css("color","black");
+
+        }
+        else{
+
+            var index = selected_team_id.indexOf(id);
+            if (index !== -1) {
+                selected_team_id.splice(index, 1);
+            }
+            $("#selected_team_box"+id).css("background","green").find(".team_dot").css("color","white");
+        }
+
+        console.log(selected_team_id);
+
+    }
+
+    function join_contest_selected_team(){
+        if (selected_team_id.length === 0){
+            alert("Please Select atleast one team");
+        }
+        else {
+            $.ajax({
+
+                url : '{{ request.base_url }}/sports/tbt/join_contest/',
+                type : 'POST',
+                dataType:'json',
+                traditional: true,
+                data : {
+                    'selected_team_id' : [selected_team_id],
+                    'join_contest_id' : join_contest_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+
+                success : function(data) {
+                    alert("Joined contest successfully");
+                    window.location.href = "/sports/tbt/contest/{{ contest.match_contest.id }}";
+
+
+                },
+                error : function(request,error)
+                {
+                    alert("Request: "+request+":"+error);
+                }
+            });
+        }
+
+    }
+
+</script>

@@ -1,0 +1,257 @@
+{% include "base.html" %}
+{% include "loader/loader.html" %}
+{% block header_tag_block %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+{% endblock %}
+{% if request.user.is_authenticated %}
+<style>
+
+#bg_image {
+    {#border: 2px solid black;#}
+    padding: 25px;
+    {#background: url(mountain.jpg);#}
+    {% if user_profile_info.image %}
+        background: url('{{ user_profile_info.image.url }}');
+    {% else %}
+        background: url('/media/media/players/players.png');
+    {% endif %}
+
+    background-repeat: no-repeat;
+    background-size: 200px 200px;
+    height: 200px;
+    width: 200px;
+    margin-bottom: 2px;
+    border-radius: 50%;
+    color: white;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-top: 90%;
+</style>
+<div align="center" style="width: 100%;margin-top: 2%">
+    <div id="bg_image">
+        <label for="file-upload" class="custom-file-upload">
+            <i class="fa fa-cloud-upload"></i> Upload Image
+        </label>
+        <form id="profile_image" enctype="multipart/form-data" action="/profile/upload_image/">
+            {% csrf_token %}
+        <input onchange="update_image(this)" id="file-upload" name='upload_cont_img' type="file" style="display:none;">
+        </form>
+    </div>
+    <div class="user_details" style="width: 100%;text-align: center">
+        {% if request.user.first_name %}
+            {{ request.user.first_name }}<br>
+        {% else %}
+            {{ request.user|capfirst }}<br>
+        {% endif %}
+
+        <button id="myBtn">Edit Account Details</button>
+    </div><br>
+    <div style="float: left;width: 50%;text-align: left">
+
+        <div class="user_details">Bonus:</div>
+        <div class="user_details">Withdrawal:</div>
+        <div class="user_details">Deposit:</div>
+        <div class="user_details">Widthdrawn:</div>
+    </div>
+    <div style="float: right;width: 50%;text-align: right">
+        <div class="user_details">{% if balance.bonus %}{{ balance.bonus }}{% else %}0.00{% endif %}</div>
+        <div class="user_details">{% if balance.widthdrawal %}{{ balance.widthdrawal }}{% else %}0.00{% endif %}</div>
+        <div class="user_details">{% if balance.deposit %}{{ balance.deposit }}{% else %}0.00{% endif %}</div>
+        <div class="user_details">{% if balance.widthdrawn %}{{ balance.widthdrawn }}{% else %}0.00{% endif %}</div>
+
+    </div>
+    <br><br>
+
+    <div  style="width: 100%;margin-top: 20%"><br><br><a  class="w3-button w3-ripple w3-green" href="/sports/TBT11/static">Join Contests</a><br><br></div>
+</div>
+{% endif %}
+
+
+<!-- Trigger/Open The Modal -->
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Account Details</h2>
+        </div>
+        <div class="modal-body">
+            <form action="/profile/" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input value="{{ user_info.user.first_name }}" type="first_name" class="form-control" id="first_name" placeholder="Enter first_name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <input value="{{ user_info.user.last_name }}" type="last_name" class="form-control" id="last_name" placeholder="Enter last_name" name="last_name" required>
+                </div>
+                <div class="form-group">
+                     <input value="{{ user_info.upi }}" type="text" class="form-control" id="upi" placeholder="Enter UPI" name="upi" required>
+                </div>
+                <div class="form-group">
+                    <input value="{{ user_info.address }}" type="text" class="form-control" id="address" placeholder="Enter Address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <input value="{{ user_info.bank_account_number }}" type="text" class="form-control" id="bank_account_number" placeholder="Enter Account Number" name="bank_account_number">
+                </div>
+                <div class="form-group">
+                    <input value="{{ user_info.bank_ifsc_code }}" type="text" class="form-control" id="bank_ifsc_code" placeholder="Enter IFSC CODE" name="bank_ifsc_code" >
+                </div>
+                <div class="form-group">
+                    <input value="{{ user_info.adhaar }}" type="text" class="form-control" id="adhaar" placeholder="Enter Adhaar Number" name="adhaar" >
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+{#        <div class="modal-footer">#}
+{#            <h3>Modal Footer</h3>#}
+{#        </div>#}
+    </div>
+
+</div>
+
+
+
+<style>
+    body{
+        text-align: -webkit-center;
+    }
+
+    .user_details{
+        background:#ede9e9;
+        border-radius: 5px;
+        padding: 5px;
+        margin-bottom: 5px;
+        font-size: 22px;
+    }
+</style>
+
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+    }
+
+    /* Add Animation */
+    @-webkit-keyframes animatetop {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+    }
+
+    @keyframes animatetop {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+    }
+
+    /* The Close Button */
+    .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .modal-header {
+        padding: 2px 16px;
+        background-color: #5cb85c;
+        color: white;
+    }
+
+    .modal-body {padding: 2px 16px;}
+
+    .modal-footer {
+        padding: 2px 16px;
+        background-color: #5cb85c;
+        color: white;
+    }
+</style>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    function update_image(e){
+        $("#loader").show();
+        {#var formData = new FormData(e);#}
+        $.ajax({
+            type:'POST',
+            url: '/sports/tbt/profile/update_image/',
+            data:new FormData($('#profile_image')[0]),
+            cache:false,
+            contentType: false,
+            processData: false,
+            success:function(data){
+                $("#bg_image").css({'background':'url(' + data['data'] + ')','background-repeat': 'no-repeat','background-size':'200px 200px'});
+                $("#loader").hide();
+            },
+            error: function(data){
+                $("#loader").hide();
+            }
+        });
+    }
+</script>

@@ -1,0 +1,39 @@
+{% load static %}
+{% include 'home/base.html' %}
+<body>
+{% include 'home/side_nav_bar.html' %}
+{% include 'home/register.html' %}
+
+<div class="main"style="width: 100%">
+    <div class="biodata" style="float: left;width: 20%;border-style: none">
+         <div class="biodata_purchased" style="border-style: none;background: none">
+        <div><p style="font-size: x-large">PDF</p></div>
+            {% for purchased in latterhad_purchased %}
+                <div style="background: #818896;margin: 1%;height: 27px; "> {{ purchased }}
+                <div style="float: right">
+                    <a href="{% url 'latterhad_cards:latterhad_form' %}?latterhad_card_id={{ purchased.id }} "><button style="margin-right:2px ">Edit</button></a>
+                    <a href="{% url 'latterhad_cards:get_wk_pdf'   %}?latterhad_card_id={{ purchased.id }}&content_type=download"><button style="">Download</button></a>
+                </div>
+                </div><br>
+            {% endfor %}
+        </div>
+        <div class="biodata_drafs" style="border-style:none;background: none" >
+        <div><p style="font-size: x-large">Drafts</p></div>
+
+            {% for drafts in latterhad_drafts %}
+                <a href="{% url 'latter_had:latterhad_form' %}?latterhad_card_id={{ drafts.id }}"><label  style="background: #818896;margin: 1%;width: 45%;color: #1e2229;cursor: pointer">{{ drafts }} </label></a>
+            {% endfor %}
+
+        </div>
+    </div>
+    <div class="border" style="border-style: solid;height: 100%;float: left;margin-left: 1%"></div>
+    <div class="templates" style="float: left;width: 77%;border-style: none;margin-left: 1%">
+    <div style="margin-left: 3%;"><p style="font-size: x-large">Templates</p></div>
+           {% for latterhad_image in latterhad_templates %}
+               <a href="{% url 'latter_had:latterhad_form'    %}?template_id={{ latterhad_image.id }}" style="margin: 3%"><img src="/media/{{ latterhad_image.template_image_latterhad_icon }}"width="10%"height="15%"></a>
+           {% endfor %}
+    </div>
+
+</div>
+</body>
+</html>

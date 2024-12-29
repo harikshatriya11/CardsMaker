@@ -1,0 +1,813 @@
+{% load static %}
+{% load mathfilters %}
+
+{% include 'home/base.html' %}
+<body>
+{% include 'home/side_nav_bar.html' %}
+{% include 'home/register.html' %}
+
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+  $(".flip").click(function(){
+   if ($(this).find($(".panel")).is(":hidden")) {
+       $("i").removeClass("fa-angle-up").addClass("fa-angle-down");
+       $(".panel").slideUp();
+       $(this).find($(".panel")).slideToggle("slow");
+       $("i", this).removeClass("fa-angle-down").addClass("fa-angle-up");
+   }
+
+  });
+  $(".title_header").click(function(){
+
+   $("i").removeClass("fa-angle-up").addClass("fa-angle-down");
+       $(".panel").slideUp();
+  });
+});
+</script>
+<style>
+    .form-row{
+        margin: 2%;
+    }
+    .flip{
+        margin-top: 2%;
+    }
+    .title_header{
+        color: #ffffff;
+    }
+
+    #iframe {
+        width: 1020px;
+        height: 1420px;
+        border: 0px;
+        margin-left: 15px;
+    }
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        #iframe {
+            zoom: 1;
+        }
+    }
+    #iframe {
+        -moz-transform: scale(0.75);
+        -moz-transform-origin: 0 0;
+        -o-transform: scale(0.75);
+        -o-transform-origin: 0 0;
+        -webkit-transform: scale(0.75);
+        -webkit-transform-origin: 0 0;
+        border: #1e2229 1px solid;
+    }
+    @media only screen and (max-width: 870px) {
+        #iframe {
+            margin-left: -24px;
+
+            -moz-transform: scale(0.34);
+            -moz-transform-origin: 0 0;
+            -o-transform: scale(0.34);
+            -o-transform-origin: 0 0;
+            -webkit-transform: scale(0.34);
+            -webkit-transform-origin: 0 0;
+        }
+    }
+    select.form-control:not([size]):not([multiple]) {
+        height: unset !important;
+    }
+    #footer_images{
+        position: fixed;
+        left: 5%;
+        right: 5%;
+        bottom: 0;
+        width: 90%;
+        color: white;
+        text-align: center;
+    }
+    .carousel-control{
+        width: unset !important;
+    }
+</style>
+
+<select style="float: left" id="biodata_language">
+    {% for language in all_languages %}
+         <option value="{{ language.id }}" {% if language.language_name == biodata.language_name.language.language_name %}selected{% endif %}>{{ language.language_name }}</option>
+    {% endfor %}
+</select>
+<form class="needs-validation" id="{{ biodata.id }}" style="min-width: 40%"   enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+   <div class="flip" style="background:#6c7b88;border-style:solid ;box-shadow: #464a52 ;border-radius: 12px; text-underline: #1e2229;font-weight: bold">
+       <p class="title_header" style="background: #6c7b88;margin: auto;margin-left: 2%;">{{ labels.personal_details }}<i class="fa fa-angle-down" style="float:right;margin-right: 4%;"></i></p>
+
+<div class="panel" style="display: block;background: #ffffff" >
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom04" id="l_first_name">{{ labels.first_name }}</label>
+      <input type="text" class="form-control" id="first_name" placeholder="{{ labels.first_name }}" value="{{ biodata.first_name }}"  required>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom04" id="l_last_name">{{ labels.last_name }}</label>
+      <input type="text" class="form-control" id="last_name" placeholder="{{ labels.last_name }}" value="{{ biodata.last_name }}"  >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_date_of_birth">{{ labels.date_of_birth }}</label>
+      <input type="date" class="form-control" id="date_of_birth" placeholder="{{ labels.date_of_birth}}" value="{{ biodata.date_of_birth }}" >
+      <div class="invalid-feedback">
+        Please provide a valid Date.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_place_of_birth">{{ labels.place_of_birth}}</label>
+         <select  class="form-control" data-live-search="true" id="place_of_birth">
+            <option value="">Select State</option>
+             {% if request.user.is_authenticated %}
+                 {% for states in all_state %}
+                     {% if states.country.id == 105 %}
+                         <option value="{{ states.name }}">{{ states.name|truncatechars:20 }}</option>
+                     {% endif %}
+                 {% endfor %}
+             {% else %}
+                 {% for states in all_state %}
+                 <option value="{{ states.name }}">{{ states.name }}</option>
+                 {% endfor %}
+             {% endif %}
+        </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_time_of_birth" value="{{ biodata.time_of_birth }}">{{ labels.time_of_birth }}  </label>
+      <input type="time" class="form-control" id="time_of_birth"  value="{{ biodata.birth_of_time }}">
+      <div class="invalid-feedback">
+        Please provide a valid Time.
+      </div>
+    </div>
+  </div>
+
+    <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_height">{{ labels.height }}</label>
+        <select class="form-control" id="height"  >
+        <option value="none"  >------</option>
+            {% for h in height_list_in_ft %}
+                <option value="{{ h|floatformat:1 }}" {% if h|floatformat:1 == biodata.height %}selected{% endif %}>{{ h|floatformat:1 }} ft</option>
+            {% endfor %}
+        </select>
+      <div class="invalid-feedback">
+        Please provide a valid Date.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_complexion">{{ labels.complexion }}</label>
+        <select class="form-control" id="complexion"  >
+            <option value="none"  >-----</option>
+            <option value="{{ labels.fair }}" {% if biodata.complexion == labels.fair %}selected {% endif %} >Fair</option>
+            <option value="{{ labels.light }}" {% if biodata.complexion == labels.light %}selected {% endif %}   >Light</option>
+            <option value="{{ labels.dark }}" {% if biodata.complexion == labels.dark %}selected {% endif %}  >Dark</option>
+            <option value="{{ labels.medium }}" {% if biodata.complexion == labels.medium %}selected {% endif %}  >Medium</option>
+            <option value="{{ labels.olive }}" {% if biodata.complexion == labels.olive %}selected {% endif %}  >Olive</option>
+            <option value="{{ labels.tan_brown }}" {% if biodata.complexion == labels.tan_brown %}selected {% endif %}  >Tan Brown</option>
+            <option value="{{ labels.black_brown }}" {% if biodata.complexion == labels.black_brown %}selected {% endif %}  >Black Brown</option>
+
+        </select>
+      <div class="invalid-feedback">
+        Please provide a valid Place.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_personality">{{ labels.personality }}</label>
+      <select class="form-control" id="personality"  >
+            <option value="none"  >-----</option>
+            <option value="{{ labels.introvert }}" {% if biodata.personality == labels.introvert %}selected {% endif %} >{{ labels.introvert }}</option>
+            <option value="{{ labels.extrovert }}" {% if biodata.personality == labels.extrovert %}selected {% endif %} >{{ labels.extrovert }}</option>
+        </select>
+      <div class="invalid-feedback">
+        Please provide a valid Time.
+      </div>
+    </div>
+  </div>
+<div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_caste">{{ labels.caste }}</label>
+      <input type="text" class="form-control" id="cast" placeholder="{{ labels.caste }}"  value="{{ biodata.caste }}" >
+      <div class="invalid-feedback">
+        Please provide a valid Cast.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_gotra">{{ labels.gotra }}</label>
+      <input type="text" class="form-control" id="gotra" placeholder="{{ labels.gotra }}"  value="{{ biodata.gotra }}" >
+      <div class="invalid-feedback">
+        Please provide a valid Gotra.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_zodiac">{{ labels.zodiac }}</label>
+      <input type="text" class="form-control" id="zodiac" placeholder="{{ labels.zodiac }}" value="{{ biodata.zodiac }}" >
+      <div class="invalid-feedback">
+        Please provide a valid Zodiac.
+      </div>
+    </div>
+  </div>
+      <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_religion">{{ labels.religion }}</label>
+      <input type="text" class="form-control" id="religion" placeholder="{{ labels.religion }}"  value="{{ biodata.religion }}"  >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_language">{{ labels.language }}</label>
+      <input type="text" class="form-control" id="speak_language" placeholder="{{ labels.language }}"  value="{{ biodata.language }}"  >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+           <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_diet">{{ labels.diet }}</label>
+      <select class="form-control" id="diet"  >
+            <option value=""  >Select Diet...</option>
+            <option value="{{ labels.vegetarian }}"{% if labels.vegetarian == biodata.diet %}selected{% endif %} >{{ labels.vegetarian }}</option>
+            <option value="{{ labels.non_vegetarian }}" {% if labels.non_vegetarian == biodata.diet %}selected{% endif %} >{{ labels.non_vegetarian }}</option>
+            <option value="{{ labels.ovo_vegetarian}}" {% if labels.ovo_vegetarian == biodata.diet %}selected{% endif %} >{{ labels.ovo_vegetarian}}</option>
+            <option value="{{ labels.vegan }}" {% if labels.vegan == biodata.die %}selected{% endif %} >{{ labels.vegan }}</option>
+            <option value="{{ labels.lacto_vegetarian}}" {% if labels.lacto_vegetarian == biodata.diet %}selected{% endif %}  >{{ labels.lacto_vegetarian}}</option>
+            <option value="{{ labels.lacto_ovo_vegetarian}}" {% if labels.lacto_ovo_vegetarian == biodata.diet %}selected{% endif %} >{{ labels.lacto_ovo_vegetarian}}</option>
+        </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  </div>
+        </div>
+       </div>
+    <div class="flip" style="background:#6c7b88;border-style:solid ;box-shadow: #464a52 ;border-radius: 12px; text-underline: #1e2229;font-weight: bold">
+       <p class="title_header" style="background: #6c7b88;margin: auto;margin-left: 2%;">{{ labels.about_family}}<i class="fa fa-angle-down" style="float:right;margin-right: 4%;"></i></p>
+
+     <div class="panel" style="display: none;background: #ffffff" >
+<div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_father_name">{{ labels.father_name}}</label>
+      <input type="text" class="form-control" id="father_name" placeholder="{{ labels.father_name}}"  value="{{ biodata.father_name }}"  >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_father_occupation">{{ labels.father_occupation}}</label>
+      <input type="text" class="form-control" id="father_occupation" placeholder="{{ labels.father_occupation}}"  value="{{ biodata.father_occupation }}">
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_brother_name">{{ labels.brother_name }}</label>
+      <input type="text" class="form-control" id="brothers"  value="{{ biodata.brother_name }}"  >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  </div>
+    <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_mother_name">{{ labels.mother_name}}</label>
+      <input type="text" class="form-control" id="mother_name" placeholder="{{ labels.mother_name}}"  value="{{ biodata.mother_name }}" >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_mother_occupation">{{ labels.mother_occupation}}</label>
+      <input type="text" class="form-control" id="mother_occupation" placeholder="{{ labels.mother_occupation}}" value="{{ biodata.mother_occupation }}" >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+        <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_sisters_name">{{ labels.sister_name }}</label>
+      <input type="text" class="form-control" id="sisters"   value="{{ biodata.sister_name }}" >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  </div>
+     </div>
+    </div>
+    <div class="flip" style="background:#6c7b88;border-style:solid ;box-shadow: #464a52 ;border-radius: 12px; text-underline: #1e2229;font-weight: bold">
+       <p class="title_header" style="background: #6c7b88;margin: auto;margin-left: 2%;">{{ labels.education }}<i class="fa fa-angle-down" style="float:right;margin-right: 4%;"></i></p>
+
+     <div class="panel" style="display: none;background: #ffffff" >
+    <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_highest_qualification">{{ labels.highest_qualification}}</label>
+      <input type="text" class="form-control" id="qualification"  value="{{ biodata.qualification }}" >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_institute">{{ labels.institute }}</label>
+      <input type="text" class="form-control" id="institute"  value="{{ biodata.institute }}" >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+         <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_completion_year">{{ labels.completion_year }}</label>
+      <input type="year" class="form-control" id="completion_year"   value="{{ biodata.completion_year }}"  >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  </div>
+     </div>
+    </div>
+    <div class="flip" style="background:#6c7b88;border-style:solid ;box-shadow: #464a52 ;border-radius: 12px; text-underline: #1e2229;font-weight: bold">
+       <p class="title_header" style="background: #6c7b88;margin: auto;margin-left: 2%;">{{ labels.contact_information}}<i class="fa fa-angle-down" style="float:right;margin-right: 4%;"></i></p>
+
+     <div class="panel" style="display: none;background: #ffffff" >
+    <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_country">{{ labels.country }}</label>
+      <select class="form-control" id="country">
+             {% if request.user.is_authenticated %}
+                 <option value="{{ user_country }}">{{ user_country|truncatechars:20 }}</option>
+                 {% for country in all_country %}
+                         <option value="{{ country.name }}"{% if country.name == biodata.home_country %}selected{% endif %}>
+                                    {{ country.name|truncatechars:20 }}</option>
+                 {% endfor %}
+             {% else %}
+                 {% for country in all_county %}
+                 <option value="{{ country.name }}" {% if country.name == biodata.home_country %}selected{% endif %}>
+                     {{ country.name|truncatechars:20 }}</option>
+                 {% endfor %}
+             {% endif %}
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_state">{{ labels.state }}</label>
+        <select class="form-control" id="state">
+                <option value="">{{ labels.select_state}}</option>
+             {% if request.user.is_authenticated and biodata.home_state == user_country %}
+                 {% for state in user_country_state %}
+                 <option value="{{ state }}" {% if state == biodata.home_state %}selected{% endif %}>{{ state|truncatechars:20 }}</option>
+                 {% endfor %}
+             {% else %}
+                 {% for state in all_state %}
+                 <option value="{{ state.name }}" {% if state.name == biodata.home_state %}selected{% endif %}>{{ state|truncatechars:20 }}</option>
+                 {% endfor %}
+             {% endif %}
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_city">{{ labels.city }}</label>
+      <select class="form-control" id="city">
+                <option value="">{{ labels.select_city}}</option>
+                {% for city in biodata_city %}
+                        <option value="{{ city.name }}"{% if biodata.home_city == city.name %} selected {% endif %}>{{  city.name|truncatechars:20 }}</option>
+                {% endfor %}
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+
+  </div>
+     <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_email">{{ labels.email }}</label>
+      <input type="text" class="form-control" id="email" placeholder="Email" value="{{ biodata.contact_email }}"  >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04" id="l_mobile">{{ labels.mobile }}</label>
+      <input type="text" class="form-control" id="mobile" placeholder="Mobile" value="{{ biodata.contact_mobile }}"  >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  </div>
+     </div>
+    </div>
+     <div class="flip" style="background:#6c7b88;border-style:solid ;box-shadow: #464a52 ;border-radius: 12px; text-underline: #1e2229;font-weight: bold">
+       <p class="title_header" style="background: #6c7b88;margin: auto;margin-left: 2%;">{{ labels.image }}, {{ labels.myself }},
+           {{ labels.preference }}<i class="fa fa-angle-down" style="float:right;margin-right: 4%;"></i></p>
+
+     <div class="panel" style="display: none;background: #ffffff" >
+         <div class="form-row">
+    <div class="col-md-12 mb-3">
+      <label for="validationCustom04" id="l_upload_image"class="btn">{{ labels.update_image}}</label>
+      <input type="File" class="form-control" id="image" placeholder="{{ labels.select_image }}"   >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+         </div>
+          <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom04" id="l_about_myself">{{ labels.about_myself}}</label>
+        <textarea type="text" rows="7" class="form-control" id="about_myself" placeholder="{{ labels.describe_your_self_in_max_500_words}}" value=""  maxlength="500">{{ biodata.about_myself }}</textarea>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+              <div class="col-md-6 mb-3">
+      <label for="validationCustom04" id="l_partner_preference">{{ labels.partner_preference}} </label>
+                  <textarea rows="7" type="text" class="form-control" id="partner_preference" value=""  maxlength="500">{{ biodata.partner_preference }}</textarea>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+    {%  if biodata.payment.payment_status %}
+        <a class="btn btn-primary"id="show_pdf"style="margin-top: 5px;display: none;width: 30%;float: left;margin-left: 5%;margin-right: 5%" target="_blank">Show PDF</a>
+
+    {% else %}
+    <div class="row">
+        <div class="col-md-12" id="payment_btn" style="display: none;margin-top: 10px">
+            <button type="button" class="btn btn-primary" onclick="paynow()"> Get PDF</button>
+        </div>
+    </div>
+    {% endif %}
+
+
+{#  <button class="btn btn-primary" id="submit_form" type="submit" style="margin-top: 10px;">Submit form</button>#}
+</form>
+<div id="iframe_div" style="margin-top:40px;overflow-scrolling: touch">
+    Output PDF Pages
+    <div id="wrap">
+        <iframe id="iframe" src="" ></iframe>
+    </div>
+</div>
+
+
+ </div>
+    </div>
+
+  </main>
+  <!-- page-content" -->
+</div>
+<div id="footer_images">
+    <div>
+        <button class="btn btn-primary" id="submit_form" style="float: left;margin-right:15px;color: #ffffff;background: #6c7b88"> Submit</button>
+{#        <button id="myBtn"style="float: right;margin-left: 15px;color: #ffffff;background: #6c7b88;"  class="btn btn-primary">Top</button>#}
+        <button id="rzp-button1" style="float: right;margin-left: 15px;color: #ffffff;background: #6c7b88;"  class="btn btn-primary" onclick="paynow()">Get PDF</button>
+    </div>
+    <div class="row" style="margin-top: 10px"><br>
+        <div class="col-md-12">
+
+            <div class="carousel slide multi-item-carousel" id="theCarousel">
+                <div class="carousel-inner" id="{{ template_id }}" >
+
+                        {% for biodata_image in biodata_template %}
+
+                            {% if forloop.counter < 4 %}
+                                {% cycle '<div class="item active">' '' '' %}
+                            {% else %}
+                                {% cycle '<div class="item">' '' '' %}
+                            {% endif %}
+                                <div class="col-xs-4">
+                                    <div style="color: black;{% if biodata_image.id == template_id %}border-style: solid;{% else %}border-style: none;{% endif %}margin-bottom: 5px;"align="center" class="flip-card-front"  href="#1" id="{{ biodata_image.id }}">
+                                        <img id="{{ biodata_image.id }}" src="/media/{{ biodata_image.template_icon_image }}" alt="Avatar" style="width:50%;height:50%;margin: 2%;" class="img-responsive">
+                                    </div>
+                                </div>
+                            {% cycle '' '' '</div>' %}
+
+                        {% endfor %}
+
+                        <!--  Example item end -->
+
+                </div>
+
+                        <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                        <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function paynow(){
+        var biodata_id = $('form').attr('id');
+        if (biodata_id > 0) {
+            window.location = '/payment/' + biodata_id + "?card_type=wedding_biodata"
+        }
+        else {
+            alert("Biodata Not Found");
+        }
+    }
+
+
+</script>
+
+<script>
+
+
+    var url = '{% url "biodata:create_biodata" %}';
+    $("#submit_form").click(function (event) {
+        event.preventDefault();
+        var template_id = $(".carousel-inner")[0].id;
+
+
+ var data = new FormData();
+    {#data.append('files[]', $('#image').prop('files')[0]);#}
+    console.log($('#image').prop('files')[0]);
+    var first_name = $('#first_name').val();
+    var name_length = $("#first_name").val().length;
+    console.log(name_length);
+
+   if (name_length < 2) {
+        alert("First Name Is Requried");
+    }
+    else {
+        formdata = new FormData();
+        formdata.append('bio_data_id', $('form').attr('id'));
+        formdata.append('template_id', template_id);
+        formdata.append('image', $('#image').prop('files')[0]);
+        formdata.append('first_name', $('#first_name').val());
+        formdata.append('last_name', $('#last_name').val());
+        formdata.append('date_of_birth', $('#date_of_birth').val());
+        formdata.append('place_of_birth', $('#place_of_birth').val());
+        formdata.append('time_of_birth', $('#time_of_birth').val());
+        formdata.append('height', $('#height').val());
+        formdata.append('complexion', $('#complexion').val());
+        formdata.append('personality', $('#personality').val());
+        formdata.append('cast', $('#cast').val());
+        formdata.append('gotra', $('#gotra').val());
+        formdata.append('zodiac', $('#zodiac').val());
+        formdata.append('religion', $('#religion').val());
+        formdata.append('language', $('#language').val());
+        formdata.append('diet', $('#diet').val());
+        formdata.append('father_name', $('#father_name').val());
+        formdata.append('father_occupation', $('#father_occupation').val());
+        formdata.append('mother_name', $('#mother_name').val());
+        formdata.append('mother_occupation', $('#mother_occupation').val());
+        formdata.append('brothers', $('#brothers').val());
+        formdata.append('sisters', $('#sisters').val());
+        formdata.append('qualification', $('#qualification').val());
+        formdata.append('institute', $('#institute').val());
+        formdata.append('completion_year', $('#completion_year').val());
+        formdata.append('city', $('#city').val());
+        formdata.append('state', $('#state').val());
+        formdata.append('country', $('#country').val());
+        formdata.append('email', $('#email').val());
+        formdata.append('mobile', $('#mobile').val());
+        formdata.append('about_myself', $('#about_myself').val());
+        formdata.append('partner_preference', $('#partner_preference').val());
+        formdata.append('language_id', $('#biodata_language').val());
+        formdata.append('speak_language', $('#speak_language').val());
+        formdata.append('csrfmiddlewaretoken', '{{csrf_token}}');
+        jQuery.ajax({
+            url: url,
+            type: "POST",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $('form').attr("id",data['bio_data_id']);
+
+                {%  if biodata.payment.payment_status %}
+                    $("#show_pdf").css('display','block').attr("href","{% url 'biodata:get_wk_pdf' %}?biodata_id="+data['bio_data_id']+"&content_type=none")
+                {% else %}
+                    $("#payment_btn").css('display', 'block');
+                {% endif %}
+                var $iframe = $('#iframe');
+                $iframe.attr('srcdoc', data['html']);
+                $('html, body').animate({
+                    scrollTop: $("#iframe_div").offset().top
+                }, );
+            }
+        });
+    }
+    });
+
+</script>
+
+<script>
+    $('#country').change(function(event) {
+    event.preventDefault();
+    $.ajax({
+        type:"POST",
+        url : "{% url 'biodata:selected_country' %}",
+        data : {'country':$(this).val(),
+            'csrfmiddlewaretoken':'{{ csrf_token }}'},
+        success : function(response) {
+            data = response;
+            var country_state = data['country_state']
+            console.log('heelo');
+            $("#state").html('<option value="">Select State</option>');
+            for (var i=0;i<=data['country_state'].length;i++) {
+                $("#state").append(
+                    $('<option></option>').val((data['country_state'][i])).html((data['country_state'][i].substring(0, 20)))
+                );
+            }
+            console.log(data);
+        },
+        error: function() {
+            alert('Error occured');
+        }
+    });
+    });
+
+    $('#state').change(function(event) {
+    event.preventDefault();
+    $.ajax({
+        type:"POST",
+        url : "{% url 'biodata:selected_state_city' %}",
+        data : {'state':$(this).val(),
+            'csrfmiddlewaretoken':'{{ csrf_token }}'},
+        success : function(response) {
+            data = response;
+            var city = data['state_city']
+            console.log('city:');
+            console.log(city);
+            $("#city").html('<option value="">Select City</option>');
+            for (var i=0;i<=data['state_city'].length;i++) {
+                $("#city").append(
+                    $('<option></option>').val((data['state_city'][i])).html((data['state_city'][i].substring(0, 20)))
+                );
+            }
+            console.log(data);
+        },
+        error: function() {
+            alert('Error occured');
+        }
+    });
+    });
+$('#biodata_language').change(function(event) {
+    event.preventDefault();
+    $.ajax({
+        type:"POST",
+        url : "{% url 'biodata:selected_language' %}",
+        data : {'biodata_language_id':$(this).val(),
+            'csrfmiddlewaretoken':'{{ csrf_token }}'},
+        success : function(response) {
+            data = response;
+            console.log(data);
+            var label = data['labels']
+            console.log('label:');
+            console.log(label['foo']);
+            $("#l_first_name").html(label['first_name']);
+            $("#l_last_name").html(label['last_name']);
+            $("#l_date_of_birth").html(label['date_of_birth']);
+            $("#l_place_of_birth").html(label['place_of_birth']);
+            $("#l_time_of_birth").html(label['time_of_birth']);
+            $("#l_height").html(label['height']);
+            $("#l_complexion").html(label['complexion']);
+            $("#l_personality").html(label['personality']);
+            $("#l_caste").html(label['caste']);
+            $("#l_gotra").html(label['gotra']);
+            $("#l_zodiac").html(label['zodiac']);
+            $("#l_religion").html(label['religion']);
+            $("#l_language").html(label['language']);
+            $("#l_diet").html(label['diet']);
+
+            $("#l_father_name").html(label['father_name']);
+            $("#l_father_occupation").html(label['father_occupation']);
+            $("#l_brother_name").html(label['brother_name']);
+            $("#l_mother_name").html(label['mother_name']);
+            $("#l_mother_occupation").html(label['mother_occupation']);
+            $("#l_sisters_name").html(label['sister_name']);
+
+            $("#l_highest_qualification").html(label['highest_qualification']);
+            $("#l_institute").html(label['institute']);
+            $("#l_completion_year").html(label['completion_year']);
+
+            $("#l_country").html(label['country']);
+            $("#l_state").html(label['state']);
+            $("#l_city").html(label['city']);
+            $("#l_email").html(label['email']);
+            $("#l_mobile").html(label['mobile']);
+
+            $("#l_about_myself").html(label['about_myself']);
+            $("#l_partner_preference").html(label['partner_preference']);
+
+            console.log(data);
+        },
+        error: function() {
+            alert('Error occured');
+        }
+    });
+    });
+</script>
+
+
+<script>
+    $(document).ready(function(){
+  $(".flip-card-front").click(function(){
+   if ($(this).css("border-style") == "none") {
+       $(".flip-card-front").css('border-style','none')
+       console.log($(this).css("border-style"));
+       var template_id = this.id;
+       console.log(this.id);
+       $(this).css('border-style','solid')
+       $(".carousel-inner").attr('id',template_id);
+
+
+ var data = new FormData();
+    {#data.append('files[]', $('#image').prop('files')[0]);#}
+    console.log($('#image').prop('files')[0]);
+    var first_name = $('#first_name').val();
+    var name_length = $("#first_name").val().length;
+    console.log(name_length);
+
+   if (name_length < 2) {
+        alert("First Name Is Requried");
+    }
+    else {
+        formdata = new FormData();
+        formdata.append('bio_data_id', $('form').attr('id'));
+        formdata.append('template_id', template_id);
+        formdata.append('image', $('#image').prop('files')[0]);
+        formdata.append('first_name', $('#first_name').val());
+        formdata.append('last_name', $('#last_name').val());
+        formdata.append('date_of_birth', $('#date_of_birth').val());
+        formdata.append('place_of_birth', $('#place_of_birth').val());
+        formdata.append('time_of_birth', $('#time_of_birth').val());
+        formdata.append('height', $('#height').val());
+        formdata.append('complexion', $('#complexion').val());
+        formdata.append('personality', $('#personality').val());
+        formdata.append('cast', $('#cast').val());
+        formdata.append('gotra', $('#gotra').val());
+        formdata.append('zodiac', $('#zodiac').val());
+        formdata.append('religion', $('#religion').val());
+        formdata.append('language', $('#language').val());
+        formdata.append('diet', $('#diet').val());
+        formdata.append('father_name', $('#father_name').val());
+        formdata.append('father_occupation', $('#father_occupation').val());
+        formdata.append('mother_name', $('#mother_name').val());
+        formdata.append('mother_occupation', $('#mother_occupation').val());
+        formdata.append('brothers', $('#brothers').val());
+        formdata.append('sisters', $('#sisters').val());
+        formdata.append('qualification', $('#qualification').val());
+        formdata.append('institute', $('#institute').val());
+        formdata.append('completion_year', $('#completion_year').val());
+        formdata.append('city', $('#city').val());
+        formdata.append('state', $('#state').val());
+        formdata.append('country', $('#country').val());
+        formdata.append('email', $('#email').val());
+        formdata.append('mobile', $('#mobile').val());
+        formdata.append('about_myself', $('#about_myself').val());
+        formdata.append('partner_preference', $('#partner_preference').val());
+        formdata.append('language_id', $('#biodata_language').val());
+        formdata.append('speak_language', $('#speak_language').val());
+        formdata.append('csrfmiddlewaretoken', '{{csrf_token}}');
+        jQuery.ajax({
+            url: url,
+            type: "POST",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $('form').attr("id",data['bio_data_id']);
+                var $iframe = $('#iframe');
+                $iframe.attr('srcdoc', data['html']);
+                $('html, body').animate({
+                    scrollTop: $("#iframe_div").offset().top
+                }, );
+            }
+        });
+    }
+
+
+   }
+
+  });
+});
+
+    $("#myBtn").click(function (){
+        $('html, body').animate({
+            scrollTop: $(".needs-validation").offset().top
+        });
+
+    },);
+
+</script>
+
+
+</body>
+</html>

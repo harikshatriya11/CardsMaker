@@ -1,0 +1,40 @@
+name: Deploy Django to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main  # Replace with your branch name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # Match your Django version
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Deploy to DigitalOcean
+      run: |
+        ssh -o StrictHostKeyChecking=no root@139.59.88.123 << 'EOF'
+        cd /home/CardsMaker
+        git pull origin main
+        source venv/bin/activate
+        pip install -r requirements.txt
+        python manage.py migrate
+        python manage.py collectstatic --noinput
+        systemctl restart gunicorn
+        certbot renew --quiet
+        systemctl reload nginx
+        EOF
+      env:
+        SSH_PRIVATE_KEY: AAAAB3NzaC1yc2EAAAADAQABAAACAQClyjJCyVvZDFljq/8KfY+Dub2qbCfY2ooLBuoeg2bQzqGFsvmAJ9mYoCBSjowRuwLtXixMiSV4gY3iYfsJMsJY9KT/gP/ZsmQopjZcoiZXyhL5G/vC6ACccin5jE1Qzj+O178apxUOBeisooTVfODfrCgOeuIdGN6YoW6P+pQqt4TrEUiNYvDDqoig5+kq/08DGcTlc53xpkloUD8HqZcMKOUycdQuYjwyfabD/RGTnJwRqjFibO5wZmvL5BHdxNFqHrSkZT4+CuS/j3KOZYvSJRhNYgi/nRetGHJRoK7fppN3iv1WMLkF9Mh9rtxOoDJc9zBeo/hwnCCftvBma4ADb07WVfKtu3eTcu1/QkQ7SvRPoB2+dg9SZkwrX0HL+SKIPKEo2cYwGufX9kkSdGaaiTlkRTRcNK0CnQURGnECNhHO5pSzGiKxhs5JO9Ni7PxMi7erdRxmRGT0FyAag1P1huTmByOgG10mh9I9vFxCXdP4WOcObIgDe7LPJ0nAeIwnTn25/x6jwGO2aAzX/WiMMJ+mA0VzAnClx9rj0J5gL1wMtmbpVDLwo6oL+5rkJOlRGdn2FR7tQ3jG69/pGKSmkoqpwgoLek4rAHE6ollt4ORcJKpNka+BTdiiyjAs5q07P20XjUH7ZQ9e+lwO3W/gpbv9+Yl1H+Nbw2RtHiTYqw==

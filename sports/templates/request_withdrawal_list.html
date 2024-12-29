@@ -1,0 +1,57 @@
+{% include 'base.html' %}
+    <style>
+        body {
+            margin-top: 2%;
+        }
+        a{ width:100%;color:black;text-decoration: none;font-size: 20px;}
+        .match_box{background: #d9dee3;margin: 1vh;padding: 3%; border-radius: 10px}
+        .team1, .team2, .vs_box{display: inline;width: 32%;}
+        .team1 {float: left}
+        .team1 {float: right;text-align: right}
+        .vs_box {float: right;text-align: center}
+        .won_by {font-size: 10px}
+
+        {#.vs_box {text-align: -webkit-center;text-align-last: center;}#}
+        th, td {
+            padding: 20px;
+        }
+        .row{
+            width: 100% !important;
+            text-align: center;
+        }
+
+    </style>
+<body>
+{% include 'base.html' %}
+{% include 'home/side_nav_bar.html' %}
+
+<table class="table-responsive table-striped" cellspacing="3">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Amount</th>
+            <th>Request Date</th>
+            <th>Paid/Rejected Date</th>
+            <th>Paid Status</th>
+            <th>Rejected Status</th>
+            <th>Reject Reason</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for req in obj %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ req.amount }}</td>
+                <td>{{ req.date_created }}</td>
+                <td>{{ req.date_updated }}</td>
+                <td>{% if req.paid  %}<i class="fa fa-angle-right" ></i>{% else %}<i class="fa fa-cross" ></i>{% endif %}</td>
+                <td>{% if req.rejected  %}<i class="fa fa-angle-right" ></i>{% else %}<i class="fa fa-cross" ></i>{% endif %}</td>
+                <td>{{ req.reject_reason }}</td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

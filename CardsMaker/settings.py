@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import sys
+from decouple import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from django.template.context_processors import static
+from django_countries import settings
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,13 +28,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*b@l20(s5&8kv^ng@gadbvvz+h06jy=m32&@#+$^n))x%l&c!%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+DEBUG = config('DEBUG', default=True, cast=bool)
+if DEBUG:
+    ALLOWED_HOSTS = ["*","10.0.2.2","192.168.43.216","localhost", "premium11.com", "www.premium11.com"]
+else:
+    ALLOWED_HOSTS = ["premium11.com", "www.premium11.com","https://www.premium11.com","https://.premium11.com"]
+CORS_ALLOWED_ORIGINS = [
+    'premium11.com',
+    'www.premium11.com',
+    'https://www.premium11.com',
+    'https://.premium11.com'
+]
 # Application definition
 
+
+sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,13 +51,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
+    'fontawesomefree',
     'languages',
     'users',
     'biodata',
-    'marriage_cards',
+    'wedding_cards',
+    'engagement_cards',
     'bussiness_cards',
-    'country_dialcode',
+    'wkhtmltopdf',
+    'cities_light',
+    'mathfilters',
+    'resume',
+    'latter_had',
+    'agora',
+    'sports',
+    'sports.TBT11.payment',
+    'sports.TBT11.tbt',
+    'sports.TBT11.livematch',
 
+    'qr_code',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +104,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'templatetags': 'users.templatetags.templatetags',
+            },
         },
+
     },
 ]
 
@@ -86,13 +117,25 @@ WSGI_APPLICATION = 'CardsMaker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+TESTING_MODE = config('TESTING_MODE', default=False, cast=bool)
+if TESTING_MODE == True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': "cardsmaker2023",
+            'USER': 'myprojectuser',
+            'PASSWORD': 'Hari2228@Kshatriya',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -132,21 +175,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 # Extra lookup directories for collectstatic to find static files
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
 
-#  Add configuration for static files storage using whitenoise
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
+# Extra lookup directories for collectstatic to find static files
+# STATICFILES_DIRS = (os.path.join(str(BASE_DIR)+"/static/"),)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+APPEND_SLASH = False
+
+if DEBUG:
+    RAZOR_KEY_ID = "rzp_test_pRwByYGHjIP0t2"
+    RAZOR_KEY_SECRET = "GOfSmvSm0jAlTiwiBoXue8kP"
+else:
+    RAZOR_KEY_ID = "H2K22dD1I3soH9"
+    RAZOR_KEY_SECRET = "rzp_test_7nruGgj5EfDxGO"
+
+LOGIN_REDIRECT_URL = '/'
+
+
+# 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
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

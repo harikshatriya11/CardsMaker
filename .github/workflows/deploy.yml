@@ -29,8 +29,6 @@ jobs:
         cd /home/CardsMaker
         git pull origin main
         source venv/bin/activate
-        pip3 install --upgrade pip setuptools wheel
-        sudo apt update && sudo apt install -y build-essential python3-dev
         python manage.py migrate
         python manage.py collectstatic --noinput
         systemctl restart gunicorn

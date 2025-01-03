@@ -24,7 +24,7 @@ jobs:
 
     - name: Deploy to DigitalOcean
       run: |
-        sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@139.59.88.123 << EOF
+        sshpass -p "Hari2228@" ssh -o StrictHostKeyChecking=no root@139.59.88.123 << EOF
         echo "Connected to server"
         cd /home/CardsMaker
         git pull origin main
